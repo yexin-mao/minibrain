@@ -133,6 +133,54 @@ def list_documents(user: UserContext) -> list[dict]:
         return [dict(row) for row in cur.fetchall()]
 
 
+def describe_corpus(user: UserContext, *, with_titles: bool = True) -> str:
+    """给 LLM 看的文档清单。和 table_rag.describe_schema 对称。
+
+    为什么需要它：system prompt 里表格侧列了表名、列名、行数，文档侧原来只有
+    一句"适合非结构化文档"。模型看得见表里有哪些列，却完全不知道文档里写了什么，
+    于是凡是两边都有的事实（组长、人数、部门归属）它一律去查表。
+    消融实验（scripts/ablate_prompt.py）证实了这个信息不对等是路由失败的根因。
+
+    with_titles=False 只列文件名——实验里这一版**没有效果**，保留是为了让
+    "光给文件名不够"这个结论可复现，不是为了给调用方选。
+    """
+    where, params = _visibility_clause(user)
+    with vector_db() as cur:
+        cur.execute(
+            f"""
+            SELECT d.filename, d.content, s.name AS source_name
+            FROM documents d
+            JOIN sources s ON s.id = d.source_id
+            WHERE {where} AND d.status = 'ready'
+            ORDER BY d.created_at
+            LIMIT 200
+            """,
+            params,
+        )
+        rows = cur.fetchall()
+
+    if not rows:
+        return "（当前用户可见范围内没有任何已就绪的文档）"
+
+    lines = []
+    for row in rows:
+        if not with_titles:
+            lines.append(f"  {row['filename']}")
+            continue
+        title = _first_heading(row["content"]) or row["filename"].rsplit(".", 1)[0]
+        lines.append(f"  {row['filename']} —— {title}")
+    return "\n".join(lines)
+
+
+def _first_heading(text: str) -> str | None:
+    """取正文里第一个 markdown 标题作为文档主题。没有标题就返回 None。"""
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("#"):
+            return stripped.lstrip("#").strip() or None
+    return None
+
+
 def upload_document(user: UserContext, source_id: str | None, filename: str, text: str) -> str:
     """只登记，不处理。返回 document_id，真正的解析交给 process_document。
 

@@ -1,0 +1,5230 @@
+{
+  "model": "deepseek/deepseek-v4-flash",
+  "rounds": 3,
+  "cases": 43,
+  "metric": "first_tool_hit_rate",
+  "variants": {
+    "A 现状（基线）": {
+      "prompt_chars": 1018,
+      "hit_rate": 0.8837209302325582
+    },
+    "B +文件名": {
+      "prompt_chars": 1303,
+      "hit_rate": 0.9457364341085271
+    },
+    "C +文件名和标题": {
+      "prompt_chars": 1429,
+      "hit_rate": 0.9224806201550387
+    },
+    "D +权威来源规则": {
+      "prompt_chars": 1593,
+      "hit_rate": 0.9767441860465116
+    }
+  },
+  "rows": {
+    "A 现状（基线）": [
+      {
+        "round": 1,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      }
+    ],
+    "B +文件名": [
+      {
+        "round": 1,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      }
+    ],
+    "C +文件名和标题": [
+      {
+        "round": 1,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": null,
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "vector_search",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "vector_search",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      }
+    ],
+    "D +权威来源规则": [
+      {
+        "round": 1,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "vector_search",
+        "ok": false
+      },
+      {
+        "round": 1,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 1,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "vector_search",
+        "ok": false
+      },
+      {
+        "round": 2,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 2,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-01",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-02",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-03",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-04",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-05",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-06",
+        "category": "文档·制度定义",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-07",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-08",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-09",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-10",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-11",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "doc-12",
+        "category": "文档·组织事实",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-01",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-02",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-03",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-04",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-05",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-06",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-07",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-08",
+        "category": "表格·销售聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-09",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-10",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-11",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-12",
+        "category": "表格·人数聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-13",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-14",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-15",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-16",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-17",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-18",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "tbl-19",
+        "category": "表格·报销聚合",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-01",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-02",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-03",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-04",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-05",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "mix-06",
+        "category": "跨链路",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-01",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": null,
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-02",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-03",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-04",
+        "category": "边界与陷阱",
+        "expected": [],
+        "picked": "table_query",
+        "ok": false
+      },
+      {
+        "round": 3,
+        "id": "edge-05",
+        "category": "边界与陷阱",
+        "expected": [
+          "table_query",
+          "vector_search"
+        ],
+        "picked": "table_query",
+        "ok": true
+      },
+      {
+        "round": 3,
+        "id": "edge-06",
+        "category": "边界与陷阱",
+        "expected": [
+          "vector_search"
+        ],
+        "picked": "vector_search",
+        "ok": true
+      }
+    ]
+  }
+}

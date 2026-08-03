@@ -104,3 +104,36 @@ def test_split_applies_overlap_between_chunks():
     paragraphs = "\n\n".join(f"第{i}段" + "文" * 40 for i in range(6))
     chunks = split_text(paragraphs, chunk_size=100, overlap=30)
     assert len(chunks) > 1
+
+
+# ---------------------------------------------------------------- 文档清单（注入 system prompt）
+
+def test_describe_corpus_lists_filenames_and_titles(alice):
+    """这段文本会进 system prompt，是路由质量的直接输入（见 eval/PROMPT_ABLATION.md）。"""
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "dept-tech.md",
+        "# 技术部\n\n技术部负责人是李伟。",
+    )
+    gateway.process("vector-rag", doc_id)
+    catalog = gateway.call("vector-rag", "describe_corpus", alice)
+    assert "dept-tech.md" in catalog
+    assert "技术部" in catalog          # 标题被抽出来了
+
+
+def test_describe_corpus_without_titles(alice):
+    """只列文件名的版本。消融实验证明这一版修不好 doc-08，保留是为了结论可复现。"""
+    catalog = gateway.call("vector-rag", "describe_corpus", alice, with_titles=False)
+    assert "——" not in catalog
+
+
+def test_describe_corpus_respects_permissions(alice, bob):
+    """★ 清单要进 prompt，所以它本身必须是过滤过的，否则 prompt 就泄露了。"""
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "secret-plan.md", "# 机密计划\n\n不该被看到。"
+    )
+    gateway.process("vector-rag", doc_id)
+    assert "secret-plan.md" not in gateway.call("vector-rag", "describe_corpus", bob)
+
+
+def test_describe_corpus_empty_is_explicit(bob):
+    assert "没有" in gateway.call("vector-rag", "describe_corpus", bob)
