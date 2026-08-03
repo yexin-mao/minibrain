@@ -1,0 +1,386 @@
+{
+  "corpus_files": 15,
+  "probes": 10,
+  "k_grid": [
+    3,
+    5,
+    10
+  ],
+  "overall": {
+    "queries": 10,
+    "mrr": 1.0,
+    "recall@3": 0.7966666666666666,
+    "precision@3": 0.6666666666666666,
+    "hit@3": 1.0,
+    "complete_recall@3": 0.5,
+    "ndcg@3": 0.9378507829754079,
+    "recall@5": 0.93,
+    "precision@5": 0.52,
+    "hit@5": 1.0,
+    "complete_recall@5": 0.8,
+    "ndcg@5": 0.9449410098742286,
+    "recall@10": 1.0,
+    "precision@10": 0.27999999999999997,
+    "hit@10": 1.0,
+    "complete_recall@10": 1.0,
+    "ndcg@10": 0.9788628838259944
+  },
+  "by_category": {
+    "对照组·单点事实": {
+      "queries": 3,
+      "mrr": 1.0,
+      "recall@3": 1.0,
+      "precision@3": 0.3333333333333333,
+      "hit@3": 1.0,
+      "complete_recall@3": 1.0,
+      "ndcg@3": 1.0,
+      "recall@5": 1.0,
+      "precision@5": 0.20000000000000004,
+      "hit@5": 1.0,
+      "complete_recall@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "precision@10": 0.10000000000000002,
+      "hit@10": 1.0,
+      "complete_recall@10": 1.0,
+      "ndcg@10": 1.0
+    },
+    "多跳推理": {
+      "queries": 3,
+      "mrr": 1.0,
+      "recall@3": 0.7222222222222222,
+      "precision@3": 0.6666666666666666,
+      "hit@3": 1.0,
+      "complete_recall@3": 0.3333333333333333,
+      "ndcg@3": 0.79283594325136,
+      "recall@5": 0.8333333333333334,
+      "precision@5": 0.4666666666666666,
+      "hit@5": 1.0,
+      "complete_recall@5": 0.6666666666666666,
+      "ndcg@5": 0.8602050587515425,
+      "recall@10": 1.0,
+      "precision@10": 0.26666666666666666,
+      "hit@10": 1.0,
+      "complete_recall@10": 1.0,
+      "ndcg@10": 0.9330075376909305
+    },
+    "全局聚合": {
+      "queries": 3,
+      "mrr": 1.0,
+      "recall@3": 0.6,
+      "precision@3": 1.0,
+      "hit@3": 1.0,
+      "complete_recall@3": 0.0,
+      "ndcg@3": 1.0,
+      "recall@5": 0.9333333333333332,
+      "precision@5": 0.9333333333333332,
+      "hit@5": 1.0,
+      "complete_recall@5": 0.6666666666666666,
+      "ndcg@5": 0.9562649741625527,
+      "recall@10": 1.0,
+      "precision@10": 0.5,
+      "hit@10": 1.0,
+      "complete_recall@10": 1.0,
+      "ndcg@10": 0.9965354083957174
+    },
+    "实体消歧": {
+      "queries": 1,
+      "mrr": 1.0,
+      "recall@3": 1.0,
+      "precision@3": 0.6666666666666666,
+      "hit@3": 1.0,
+      "complete_recall@3": 1.0,
+      "ndcg@3": 1.0,
+      "recall@5": 1.0,
+      "precision@5": 0.4,
+      "hit@5": 1.0,
+      "complete_recall@5": 1.0,
+      "ndcg@5": 1.0,
+      "recall@10": 1.0,
+      "precision@10": 0.2,
+      "hit@10": 1.0,
+      "complete_recall@10": 1.0,
+      "ndcg@10": 1.0
+    }
+  },
+  "per_probe": [
+    {
+      "id": "ctrl-1",
+      "category": "对照组·单点事实",
+      "question": "后端组有多少人？",
+      "required": [
+        "team-backend.md"
+      ],
+      "ranking": [
+        "team-backend.md",
+        "team-frontend.md",
+        "dept-tech.md",
+        "team-algo.md",
+        "dept-hr.md",
+        "dept-product.md",
+        "dept-market.md",
+        "team-research.md",
+        "project-alpha.md",
+        "dept-finance.md",
+        "intern-liwei.md",
+        "team-design.md",
+        "policy-reimburse.md",
+        "policy-leave.md",
+        "policy-travel.md"
+      ],
+      "min_k": 1
+    },
+    {
+      "id": "ctrl-2",
+      "category": "对照组·单点事实",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "required": [
+        "policy-travel.md"
+      ],
+      "ranking": [
+        "policy-travel.md",
+        "policy-reimburse.md",
+        "policy-leave.md",
+        "dept-finance.md",
+        "intern-liwei.md",
+        "team-backend.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "team-frontend.md",
+        "dept-product.md",
+        "dept-tech.md",
+        "project-alpha.md",
+        "team-research.md",
+        "team-algo.md",
+        "team-design.md"
+      ],
+      "min_k": 1
+    },
+    {
+      "id": "ctrl-3",
+      "category": "对照组·单点事实",
+      "question": "入职满三年有几天年假？",
+      "required": [
+        "policy-leave.md"
+      ],
+      "ranking": [
+        "policy-leave.md",
+        "policy-reimburse.md",
+        "dept-hr.md",
+        "intern-liwei.md",
+        "dept-finance.md",
+        "dept-product.md",
+        "project-alpha.md",
+        "team-frontend.md",
+        "dept-market.md",
+        "dept-tech.md",
+        "team-backend.md",
+        "team-research.md",
+        "team-algo.md",
+        "policy-travel.md",
+        "team-design.md"
+      ],
+      "min_k": 1
+    },
+    {
+      "id": "hop-1",
+      "category": "多跳推理",
+      "question": "张敏的上级的上级是谁？",
+      "required": [
+        "team-backend.md",
+        "dept-tech.md"
+      ],
+      "ranking": [
+        "team-backend.md",
+        "dept-product.md",
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-tech.md",
+        "team-algo.md",
+        "team-frontend.md",
+        "team-research.md",
+        "team-design.md",
+        "intern-liwei.md",
+        "project-alpha.md",
+        "policy-reimburse.md",
+        "policy-travel.md",
+        "policy-leave.md"
+      ],
+      "min_k": 6
+    },
+    {
+      "id": "hop-2",
+      "category": "多跳推理",
+      "question": "Alpha 项目的产品侧对接人向谁汇报？",
+      "required": [
+        "project-alpha.md",
+        "team-design.md",
+        "dept-product.md"
+      ],
+      "ranking": [
+        "project-alpha.md",
+        "dept-product.md",
+        "team-algo.md",
+        "team-design.md",
+        "team-frontend.md",
+        "dept-tech.md",
+        "team-backend.md",
+        "dept-market.md",
+        "team-research.md",
+        "dept-hr.md",
+        "dept-finance.md",
+        "intern-liwei.md",
+        "policy-reimburse.md",
+        "policy-leave.md",
+        "policy-travel.md"
+      ],
+      "min_k": 4
+    },
+    {
+      "id": "hop-3",
+      "category": "多跳推理",
+      "question": "陈刚和刘洋是同一个部门的吗？",
+      "required": [
+        "team-algo.md",
+        "team-frontend.md",
+        "dept-tech.md"
+      ],
+      "ranking": [
+        "team-frontend.md",
+        "team-algo.md",
+        "dept-tech.md",
+        "team-backend.md",
+        "dept-product.md",
+        "dept-finance.md",
+        "dept-market.md",
+        "dept-hr.md",
+        "intern-liwei.md",
+        "team-research.md",
+        "project-alpha.md",
+        "team-design.md",
+        "policy-reimburse.md",
+        "policy-leave.md",
+        "policy-travel.md"
+      ],
+      "min_k": 3
+    },
+    {
+      "id": "global-1",
+      "category": "全局聚合",
+      "question": "公司一共有几个部门，分别是什么？",
+      "required": [
+        "dept-tech.md",
+        "dept-product.md",
+        "dept-market.md",
+        "dept-hr.md",
+        "dept-finance.md"
+      ],
+      "ranking": [
+        "dept-tech.md",
+        "dept-product.md",
+        "dept-hr.md",
+        "dept-finance.md",
+        "dept-market.md",
+        "team-frontend.md",
+        "team-backend.md",
+        "intern-liwei.md",
+        "policy-reimburse.md",
+        "team-research.md",
+        "team-algo.md",
+        "team-design.md",
+        "policy-leave.md",
+        "project-alpha.md",
+        "policy-travel.md"
+      ],
+      "min_k": 5
+    },
+    {
+      "id": "global-2",
+      "category": "全局聚合",
+      "question": "哪个部门的人最多？",
+      "required": [
+        "dept-tech.md",
+        "dept-product.md",
+        "dept-market.md",
+        "dept-hr.md",
+        "dept-finance.md"
+      ],
+      "ranking": [
+        "dept-tech.md",
+        "dept-hr.md",
+        "dept-product.md",
+        "dept-finance.md",
+        "dept-market.md",
+        "team-backend.md",
+        "team-frontend.md",
+        "team-algo.md",
+        "intern-liwei.md",
+        "team-research.md",
+        "team-design.md",
+        "policy-reimburse.md",
+        "policy-leave.md",
+        "project-alpha.md",
+        "policy-travel.md"
+      ],
+      "min_k": 5
+    },
+    {
+      "id": "global-3",
+      "category": "全局聚合",
+      "question": "公司总共大约多少人？",
+      "required": [
+        "dept-tech.md",
+        "dept-product.md",
+        "dept-market.md",
+        "dept-hr.md",
+        "dept-finance.md"
+      ],
+      "ranking": [
+        "dept-hr.md",
+        "dept-tech.md",
+        "dept-product.md",
+        "dept-market.md",
+        "intern-liwei.md",
+        "dept-finance.md",
+        "team-frontend.md",
+        "policy-leave.md",
+        "team-backend.md",
+        "policy-reimburse.md",
+        "team-algo.md",
+        "team-research.md",
+        "project-alpha.md",
+        "team-design.md",
+        "policy-travel.md"
+      ],
+      "min_k": 6
+    },
+    {
+      "id": "ambig-1",
+      "category": "实体消歧",
+      "question": "李伟负责什么工作？",
+      "required": [
+        "dept-tech.md",
+        "intern-liwei.md"
+      ],
+      "ranking": [
+        "intern-liwei.md",
+        "dept-tech.md",
+        "dept-product.md",
+        "dept-finance.md",
+        "team-frontend.md",
+        "dept-market.md",
+        "team-backend.md",
+        "dept-hr.md",
+        "team-algo.md",
+        "team-research.md",
+        "team-design.md",
+        "project-alpha.md",
+        "policy-reimburse.md",
+        "policy-leave.md",
+        "policy-travel.md"
+      ],
+      "min_k": 2
+    }
+  ]
+}
