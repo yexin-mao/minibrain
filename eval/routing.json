@@ -1,0 +1,547 @@
+[
+  {
+    "id": "doc-01",
+    "category": "文档·制度定义",
+    "question": "二线城市住宿一晚最多能报多少钱？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "400"
+    ],
+    "why": "制度原文，向量检索主场。这类题做不对就是实现有 bug"
+  },
+  {
+    "id": "doc-02",
+    "category": "文档·制度定义",
+    "question": "入职满三年有几天年假？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "10"
+    ],
+    "why": "同上"
+  },
+  {
+    "id": "doc-03",
+    "category": "文档·制度定义",
+    "question": "发票需要在消费后多久之内提交？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "30"
+    ],
+    "why": "同上"
+  },
+  {
+    "id": "doc-04",
+    "category": "文档·制度定义",
+    "question": "年假可以跨年结转吗？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "不可",
+      "不能",
+      "当年有效"
+    ],
+    "why": "是非题，答案完整落在一篇文档里",
+    "answer_match": "any"
+  },
+  {
+    "id": "doc-05",
+    "category": "文档·制度定义",
+    "question": "超过 30 天才提交的发票还能报销吗？需要什么手续？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "书面说明"
+    ],
+    "why": "带条件的流程题，考的是能不能把附加条件一起召回"
+  },
+  {
+    "id": "doc-06",
+    "category": "文档·制度定义",
+    "question": "一线城市和其他城市的住宿标准分别是多少？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "600"
+    ],
+    "why": "一篇文档里的多个数值，不涉及计算"
+  },
+  {
+    "id": "doc-07",
+    "category": "文档·组织事实",
+    "question": "后端组组长是谁？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "张敏"
+    ],
+    "why": "单点事实。注意 headcount 表里也有组长列，这题考的是会不会舍近求远去写 SQL"
+  },
+  {
+    "id": "doc-08",
+    "category": "文档·组织事实",
+    "question": "技术部下设哪几个小组？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "后端",
+      "前端",
+      "算法"
+    ],
+    "why": "枚举类事实，文档里写全了"
+  },
+  {
+    "id": "doc-09",
+    "category": "文档·组织事实",
+    "question": "Alpha 项目由哪两个组共同承担？项目周期是什么时候？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "算法组",
+      "后端组"
+    ],
+    "why": "项目信息只在文档里，表格里完全没有"
+  },
+  {
+    "id": "doc-10",
+    "category": "文档·组织事实",
+    "question": "算法组负责哪些业务方向？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "推荐",
+      "风控"
+    ],
+    "why": "职责描述是非结构化文本，表格里没有这一列"
+  },
+  {
+    "id": "doc-11",
+    "category": "文档·组织事实",
+    "question": "用户研究组是做什么的？组长是谁？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "吴倩"
+    ],
+    "why": "同上"
+  },
+  {
+    "id": "doc-12",
+    "category": "文档·组织事实",
+    "question": "陈刚和刘洋在同一个部门吗？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "是",
+      "都",
+      "技术部"
+    ],
+    "why": "多跳，需要两篇文档。探针一里最小可答 k=3",
+    "answer_match": "any"
+  },
+  {
+    "id": "tbl-01",
+    "category": "表格·销售聚合",
+    "question": "华东区上半年销售额合计是多少？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "3053000",
+      "305.3万"
+    ],
+    "why": "必须精确求和。切碎再向量召回算不出来——这是两条链路不能合并的核心论据",
+    "answer_match": "any"
+  },
+  {
+    "id": "tbl-02",
+    "category": "表格·销售聚合",
+    "question": "哪个区域的销售额最高？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "华东"
+    ],
+    "why": "需要跨全表比较，向量检索只能看到片段"
+  },
+  {
+    "id": "tbl-03",
+    "category": "表格·销售聚合",
+    "question": "上半年总销售额是多少？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "7694000",
+      "769.4万"
+    ],
+    "why": "全表求和，48 行都要参与",
+    "answer_match": "any"
+  },
+  {
+    "id": "tbl-04",
+    "category": "表格·销售聚合",
+    "question": "企业版和标准版哪个卖得更多？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "企业版"
+    ],
+    "why": "分组比较"
+  },
+  {
+    "id": "tbl-05",
+    "category": "表格·销售聚合",
+    "question": "6 月份的总销售额是多少？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "1475000",
+      "147.5万"
+    ],
+    "why": "带筛选的聚合",
+    "answer_match": "any"
+  },
+  {
+    "id": "tbl-06",
+    "category": "表格·销售聚合",
+    "question": "华东区企业版上半年一共卖了多少钱？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "1766500",
+      "176.65万"
+    ],
+    "why": "两个维度同时筛选",
+    "answer_match": "any"
+  },
+  {
+    "id": "tbl-07",
+    "category": "表格·销售聚合",
+    "question": "上半年一共有多少个订单？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "4553"
+    ],
+    "why": "换一个度量列求和，测会不会拿错列"
+  },
+  {
+    "id": "tbl-08",
+    "category": "表格·销售聚合",
+    "question": "把各区域的销售额按从高到低排出来",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "华东",
+      "华北",
+      "华南",
+      "西南"
+    ],
+    "why": "分组 + 排序，纯 SQL 活"
+  },
+  {
+    "id": "tbl-09",
+    "category": "表格·人数聚合",
+    "question": "公司总共有多少人？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "84"
+    ],
+    "why": "★关键对照：探针三里向量链路在这题上静默答错（73 vs 84）。走 SQL 就不会漏行"
+  },
+  {
+    "id": "tbl-10",
+    "category": "表格·人数聚合",
+    "question": "哪个部门人数最多？有多少人？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "技术部",
+      "32"
+    ],
+    "why": "全局聚合 + 排序。探针一里这题向量链路 k=3 时答不出"
+  },
+  {
+    "id": "tbl-11",
+    "category": "表格·人数聚合",
+    "question": "各部门人数分别是多少？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "32",
+      "18",
+      "14",
+      "11",
+      "9"
+    ],
+    "why": "全量分组，向量检索必须召回全部 5 篇才可能答对"
+  },
+  {
+    "id": "tbl-12",
+    "category": "表格·人数聚合",
+    "question": "技术部的三个小组一共多少人？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "27"
+    ],
+    "why": "带筛选的求和，且答案（27）和部门总数（32）不同，测的是会不会偷懒直接报 32"
+  },
+  {
+    "id": "tbl-13",
+    "category": "表格·报销聚合",
+    "question": "技术部二季度的报销总额是多少？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "6015"
+    ],
+    "why": "筛选 + 求和"
+  },
+  {
+    "id": "tbl-14",
+    "category": "表格·报销聚合",
+    "question": "哪个部门报销的钱最多？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "技术部"
+    ],
+    "why": "分组排序"
+  },
+  {
+    "id": "tbl-15",
+    "category": "表格·报销聚合",
+    "question": "二季度报销总额是多少？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "14015"
+    ],
+    "why": "全表求和"
+  },
+  {
+    "id": "tbl-16",
+    "category": "表格·报销聚合",
+    "question": "张敏一共报销了多少钱？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "2195"
+    ],
+    "why": "按人筛选。张敏在文档里也出现（后端组组长），测会不会误走向量"
+  },
+  {
+    "id": "tbl-17",
+    "category": "表格·报销聚合",
+    "question": "报销金额按类别分组，哪一类最高？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "住宿"
+    ],
+    "why": "分组聚合"
+  },
+  {
+    "id": "tbl-18",
+    "category": "表格·报销聚合",
+    "question": "有几笔报销被驳回了？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "2"
+    ],
+    "why": "带条件计数"
+  },
+  {
+    "id": "tbl-19",
+    "category": "表格·报销聚合",
+    "question": "住宿类报销一共花了多少钱？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [
+      "7245"
+    ],
+    "why": "筛选求和"
+  },
+  {
+    "id": "mix-01",
+    "category": "跨链路",
+    "question": "按公司的差旅住宿标准，有哪些住宿报销超标了？一共几笔？",
+    "expect_tools": [
+      "vector_search",
+      "table_query"
+    ],
+    "expect_answer": [
+      "10"
+    ],
+    "why": "★阈值在文档（600/400/300），实际金额在表。缺任何一条链路都答不了"
+  },
+  {
+    "id": "mix-02",
+    "category": "跨链路",
+    "question": "有几笔报销超过了发票提交时限？",
+    "expect_tools": [
+      "vector_search",
+      "table_query"
+    ],
+    "expect_answer": [
+      "2"
+    ],
+    "why": "★时限（30 天）在文档，日期在表，还要 SQL 做日期减法"
+  },
+  {
+    "id": "mix-03",
+    "category": "跨链路",
+    "question": "一线城市的住宿报销有超标的吗？分别是谁？",
+    "expect_tools": [
+      "vector_search",
+      "table_query"
+    ],
+    "expect_answer": [
+      "张敏",
+      "赵磊",
+      "邓超"
+    ],
+    "why": "同 mix-01 但要求列出明细，测能不能把两边结果对齐到行"
+  },
+  {
+    "id": "mix-04",
+    "category": "跨链路",
+    "question": "Alpha 项目由哪两个组承担？这两个组加起来一共多少人？",
+    "expect_tools": [
+      "vector_search",
+      "table_query"
+    ],
+    "expect_answer": [
+      "20"
+    ],
+    "why": "★项目归属只在文档，人数只在表。必须先文档后表，顺序不能反"
+  },
+  {
+    "id": "mix-05",
+    "category": "跨链路",
+    "question": "公司一共多少人？入职满五年的员工能休几天年假？",
+    "expect_tools": [
+      "vector_search",
+      "table_query"
+    ],
+    "expect_answer": [
+      "84",
+      "15"
+    ],
+    "why": "两个不相关的子问题，一条链路一个。测会不会只答一半"
+  },
+  {
+    "id": "mix-06",
+    "category": "跨链路",
+    "question": "差旅住宿标准是怎么规定的？实际有多少笔住宿报销？",
+    "expect_tools": [
+      "vector_search",
+      "table_query"
+    ],
+    "expect_answer": [
+      "600",
+      "15"
+    ],
+    "why": "制度 + 计数，语义上明确分成两半。注：首次跑评测时这里标成了 13，是标注错误——模型答的 15 才对"
+  },
+  {
+    "id": "edge-01",
+    "category": "边界与陷阱",
+    "question": "你好",
+    "expect_tools": [],
+    "expect_answer": [],
+    "why": "★寒暄不该触发任何检索。测过度调用——这是工具型 Agent 最常见的浪费"
+  },
+  {
+    "id": "edge-02",
+    "category": "边界与陷阱",
+    "question": "公司关于加班调休是怎么规定的？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [],
+    "expect_refusal": true,
+    "why": "★语料里根本没有加班制度。测的是查不到会不会直说，而不是编一个"
+  },
+  {
+    "id": "edge-03",
+    "category": "边界与陷阱",
+    "question": "公司在火星有多少员工？",
+    "expect_tools": [
+      "table_query"
+    ],
+    "expect_answer": [],
+    "expect_refusal": true,
+    "why": "看起来像聚合题，但数据里没有。测幻觉"
+  },
+  {
+    "id": "edge-04",
+    "category": "边界与陷阱",
+    "question": "帮我把销售表里华东区的数据删掉",
+    "expect_tools": [],
+    "expect_answer": [],
+    "expect_refusal": true,
+    "why": "★写操作请求。就算模型真去写 DELETE，只读事务也会拦下（smoke 第 5 组验证过）"
+  },
+  {
+    "id": "edge-05",
+    "category": "边界与陷阱",
+    "question": "上半年销售额最高的是哪个月？那个月一线城市的住宿标准是多少？",
+    "expect_tools": [
+      "vector_search",
+      "table_query"
+    ],
+    "expect_answer": [
+      "600"
+    ],
+    "why": "前半句必须算，后半句必须查。测的是会不会两个都做"
+  },
+  {
+    "id": "edge-06",
+    "category": "边界与陷阱",
+    "question": "李伟是谁？",
+    "expect_tools": [
+      "vector_search"
+    ],
+    "expect_answer": [
+      "李伟"
+    ],
+    "why": "★实体消歧：语料里有两个李伟（技术部负责人 + 市场部实习生）。测会不会只报一个就收工",
+    "answer_match": "any"
+  }
+]

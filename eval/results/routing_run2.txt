@@ -1,0 +1,193 @@
+语料：15 篇文档 + 3 张表 | 用例 43 题 | 模型 deepseek/deepseek-v4-flash | 并发 4
+
+==============================================================================
+文档·制度定义
+==============================================================================
+  ✓ doc-01   期望[vector_search] 实际[vector_search]  5.4s
+  ✓ doc-02   期望[vector_search] 实际[vector_search]  5.1s
+  ✓ doc-03   期望[vector_search] 实际[vector_search]  6.6s
+  ✓ doc-04   期望[vector_search] 实际[vector_search]  4.4s
+  ✓ doc-05   期望[vector_search] 实际[vector_search]  7.3s
+  ✓ doc-06   期望[vector_search] 实际[vector_search]  5.9s
+
+==============================================================================
+文档·组织事实
+==============================================================================
+  ✗ doc-07   期望[vector_search] 实际[table_query,table_query]  5.9s
+      问题：后端组组长是谁？
+  ✗ doc-08   期望[vector_search] 实际[table_query]  3.5s
+      问题：技术部下设哪几个小组？
+  ✓ doc-09   期望[vector_search] 实际[vector_search]  5.9s
+  ~ doc-10   期望[vector_search] 实际[vector_search,table_query]  9.7s
+      问题：算法组负责哪些业务方向？
+  ~ doc-11   期望[vector_search] 实际[table_query,vector_search]  9.2s
+      问题：用户研究组是做什么的？组长是谁？
+  ✗ doc-12   期望[vector_search] 实际[table_query]  6.3s
+      问题：陈刚和刘洋在同一个部门吗？
+
+==============================================================================
+表格·销售聚合
+==============================================================================
+  ✓ tbl-01   期望[table_query] 实际[table_query]  4.0s
+  ✓ tbl-02   期望[table_query] 实际[table_query]  5.0s
+  ✓ tbl-03   期望[table_query] 实际[table_query]  3.1s
+  ✓ tbl-04   期望[table_query] 实际[table_query]  4.7s
+  ✓ tbl-05   期望[table_query] 实际[table_query]  3.6s
+  ✓ tbl-06   期望[table_query] 实际[table_query,table_query,table_query]  6.6s
+  ✓ tbl-07   期望[table_query] 实际[table_query]  4.7s
+  ✓ tbl-08   期望[table_query] 实际[table_query]  6.2s
+
+==============================================================================
+表格·人数聚合
+==============================================================================
+  ✓ tbl-09   期望[table_query] 实际[table_query]  2.9s
+  ✓ tbl-10   期望[table_query] 实际[table_query]  3.3s
+  ✓ tbl-11   期望[table_query] 实际[table_query]  4.5s
+  ✓ tbl-12   期望[table_query] 实际[table_query,table_query]  8.0s
+
+==============================================================================
+表格·报销聚合
+==============================================================================
+  ✓ tbl-13   期望[table_query] 实际[table_query]  7.6s
+  ✓ tbl-14   期望[table_query] 实际[table_query]  5.1s
+  ✓ tbl-15   期望[table_query] 实际[table_query]  3.6s
+  ✓ tbl-16   期望[table_query] 实际[table_query]  3.3s
+  ✓ tbl-17   期望[table_query] 实际[table_query]  4.4s
+  ✓ tbl-18   期望[table_query] 实际[table_query]  4.7s
+  ✓ tbl-19   期望[table_query] 实际[table_query]  3.7s
+
+==============================================================================
+跨链路
+==============================================================================
+  ✓ mix-01   期望[table_query,vector_search] 实际[vector_search,table_query]  20.2s
+  ✓ mix-02   期望[table_query,vector_search] 实际[vector_search,table_query,table_query]  16.6s
+  ✓ mix-03   期望[table_query,vector_search] 实际[table_query,table_query,vector_search,table_query]  14.4s
+  ✓ mix-04   期望[table_query,vector_search] 实际[vector_search,table_query]  10.7s
+  ✓ mix-05   期望[table_query,vector_search] 实际[table_query,vector_search]  6.9s
+  ✓ mix-06   期望[table_query,vector_search] 实际[vector_search,table_query]  8.2s
+
+==============================================================================
+边界与陷阱
+==============================================================================
+  ✓ edge-01  期望[(不调工具)] 实际[(未调工具)]  1.5s
+  ✓ edge-02  期望[vector_search] 实际[vector_search,vector_search]  8.4s
+  ~ edge-03  期望[table_query] 实际[table_query,vector_search]  9.0s
+      问题：公司在火星有多少员工？
+  ✓ edge-04  期望[(不调工具)] 实际[(未调工具)]  2.7s
+  ✓ edge-05  期望[table_query,vector_search] 实际[table_query,vector_search]  7.4s
+  ~ edge-06  期望[vector_search] 实际[vector_search,table_query,table_query]  9.1s
+      问题：李伟是谁？
+
+==============================================================================
+路由准确率（主指标）
+==============================================================================
+类别                            严格              宽松          过度调用
+文档·制度定义             6/6 (100.0%)    6/6 (100.0%)  0/6 (  0.0%)
+文档·组织事实             1/6 ( 16.7%)    3/6 ( 50.0%)  2/6 ( 33.3%)
+表格·销售聚合             8/8 (100.0%)    8/8 (100.0%)  0/8 (  0.0%)
+表格·人数聚合             4/4 (100.0%)    4/4 (100.0%)  0/4 (  0.0%)
+表格·报销聚合             7/7 (100.0%)    7/7 (100.0%)  0/7 (  0.0%)
+跨链路                 6/6 (100.0%)    6/6 (100.0%)  0/6 (  0.0%)
+边界与陷阱               4/6 ( 66.7%)    6/6 (100.0%)  2/6 ( 33.3%)
+------------------------------------------------------------------------------
+总计                36/43 ( 83.7%)  40/43 ( 93.0%) 4/43 (  9.3%)
+
+答案正确率（次要指标）：39/39 (100.0%)
+查不到时如实承认：    3/3 (100.0%)
+总耗时 73s，平均每题 1.7s
+
+==============================================================================
+badcase 清单（7 题）
+==============================================================================
+
+  [doc-07] 漏调工具
+    问：后端组组长是谁？
+    期望 ['vector_search'] → 实际 ['table_query', 'table_query']
+    SQL：{"sql": "SELECT \"部门\", \"小组\", \"组长\" FROM t_205c603c WHERE \"小组\" = '后端'"}
+    SQL：{"sql": "SELECT * FROM t_205c603c"}
+    答：后端组组长是 **张敏**。[1]
+
+（所属部门：技术部，小组人数：8人）
+    这题为什么在集里：单点事实。注意 headcount 表里也有组长列，这题考的是会不会舍近求远去写 SQL
+
+  [doc-08] 漏调工具
+    问：技术部下设哪几个小组？
+    期望 ['vector_search'] → 实际 ['table_query']
+    SQL：{"sql": "SELECT \"小组\" FROM t_205c603c WHERE \"部门\" = '技术部'"}
+    答：技术部下设 **4 个小组**（来自员工表 [1]）：
+
+| 小组 |
+|------|
+| 后端组 |
+| 前端组 |
+| 算法组 |
+| 部门直属 |
+    这题为什么在集里：枚举类事实，文档里写全了
+
+  [doc-10] 过度调用
+    问：算法组负责哪些业务方向？
+    期望 ['vector_search'] → 实际 ['vector_search', 'table_query']
+    SQL：{"sql": "SELECT * FROM t_205c603c WHERE \"小组\" = '算法组'"}
+    答：**算法组**属于技术部，由组长陈刚带领，目前共 **12 人** [1][2]。
+
+主要负责以下业务方向 [1]：
+- **推荐系统**
+- **风控模型**
+    这题为什么在集里：职责描述是非结构化文本，表格里没有这一列
+
+  [doc-11] 过度调用
+    问：用户研究组是做什么的？组长是谁？
+    期望 ['vector_search'] → 实际 ['table_query', 'vector_search']
+    SQL：{"sql": "SELECT * FROM t_205c603c WHERE \"小组\" = '用户研究组'"}
+    答：**用户研究组**是**产品部**下属的小组，目前有 **5 人**。 [1][2]
+
+- **组长**：**吴倩** [1]
+- **主要职责**：负责**用户访谈**与**可用性测试** [1]
+    这题为什么在集里：同上
+
+  [doc-12] 漏调工具
+    问：陈刚和刘洋在同一个部门吗？
+    期望 ['vector_search'] → 实际 ['table_query']
+    SQL：{"sql": "SELECT * FROM t_205c603c"}
+    答：根据查询到的花名册数据：
+
+- **刘洋**：技术部 / 前端组 组长
+- **陈刚**：技术部 / 算法组 组长
+
+两人都属于 **技术部**，因此在同一个部门。[1]
+    这题为什么在集里：多跳，需要两篇文档。探针一里最小可答 k=3
+
+  [edge-03] 过度调用
+    问：公司在火星有多少员工？
+    期望 ['table_query'] → 实际 ['table_query', 'vector_search']
+    SQL：{"sql": "SELECT DISTINCT \"部门\", \"小组\" FROM t_205c603c"}
+    答：我从已有数据中没有查到任何关于"火星"员工的信息。可查询的数据包含以下部门的员工：
+
+- 技术部（共 32 人）
+- 市场部（共 18 人）
+- 人力资源部（共 9 人）
+- 产品部
+- 财务部
+
+这些部门均在地球常规办公场景内，没有提及火星办公点或火星员工的相关记录。
+    这题为什么在集里：看起来像聚合题，但数据里没有。测幻觉
+
+  [edge-06] 过度调用
+    问：李伟是谁？
+    期望 ['vector_search'] → 实际 ['vector_search', 'table_query', 'table_query']
+    SQL：{"sql": "SELECT * FROM t_205c603c WHERE \"组长\" = '李伟'"}
+    SQL：{"sql": "SELECT DISTINCT \"员工\", \"部门\" FROM t_2961d5e3 WHERE \"员工\" = '李伟'"}
+    答：根据查询到的信息，系统中涉及两位叫"李伟"的人：
+
+---
+
+### 1️⃣ 技术部负责人 / 部门直属小组组长 李伟
+- **部门**：技术部，是该部门负责人 [2]
+- **小组**：部门直属小组，担任**组长**（小组共 5 人）[headcount]
+- **考勤记录**：在 expense 表中有该员工的费用记录，部门为技术部 [expense]
+
+### 2️⃣ 市场部实习生 李伟
+-
+    这题为什么在集里：★实体消歧：语料里有两个李伟（技术部负责人 + 市场部实习生）。测会不会只报一个就收工
+
+明细已写入 eval/results/routing.json

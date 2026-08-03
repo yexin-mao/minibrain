@@ -1,0 +1,1303 @@
+{
+  "model": "deepseek/deepseek-v4-flash",
+  "embedding_model": "qwen/qwen3-embedding-8b",
+  "embedding_dimensions": 1024,
+  "cases": 43,
+  "strict": 34,
+  "loose": 38,
+  "over": 4,
+  "answer_scored": 39,
+  "answer_ok": 39,
+  "seconds": 97,
+  "rows": [
+    {
+      "id": "doc-01",
+      "category": "文档·制度定义",
+      "question": "二线城市住宿一晚最多能报多少钱？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "400"
+      ],
+      "answer_wanted": [
+        "400"
+      ],
+      "refusal_ok": null,
+      "answer": "根据差旅住宿标准，**二线城市住宿费每晚不超过 400 元**[1]。",
+      "sqls": [],
+      "error": null,
+      "seconds": 11.4,
+      "why": "制度原文，向量检索主场。这类题做不对就是实现有 bug"
+    },
+    {
+      "id": "doc-02",
+      "category": "文档·制度定义",
+      "question": "入职满三年有几天年假？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "10"
+      ],
+      "answer_wanted": [
+        "10"
+      ],
+      "refusal_ok": null,
+      "answer": "根据公司年假制度规定，**入职满 3 年享有 10 天年假**，年假当年有效，不可跨年结转。[1]",
+      "sqls": [],
+      "error": null,
+      "seconds": 7.9,
+      "why": "同上"
+    },
+    {
+      "id": "doc-03",
+      "category": "文档·制度定义",
+      "question": "发票需要在消费后多久之内提交？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "30"
+      ],
+      "answer_wanted": [
+        "30"
+      ],
+      "refusal_ok": null,
+      "answer": "根据公司报销流程规定，**发票需在消费后 30 天内提交**。超过 30 天的，需由所在部门负责人出具书面说明后方可受理 [1]。",
+      "sqls": [],
+      "error": null,
+      "seconds": 16.2,
+      "why": "同上"
+    },
+    {
+      "id": "doc-04",
+      "category": "文档·制度定义",
+      "question": "年假可以跨年结转吗？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "不可",
+        "当年有效"
+      ],
+      "answer_wanted": [
+        "不可",
+        "不能",
+        "当年有效"
+      ],
+      "refusal_ok": null,
+      "answer": "根据公司《年假制度》的规定，**年假不可跨年结转**，当年有效 [1]。",
+      "sqls": [],
+      "error": null,
+      "seconds": 11.7,
+      "why": "是非题，答案完整落在一篇文档里"
+    },
+    {
+      "id": "doc-05",
+      "category": "文档·制度定义",
+      "question": "超过 30 天才提交的发票还能报销吗？需要什么手续？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "书面说明"
+      ],
+      "answer_wanted": [
+        "书面说明"
+      ],
+      "refusal_ok": null,
+      "answer": "### 是否能报销？\n\n**可以报销，但需满足额外条件。**\n\n根据报销管理规定 [1]：\n\n> **发票需在消费后 30 天内提交。超过 30 天的，需由所在部门负责人出具书面说明后方可受理。**\n\n### 需要什么手续？\n\n超过 30 天提交的发票，需要额外准备：\n\n1. **部门负责人出具的书面说明** — 说明超期提交的原因，由部门负责人签字确认。\n\n有了这份书面说明，财务方可受理报销。其他常规报销材料（发票原件、消费明细等）仍需按正常流程提交。",
+      "sqls": [],
+      "error": null,
+      "seconds": 16.3,
+      "why": "带条件的流程题，考的是能不能把附加条件一起召回"
+    },
+    {
+      "id": "doc-06",
+      "category": "文档·制度定义",
+      "question": "一线城市和其他城市的住宿标准分别是多少？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "600"
+      ],
+      "answer_wanted": [
+        "600"
+      ],
+      "refusal_ok": null,
+      "answer": "根据《差旅住宿标准》的规定 [1]：\n\n- **一线城市**：每晚不超过 **600 元**\n- **二线城市**：每晚不超过 **400 元**\n- **其他城市**：每晚不超过 **300 元**",
+      "sqls": [],
+      "error": null,
+      "seconds": 5.3,
+      "why": "一篇文档里的多个数值，不涉及计算"
+    },
+    {
+      "id": "doc-07",
+      "category": "文档·组织事实",
+      "question": "后端组组长是谁？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": false,
+      "loose": false,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "张敏"
+      ],
+      "answer_wanted": [
+        "张敏"
+      ],
+      "refusal_ok": null,
+      "answer": "后端组的组长是 **张敏**（所属部门：技术部）。[1]",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"部门\\\", \\\"小组\\\", \\\"组长\\\" FROM t_2a65a95a WHERE \\\"小组\\\" = '后端' OR \\\"小组\\\" LIKE '%后端%'\"}"
+      ],
+      "error": null,
+      "seconds": 4.0,
+      "why": "单点事实。注意 headcount 表里也有组长列，这题考的是会不会舍近求远去写 SQL"
+    },
+    {
+      "id": "doc-08",
+      "category": "文档·组织事实",
+      "question": "技术部下设哪几个小组？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": false,
+      "loose": false,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "后端",
+        "前端",
+        "算法"
+      ],
+      "answer_wanted": [
+        "后端",
+        "前端",
+        "算法"
+      ],
+      "refusal_ok": null,
+      "answer": "技术部下设以下 4 个小组：\n\n1. **后端组**\n2. **前端组**\n3. **算法组**\n4. **部门直属**\n\n[1]",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"小组\\\" FROM t_2a65a95a WHERE \\\"部门\\\" = '技术部'\"}"
+      ],
+      "error": null,
+      "seconds": 3.2,
+      "why": "枚举类事实，文档里写全了"
+    },
+    {
+      "id": "doc-09",
+      "category": "文档·组织事实",
+      "question": "Alpha 项目由哪两个组共同承担？项目周期是什么时候？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "算法组",
+        "后端组"
+      ],
+      "answer_wanted": [
+        "算法组",
+        "后端组"
+      ],
+      "refusal_ok": null,
+      "answer": "根据项目文档 [1]：\n\n- **承担组**：Alpha 项目由 **算法组** 和 **后端组** 两个组共同承担。\n- **项目周期**：**2026 年 4 月至 9 月**。",
+      "sqls": [],
+      "error": null,
+      "seconds": 16.0,
+      "why": "项目信息只在文档里，表格里完全没有"
+    },
+    {
+      "id": "doc-10",
+      "category": "文档·组织事实",
+      "question": "算法组负责哪些业务方向？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search",
+        "table_query"
+      ],
+      "strict": false,
+      "loose": true,
+      "over": true,
+      "answer_ok": true,
+      "answer_hits": [
+        "推荐",
+        "风控"
+      ],
+      "answer_wanted": [
+        "推荐",
+        "风控"
+      ],
+      "refusal_ok": null,
+      "answer": "根据文档材料，**算法组**目前负责两个主要业务方向 [1]：\n\n1. **推荐系统** — 负责个性化推荐相关算法与模型\n2. **风控模型** — 负责风险控制相关的算法与模型\n\n> 算法组组长是陈刚，现有 12 人，隶属于技术部（技术部下设后端组、前端组、算法组三个小组）[1][3]。",
+      "sqls": [
+        "{\"sql\": \"SELECT * FROM t_2a65a95a WHERE \\\"部门\\\" = '算法组'\"}"
+      ],
+      "error": null,
+      "seconds": 8.0,
+      "why": "职责描述是非结构化文本，表格里没有这一列"
+    },
+    {
+      "id": "doc-11",
+      "category": "文档·组织事实",
+      "question": "用户研究组是做什么的？组长是谁？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "table_query",
+        "vector_search"
+      ],
+      "strict": false,
+      "loose": true,
+      "over": true,
+      "answer_ok": true,
+      "answer_hits": [
+        "吴倩"
+      ],
+      "answer_wanted": [
+        "吴倩"
+      ],
+      "refusal_ok": null,
+      "answer": "**用户研究组**隶属于**产品部**，主要**负责用户访谈与可用性测试**[1]。该组现有 **5 人**，**组长是吴倩**[1][2]。",
+      "sqls": [
+        "{\"sql\": \"SELECT * FROM t_2a65a95a WHERE \\\"小组\\\" = '用户研究组'\"}"
+      ],
+      "error": null,
+      "seconds": 19.5,
+      "why": "同上"
+    },
+    {
+      "id": "doc-12",
+      "category": "文档·组织事实",
+      "question": "陈刚和刘洋在同一个部门吗？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "table_query",
+        "table_query"
+      ],
+      "strict": false,
+      "loose": false,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "是",
+        "技术部"
+      ],
+      "answer_wanted": [
+        "是",
+        "都",
+        "技术部"
+      ],
+      "refusal_ok": null,
+      "answer": "是的，陈刚和刘洋在**同一个部门——技术部**。\n\n- 在**人员台账**中：陈刚是技术部-算法组组长，刘洋是技术部-前端组组长 [1]。\n- 在**费用报表**中：两人所属部门均为技术部 [2]。",
+      "sqls": [
+        "{\"sql\": \"SELECT * FROM t_2a65a95a WHERE \\\"组长\\\" = '陈刚' OR \\\"组长\\\" = '刘洋'\"}",
+        "{\"sql\": \"SELECT DISTINCT \\\"部门\\\", \\\"员工\\\" FROM t_3b19b2d9 WHERE \\\"员工\\\" IN ('陈刚', '刘洋')\"}"
+      ],
+      "error": null,
+      "seconds": 7.6,
+      "why": "多跳，需要两篇文档。探针一里最小可答 k=3"
+    },
+    {
+      "id": "tbl-01",
+      "category": "表格·销售聚合",
+      "question": "华东区上半年销售额合计是多少？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "3053000"
+      ],
+      "answer_wanted": [
+        "3053000",
+        "305.3万"
+      ],
+      "refusal_ok": null,
+      "answer": "华东区上半年销售额合计为 **3,053,000** 元。[1]\n\n> 数据来源：销售表 t_49d660a9（sales-2026h1.csv），筛选区域为\"华东\"且月份为1–6月的销售额汇总。",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"销售额\\\") FROM t_49d660a9 WHERE \\\"区域\\\" = '华东' AND \\\"月份\\\" BETWEEN 1 AND 6\"}"
+      ],
+      "error": null,
+      "seconds": 6.3,
+      "why": "必须精确求和。切碎再向量召回算不出来——这是两条链路不能合并的核心论据"
+    },
+    {
+      "id": "tbl-02",
+      "category": "表格·销售聚合",
+      "question": "哪个区域的销售额最高？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "华东"
+      ],
+      "answer_wanted": [
+        "华东"
+      ],
+      "refusal_ok": null,
+      "answer": "销售额最高的区域是 **华东**，总销售额为 **3,053,000** [1]。各区域排名如下：\n\n| 区域 | 总销售额 |\n|------|---------|\n| 华东 | 3,053,000 |\n| 华北 | 2,057,000 |\n| 华南 | 1,577,000 |\n| 西南 | 1,007,000 |",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"区域\\\", sum(\\\"销售额\\\") as \\\"总销售额\\\" FROM t_49d660a9 GROUP BY \\\"区域\\\" ORDER BY sum(\\\"销售额\\\") DESC\"}"
+      ],
+      "error": null,
+      "seconds": 5.1,
+      "why": "需要跨全表比较，向量检索只能看到片段"
+    },
+    {
+      "id": "tbl-03",
+      "category": "表格·销售聚合",
+      "question": "上半年总销售额是多少？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "7694000"
+      ],
+      "answer_wanted": [
+        "7694000",
+        "769.4万"
+      ],
+      "refusal_ok": null,
+      "answer": "2026年上半年总销售额为 **7,694,000** [1]。\n\n> 数据来源：对销售明细表（sales-2026h1.csv）按月份 1-6 月汇总得出。",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"销售额\\\") FROM t_49d660a9 WHERE \\\"月份\\\" BETWEEN 1 AND 6\"}"
+      ],
+      "error": null,
+      "seconds": 5.5,
+      "why": "全表求和，48 行都要参与"
+    },
+    {
+      "id": "tbl-04",
+      "category": "表格·销售聚合",
+      "question": "企业版和标准版哪个卖得更多？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "企业版"
+      ],
+      "answer_wanted": [
+        "企业版"
+      ],
+      "refusal_ok": null,
+      "answer": "从销售数据来看：\n\n| 产品线 | 总销售额 | 总订单数 |\n|--------|---------|---------|\n| **企业版** | **4,412,500 元** | 702 单 |\n| **标准版** | 3,281,500 元 | **3,851 单** |\n\n**按销售额**：企业版比标准版多 **1,131,000 元**，企业版卖得更多。  \n**按订单量**：标准版订单数远超企业版（3,851 单 vs 702 单），但单价较低。\n\n综合来看，**企业版销售额更高**，贡献了更大的收入 [1]。",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"产品线\\\", sum(\\\"销售额\\\") as \\\"总销售额\\\", sum(\\\"订单数\\\") as \\\"总订单数\\\" FROM t_49d660a9 GROUP BY \\\"产品线\\\" ORDER BY sum(\\\"销售额\\\") DESC\"}"
+      ],
+      "error": null,
+      "seconds": 7.4,
+      "why": "分组比较"
+    },
+    {
+      "id": "tbl-05",
+      "category": "表格·销售聚合",
+      "question": "6 月份的总销售额是多少？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "1475000"
+      ],
+      "answer_wanted": [
+        "1475000",
+        "147.5万"
+      ],
+      "refusal_ok": null,
+      "answer": "6 月份的总销售额为 **1,475,000** [1]。",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"销售额\\\") FROM t_49d660a9 WHERE \\\"月份\\\" = 6\"}"
+      ],
+      "error": null,
+      "seconds": 3.6,
+      "why": "带筛选的聚合"
+    },
+    {
+      "id": "tbl-06",
+      "category": "表格·销售聚合",
+      "question": "华东区企业版上半年一共卖了多少钱？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query",
+        "table_query",
+        "table_query",
+        "table_query",
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "1766500"
+      ],
+      "answer_wanted": [
+        "1766500",
+        "176.65万"
+      ],
+      "refusal_ok": null,
+      "answer": "华东区企业版上半年的销售额合计为 **1,766,500** 元。",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"销售额\\\") FROM t_49d660a9 WHERE \\\"区域\\\" = '华东区' AND \\\"产品线\\\" = '企业版' AND \\\"月份\\\" <= 6\"}",
+        "{\"sql\": \"SELECT DISTINCT \\\"区域\\\" FROM t_49d660a9\"}",
+        "{\"sql\": \"SELECT DISTINCT \\\"产品线\\\" FROM t_49d660a9\"}",
+        "{\"sql\": \"SELECT DISTINCT \\\"月份\\\" FROM t_49d660a9 ORDER BY \\\"月份\\\"\"}",
+        "{\"sql\": \"SELECT sum(\\\"销售额\\\") FROM t_49d660a9 WHERE \\\"区域\\\" = '华东' AND \\\"产品线\\\" = '企业版'\"}"
+      ],
+      "error": null,
+      "seconds": 8.8,
+      "why": "两个维度同时筛选"
+    },
+    {
+      "id": "tbl-07",
+      "category": "表格·销售聚合",
+      "question": "上半年一共有多少个订单？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "4553"
+      ],
+      "answer_wanted": [
+        "4553"
+      ],
+      "refusal_ok": null,
+      "answer": "上半年（2026 H1）的**总订单数为 4553**。[1]",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"订单数\\\") AS \\\"总订单数\\\" FROM t_49d660a9\"}"
+      ],
+      "error": null,
+      "seconds": 5.9,
+      "why": "换一个度量列求和，测会不会拿错列"
+    },
+    {
+      "id": "tbl-08",
+      "category": "表格·销售聚合",
+      "question": "把各区域的销售额按从高到低排出来",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "华东",
+        "华北",
+        "华南",
+        "西南"
+      ],
+      "answer_wanted": [
+        "华东",
+        "华北",
+        "华南",
+        "西南"
+      ],
+      "refusal_ok": null,
+      "answer": "各区域的销售额排名如下（从高到低）：\n\n| 排名 | 区域 | 总销售额 |\n|:---:|:---:|:---:|\n| 1 | **华东** | 3,053,000 |\n| 2 | **华北** | 2,057,000 |\n| 3 | **华南** | 1,577,000 |\n| 4 | **西南** | 1,007,000 |\n\n**合计**：7,695,000\n\n华东区域领跑，销售额是西南区域的 3 倍以上。",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"区域\\\", sum(\\\"销售额\\\") as \\\"总销售额\\\" FROM t_49d660a9 GROUP BY \\\"区域\\\" ORDER BY \\\"总销售额\\\" DESC\"}"
+      ],
+      "error": null,
+      "seconds": 5.3,
+      "why": "分组 + 排序，纯 SQL 活"
+    },
+    {
+      "id": "tbl-09",
+      "category": "表格·人数聚合",
+      "question": "公司总共有多少人？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "84"
+      ],
+      "answer_wanted": [
+        "84"
+      ],
+      "refusal_ok": null,
+      "answer": "公司总共有 **84 人**。[1]\n\n> 数据来源：headcount.csv 中所有部门人数合计。",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"人数\\\") FROM t_2a65a95a\"}"
+      ],
+      "error": null,
+      "seconds": 3.3,
+      "why": "★关键对照：探针三里向量链路在这题上静默答错（73 vs 84）。走 SQL 就不会漏行"
+    },
+    {
+      "id": "tbl-10",
+      "category": "表格·人数聚合",
+      "question": "哪个部门人数最多？有多少人？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "技术部",
+        "32"
+      ],
+      "answer_wanted": [
+        "技术部",
+        "32"
+      ],
+      "refusal_ok": null,
+      "answer": "人数最多的部门是**技术部**，共有 **32 人**。[1]\n\n各部门人数排名如下：\n\n| 排名 | 部门 | 人数 |\n|:---:|:---:|:---:|\n| 1 | 技术部 | 32 |\n| 2 | 市场部 | 18 |\n| 3 | 产品部 | 14 |\n| 4 | 财务部 | 11 |\n| 5 | 人力资源部 | 9 |",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"部门\\\", sum(\\\"人数\\\") AS \\\"总人数\\\" FROM t_2a65a95a GROUP BY \\\"部门\\\" ORDER BY \\\"总人数\\\" DESC\"}"
+      ],
+      "error": null,
+      "seconds": 4.7,
+      "why": "全局聚合 + 排序。探针一里这题向量链路 k=3 时答不出"
+    },
+    {
+      "id": "tbl-11",
+      "category": "表格·人数聚合",
+      "question": "各部门人数分别是多少？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "32",
+        "18",
+        "14",
+        "11",
+        "9"
+      ],
+      "answer_wanted": [
+        "32",
+        "18",
+        "14",
+        "11",
+        "9"
+      ],
+      "refusal_ok": null,
+      "answer": "以下是各部门人数统计结果 [1]：\n\n| 部门 | 人数 |\n|------|:----:|\n| 技术部 | 32 |\n| 市场部 | 18 |\n| 产品部 | 14 |\n| 财务部 | 11 |\n| 人力资源部 | 9 |\n\n**合计：84 人**",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"部门\\\", sum(\\\"人数\\\") as \\\"人数\\\" FROM t_2a65a95a GROUP BY \\\"部门\\\" ORDER BY \\\"人数\\\" DESC\"}"
+      ],
+      "error": null,
+      "seconds": 5.6,
+      "why": "全量分组，向量检索必须召回全部 5 篇才可能答对"
+    },
+    {
+      "id": "tbl-12",
+      "category": "表格·人数聚合",
+      "question": "技术部的三个小组一共多少人？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "27"
+      ],
+      "answer_wanted": [
+        "27"
+      ],
+      "refusal_ok": null,
+      "answer": "根据技术部的人员数据，共有以下记录：\n\n| 小组 | 人数 |\n|------|:----:|\n| 后端组 | 8 |\n| 前端组 | 7 |\n| 算法组 | 12 |\n| 部门直属 | 5 |\n\n如果按 **后端组、前端组、算法组** 三个小组计算，合计 **27 人**（8+7+12）。  \n如果将 \"部门直属\" 也算在内，则技术部总人数为 **32 人**。",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"小组\\\", \\\"人数\\\" FROM t_2a65a95a WHERE \\\"部门\\\" = '技术部'\"}"
+      ],
+      "error": null,
+      "seconds": 8.5,
+      "why": "带筛选的求和，且答案（27）和部门总数（32）不同，测的是会不会偷懒直接报 32"
+    },
+    {
+      "id": "tbl-13",
+      "category": "表格·报销聚合",
+      "question": "技术部二季度的报销总额是多少？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "6015"
+      ],
+      "answer_wanted": [
+        "6015"
+      ],
+      "refusal_ok": null,
+      "answer": "技术部在2026年第二季度的报销总额为 **6,015 元**。[1]\n\n> 说明：查询的是 expense-2026q2.csv 表中\"部门\"为\"技术部\"的记录，消费日期覆盖2026年4月至6月（Q2）。",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"金额\\\") FROM t_3b19b2d9 WHERE \\\"部门\\\" = '技术部' AND (\\\"消费日期\\\" LIKE '2026-04%' OR \\\"消费日期\\\" LIKE '2026-05%' OR \\\"消费日期\\\" LIKE '2026-06%')\"}"
+      ],
+      "error": null,
+      "seconds": 8.2,
+      "why": "筛选 + 求和"
+    },
+    {
+      "id": "tbl-14",
+      "category": "表格·报销聚合",
+      "question": "哪个部门报销的钱最多？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "技术部"
+      ],
+      "answer_wanted": [
+        "技术部"
+      ],
+      "refusal_ok": null,
+      "answer": "报销钱最多的部门是 **技术部**，报销总额为 **6,015 元**。其他部门依次为：\n\n| 部门 | 报销总额 |\n|------|---------|\n| 技术部 | 6,015 元 |\n| 产品部 | 3,070 元 |\n| 市场部 | 2,430 元 |\n| 财务部 | 1,260 元 |\n| 人力资源部 | 1,240 元 |\n\n[1]",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"部门\\\", sum(\\\"金额\\\") AS \\\"报销总额\\\" FROM t_3b19b2d9 GROUP BY \\\"部门\\\" ORDER BY \\\"报销总额\\\" DESC\"}"
+      ],
+      "error": null,
+      "seconds": 5.0,
+      "why": "分组排序"
+    },
+    {
+      "id": "tbl-15",
+      "category": "表格·报销聚合",
+      "question": "二季度报销总额是多少？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query",
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "14015"
+      ],
+      "answer_wanted": [
+        "14015"
+      ],
+      "refusal_ok": null,
+      "answer": "二季度报销总额为 **14,015** 元。[1]\n\n> 来源：t_3b19b2d9（expense-2026q2.csv）汇总结果。",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"消费日期\\\", \\\"提交日期\\\", \\\"金额\\\" FROM t_3b19b2d9 LIMIT 5\"}",
+        "{\"sql\": \"SELECT sum(\\\"金额\\\") AS \\\"报销总额\\\" FROM t_3b19b2d9\"}"
+      ],
+      "error": null,
+      "seconds": 6.8,
+      "why": "全表求和"
+    },
+    {
+      "id": "tbl-16",
+      "category": "表格·报销聚合",
+      "question": "张敏一共报销了多少钱？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "2195"
+      ],
+      "answer_wanted": [
+        "2195"
+      ],
+      "refusal_ok": null,
+      "answer": "张敏一共报销了 **2,195 元**。[1]",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"金额\\\") FROM t_3b19b2d9 WHERE \\\"员工\\\" = '张敏'\"}"
+      ],
+      "error": null,
+      "seconds": 3.6,
+      "why": "按人筛选。张敏在文档里也出现（后端组组长），测会不会误走向量"
+    },
+    {
+      "id": "tbl-17",
+      "category": "表格·报销聚合",
+      "question": "报销金额按类别分组，哪一类最高？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "住宿"
+      ],
+      "answer_wanted": [
+        "住宿"
+      ],
+      "refusal_ok": null,
+      "answer": "按类别分组，报销总金额从高到低如下：\n\n| 类别 | 总金额 |\n|------|-------|\n| **住宿** | **¥7,245** ⬅ 最高 |\n| 交通 | ¥4,500 |\n| 餐饮 | ¥1,420 |\n| 办公 | ¥850 |\n\n**最高的是「住宿」类**，合计 ¥7,245。 [1]",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"类别\\\", sum(\\\"金额\\\") AS \\\"总金额\\\" FROM t_3b19b2d9 GROUP BY \\\"类别\\\" ORDER BY \\\"总金额\\\" DESC\"}"
+      ],
+      "error": null,
+      "seconds": 4.3,
+      "why": "分组聚合"
+    },
+    {
+      "id": "tbl-18",
+      "category": "表格·报销聚合",
+      "question": "有几笔报销被驳回了？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "2"
+      ],
+      "answer_wanted": [
+        "2"
+      ],
+      "refusal_ok": null,
+      "answer": "共有 **2 笔**报销被驳回，其余 24 笔已通过。[1]",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"状态\\\", count(*) as \\\"笔数\\\" FROM t_3b19b2d9 GROUP BY \\\"状态\\\"\"}"
+      ],
+      "error": null,
+      "seconds": 5.4,
+      "why": "带条件计数"
+    },
+    {
+      "id": "tbl-19",
+      "category": "表格·报销聚合",
+      "question": "住宿类报销一共花了多少钱？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [
+        "table_query",
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "7245"
+      ],
+      "answer_wanted": [
+        "7245"
+      ],
+      "refusal_ok": null,
+      "answer": "住宿类报销的总金额为 **7,245 元**。",
+      "sqls": [
+        "{\"sql\": \"SELECT DISTINCT \\\"类别\\\" FROM t_3b19b2d9\"}",
+        "{\"sql\": \"SELECT sum(\\\"金额\\\") FROM t_3b19b2d9 WHERE \\\"类别\\\" = '住宿'\"}"
+      ],
+      "error": null,
+      "seconds": 5.3,
+      "why": "筛选求和"
+    },
+    {
+      "id": "mix-01",
+      "category": "跨链路",
+      "question": "按公司的差旅住宿标准，有哪些住宿报销超标了？一共几笔？",
+      "expected": [
+        "table_query",
+        "vector_search"
+      ],
+      "called": [
+        "vector_search",
+        "table_query",
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "10"
+      ],
+      "answer_wanted": [
+        "10"
+      ],
+      "refusal_ok": null,
+      "answer": "根据公司差旅住宿标准，一线城市每晚不超过 **600 元**，二线城市不超过 **400 元**，其他城市不超过 **300 元**[1]。\n\n对照以下住宿报销明细，共有 **10 笔超标**：\n\n| 单号 | 员工 | 城市等级 | 金额 | 标准上限 | 超标 |\n|------|------|---------|------|---------|------|\n| BX26040108 | 赵磊 | 一线 | 720 | 600 | ❌ |\n| BX26040101 | 张敏 | 一线 | 680 | 600 | ❌ |\n| BX26050206 | 赵磊 | 一线 | 640 | 600 | ❌ |\n| BX26060307 | 邓超 | 一线 | 610 | 600 | ❌ |\n| BX26040105 | 胡静 | 二线 | 460 | 400 | ❌ |\n| BX26060305 | 李伟 | 二线 | 440 | 400 | ❌ |\n| BX26040109 | 冯磊 | 二线 | 420 | 400 | ❌ |\n| BX26050208 | 孙红 | 二线 | 410 | 400 | ❌ |\n| BX26050202 | 陈刚 | 其他 | 340 | 300 | ❌ |\n| BX26060303 | 袁伟 | 其他 | 320 | 300 | ❌ |\n\n**合计：共 10 笔住宿报销超标。** 其中一线城市 4 笔，二线城市 4 笔，其他城市 2 笔。",
+      "sqls": [
+        "{\"sql\": \"SELECT DISTINCT \\\"类别\\\" FROM t_3b19b2d9\"}",
+        "{\"sql\": \"SELECT * FROM t_3b19b2d9 WHERE \\\"类别\\\" = '住宿' ORDER BY \\\"金额\\\" DESC\"}"
+      ],
+      "error": null,
+      "seconds": 22.5,
+      "why": "★阈值在文档（600/400/300），实际金额在表。缺任何一条链路都答不了"
+    },
+    {
+      "id": "mix-02",
+      "category": "跨链路",
+      "question": "有几笔报销超过了发票提交时限？",
+      "expected": [
+        "table_query",
+        "vector_search"
+      ],
+      "called": [
+        "vector_search",
+        "table_query",
+        "table_query",
+        "table_query",
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "2"
+      ],
+      "answer_wanted": [
+        "2"
+      ],
+      "refusal_ok": null,
+      "answer": "根据报销规定，发票需在**消费后30天内提交**[1]，超过30天需部门负责人书面说明方可受理。\n\n经查询报销明细表，共有 **2笔** 报销单的提交时间超过了30天时限：\n\n| 单号 | 员工 | 消费日期 | 提交日期 | 超时天数 | 金额 | 状态 |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| BX26040108 | 赵磊 | 2026-04-06 | 2026-05-28 | **超52天** | 720元 | 已驳回 |\n| BX26050207 | 许娜 | 2026-05-19 | 2026-06-30 | **超42天** | 310元 | 已驳回 |\n\n两笔均已作**驳回**处理。",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"单号\\\", \\\"员工\\\", \\\"消费日期\\\", \\\"提交日期\\\", \\\"金额\\\", \\\"状态\\\" FROM t_3b19b2d9 LIMIT 5\"}",
+        "{\"sql\": \"SELECT \\\"单号\\\", \\\"员工\\\", \\\"消费日期\\\", \\\"提交日期\\\", \\\"金额\\\", \\\"状态\\\", \\n       julianday(\\\"提交日期\\\") - julianday(\\\"消费日期\\\") AS \\\"天数差\\\"\\nFROM t_3b19b2d9 \\nWHERE julianday(\\\"提交日期\\\") - julianday(\\\"消费日期\\\") > 30\"}",
+        "{\"sql\": \"SELECT \\\"单号\\\", \\\"员工\\\", \\\"消费日期\\\", \\\"提交日期\\\", \\\"金额\\\", \\\"状态\\\"\\nFROM t_3b19b2d9 \\nWHERE CAST(\\\"提交日期\\\" AS DATE) - CAST(\\\"消费日期\\\" AS DATE) > 30\"}",
+        "{\"sql\": \"SELECT \\\"单号\\\", \\\"员工\\\", \\\"消费日期\\\", \\\"提交日期\\\", \\n       CAST(\\\"提交日期\\\" AS DATE) - CAST(\\\"消费日期\\\" AS DATE) AS \\\"天数差\\\",\\n       \\\"金额\\\", \\\"状态\\\"\\nFROM t_3b19b2d9 \\nORDER BY \\\"天数差\\\" DESC\"}"
+      ],
+      "error": null,
+      "seconds": 26.3,
+      "why": "★时限（30 天）在文档，日期在表，还要 SQL 做日期减法"
+    },
+    {
+      "id": "mix-03",
+      "category": "跨链路",
+      "question": "一线城市的住宿报销有超标的吗？分别是谁？",
+      "expected": [
+        "table_query",
+        "vector_search"
+      ],
+      "called": [
+        "table_query",
+        "table_query",
+        "table_query",
+        "vector_search",
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "张敏",
+        "赵磊",
+        "邓超"
+      ],
+      "answer_wanted": [
+        "张敏",
+        "赵磊",
+        "邓超"
+      ],
+      "refusal_ok": null,
+      "answer": "根据查询结果，一线城市（标准：每晚不超过 **600 元** [1]）的住宿报销数据如下：\n\n## 超标记录一览（金额 > 600 元）\n\n| 员工 | 部门 | 金额 | 状态 | 超标额 |\n|------|------|:----:|:----:|:------:|\n| **张敏** | 技术部 | **680 元** | ✅ 已通过 | 超标 80 元 |\n| **赵磊** | 市场部 | **720 元** | ❌ 已驳回 | 超标 120 元 |\n| **赵磊** | 市场部 | **640 元** | ✅ 已通过 | 超标 40 元 |\n| **邓超** | 人力资源部 | **610 元** | ✅ 已通过 | 超标 10 元 |\n\n## 超标人员汇总\n\n| 员工 | 超标次数 | 涉及金额 |\n|:---:|:--------:|:--------:|\n| **赵磊**（市场部） | 2 次 | 720 元（已驳回）、640 元（已通过） |\n| **张敏**（技术部） | 1 次 | 680 元（已通过） |\n| **邓超**（人力资源部） | 1 次 | 610 元（已通过） |\n\n> 说明：一线城市住宿上限为 600 元/晚 [1]，数据来源于 expense-2026q2.csv 中城市等级=\"一线\"且类别=\"住宿\"的记录。金额 590 元及以下的两条（胡静 590 元、周涛 560 元）符合标准，未超标。",
+      "sqls": [
+        "{\"sql\": \"SELECT DISTINCT \\\"类别\\\" FROM t_3b19b2d9\"}",
+        "{\"sql\": \"SELECT DISTINCT \\\"城市等级\\\" FROM t_3b19b2d9\"}",
+        "{\"sql\": \"SELECT DISTINCT \\\"状态\\\" FROM t_3b19b2d9\"}",
+        "{\"sql\": \"SELECT \\\"单号\\\", \\\"员工\\\", \\\"部门\\\", \\\"金额\\\", \\\"状态\\\", \\\"消费日期\\\" FROM t_3b19b2d9 WHERE \\\"城市等级\\\" = '一线' AND \\\"类别\\\" = '住宿' ORDER BY \\\"金额\\\" DESC\"}"
+      ],
+      "error": null,
+      "seconds": 27.4,
+      "why": "同 mix-01 但要求列出明细，测能不能把两边结果对齐到行"
+    },
+    {
+      "id": "mix-04",
+      "category": "跨链路",
+      "question": "Alpha 项目由哪两个组承担？这两个组加起来一共多少人？",
+      "expected": [
+        "table_query",
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": false,
+      "loose": false,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "20"
+      ],
+      "answer_wanted": [
+        "20"
+      ],
+      "refusal_ok": null,
+      "answer": "Alpha 项目由**算法组**和**后端组**两个组共同承担 [1]。\n\n- 算法组现有 **12 人** [2]\n- 后端组现有 **8 人** [4]\n\n**两个组加起来一共 20 人。**",
+      "sqls": [],
+      "error": null,
+      "seconds": 12.2,
+      "why": "★项目归属只在文档，人数只在表。必须先文档后表，顺序不能反"
+    },
+    {
+      "id": "mix-05",
+      "category": "跨链路",
+      "question": "公司一共多少人？入职满五年的员工能休几天年假？",
+      "expected": [
+        "table_query",
+        "vector_search"
+      ],
+      "called": [
+        "table_query",
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "84",
+        "15"
+      ],
+      "answer_wanted": [
+        "84",
+        "15"
+      ],
+      "refusal_ok": null,
+      "answer": "## 回答\n\n**公司总人数：84 人** [1]（来自 headcount 表汇总）。\n\n**入职满五年的员工年假天数：15 天** [1]（来自年假制度规定：满 1 年享 5 天，满 3 年享 10 天，满 5 年享 15 天，当年有效，不可跨年结转）。",
+      "sqls": [
+        "{\"sql\": \"SELECT sum(\\\"人数\\\") as \\\"总人数\\\" FROM t_2a65a95a\"}"
+      ],
+      "error": null,
+      "seconds": 7.3,
+      "why": "两个不相关的子问题，一条链路一个。测会不会只答一半"
+    },
+    {
+      "id": "mix-06",
+      "category": "跨链路",
+      "question": "差旅住宿标准是怎么规定的？实际有多少笔住宿报销？",
+      "expected": [
+        "table_query",
+        "vector_search"
+      ],
+      "called": [
+        "vector_search",
+        "table_query"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "600",
+        "15"
+      ],
+      "answer_wanted": [
+        "600",
+        "15"
+      ],
+      "refusal_ok": null,
+      "answer": "## 差旅住宿标准\n\n根据《差旅住宿标准》规定 [1]：\n\n- **一线城市**：每晚不超过 **600 元**\n- **二线城市**：每晚不超过 **400 元**\n- **其他城市**：每晚不超过 **300 元**\n\n## 实际住宿报销笔数\n\n从 expense-2026q2 报销台账中查询，类别为\"住宿\"的报销共有 **15 笔** [2]。\n\n> 注：住宿标准来自公司差旅政策文档，实际报销数据来自 expense-2026q2.csv 报表。",
+      "sqls": [
+        "{\"sql\": \"SELECT COUNT(*) AS \\\"住宿报销笔数\\\" FROM \\\"t_3b19b2d9\\\" WHERE \\\"类别\\\" = '住宿'\"}"
+      ],
+      "error": null,
+      "seconds": 7.8,
+      "why": "制度 + 计数，语义上明确分成两半。注：首次跑评测时这里标成了 13，是标注错误——模型答的 15 才对"
+    },
+    {
+      "id": "edge-01",
+      "category": "边界与陷阱",
+      "question": "你好",
+      "expected": [],
+      "called": [],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": null,
+      "answer_hits": [],
+      "answer_wanted": [],
+      "refusal_ok": null,
+      "answer": "你好！我是你的企业知识助手。我可以通过以下两种方式帮你查找信息：\n\n1. **文档语义检索** 📄 — 查找报告、说明、纪要等非结构化文档中的内容，回答\"某某材料里怎么说的\"这类问题。\n2. **表格结构化查询** 📊 — 对 CSV 报表（如销售数据、人员统计、费用明细等）进行精确的 SQL 计算，回答\"合计多少\"\"按维度分组\"等问题。\n\n当前我权限范围内可查询的数据包括：\n- **销售数据**（2026上半年）\n- **人员编制表**\n- **费用明细表**（2026年第二季度）\n\n有什么可以帮助你的吗？请直接提问！",
+      "sqls": [],
+      "error": null,
+      "seconds": 2.5,
+      "why": "★寒暄不该触发任何检索。测过度调用——这是工具型 Agent 最常见的浪费"
+    },
+    {
+      "id": "edge-02",
+      "category": "边界与陷阱",
+      "question": "公司关于加班调休是怎么规定的？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": null,
+      "answer_hits": [],
+      "answer_wanted": [],
+      "refusal_ok": true,
+      "answer": "没有查到关于加班调休的相关规定。现有文档涉及年假制度、报销流程、人力资源部组织架构等内容，但未提及加班调休的具体条款。",
+      "sqls": [],
+      "error": null,
+      "seconds": 5.0,
+      "why": "★语料里根本没有加班制度。测的是查不到会不会直说，而不是编一个"
+    },
+    {
+      "id": "edge-03",
+      "category": "边界与陷阱",
+      "question": "公司在火星有多少员工？",
+      "expected": [
+        "table_query"
+      ],
+      "called": [],
+      "strict": false,
+      "loose": false,
+      "over": false,
+      "answer_ok": null,
+      "answer_hits": [],
+      "answer_wanted": [],
+      "refusal_ok": true,
+      "answer": "没有查到相关内容。当前可查询的表格中（销售数据、员工人数、费用数据）均未涉及\"火星\"地区或相关的员工信息，无法回答该问题。",
+      "sqls": [],
+      "error": null,
+      "seconds": 2.9,
+      "why": "看起来像聚合题，但数据里没有。测幻觉"
+    },
+    {
+      "id": "edge-04",
+      "category": "边界与陷阱",
+      "question": "帮我把销售表里华东区的数据删掉",
+      "expected": [],
+      "called": [
+        "table_query"
+      ],
+      "strict": false,
+      "loose": true,
+      "over": true,
+      "answer_ok": null,
+      "answer_hits": [],
+      "answer_wanted": [],
+      "refusal_ok": false,
+      "answer": "这是销售表（`t_49d660a9`）中的**华东区**数据，共 **12 条记录**：\n\n| 月份 | 产品线 | 销售额 | 订单数 |\n|:---:|:---:|:---:|:---:|\n| 1月 | 标准版 | 182,000 | 214 |\n| 1月 | 企业版 | 265,000 | 42 |\n| 2月 | 标准版 | 196,500 | 231 |\n| 2月 | 企业版 | 238,000 | 37 |\n| 3月 | 标准版 | 221,000 | 258 |\n| 3月 | 企业版 | 310,000 | 49 |\n| 4月 | 标准版 | 205,000 | 240 |\n| 4月 | 企业版 | 287,500 | 45 |\n| 5月 | 标准版 | 234,000 | 272 |\n| 5月 | 企业版 | 325,000 | 51 |\n| 6月 | 标准版 | 248,000 | 289 |\n| 6月 | 企业版 | 341,000 | 54 |\n\n**华东区合计：销售额 3,053,000，订单数 1,782。**\n\n如需修改数据，请联系有写入权限的管理员操作。",
+      "sqls": [
+        "{\"sql\": \"SELECT * FROM t_49d660a9 WHERE \\\"区域\\\" = '华东'\"}"
+      ],
+      "error": null,
+      "seconds": 6.9,
+      "why": "★写操作请求。就算模型真去写 DELETE，只读事务也会拦下（smoke 第 5 组验证过）"
+    },
+    {
+      "id": "edge-05",
+      "category": "边界与陷阱",
+      "question": "上半年销售额最高的是哪个月？那个月一线城市的住宿标准是多少？",
+      "expected": [
+        "table_query",
+        "vector_search"
+      ],
+      "called": [
+        "table_query",
+        "vector_search"
+      ],
+      "strict": true,
+      "loose": true,
+      "over": false,
+      "answer_ok": true,
+      "answer_hits": [
+        "600"
+      ],
+      "answer_wanted": [
+        "600"
+      ],
+      "refusal_ok": null,
+      "answer": "上半年销售额最高的月份是 **6 月**，总销售额为 **1,475,000 元** [1]。\n\n关于一线城市的住宿标准，相关文件规定：**一线城市每晚不超过 600 元**[1]。",
+      "sqls": [
+        "{\"sql\": \"SELECT \\\"月份\\\", sum(\\\"销售额\\\") as \\\"总销售额\\\" FROM t_49d660a9 WHERE \\\"月份\\\" BETWEEN 1 AND 6 GROUP BY \\\"月份\\\" ORDER BY \\\"总销售额\\\" DESC LIMIT 1\"}"
+      ],
+      "error": null,
+      "seconds": 9.0,
+      "why": "前半句必须算，后半句必须查。测的是会不会两个都做"
+    },
+    {
+      "id": "edge-06",
+      "category": "边界与陷阱",
+      "question": "李伟是谁？",
+      "expected": [
+        "vector_search"
+      ],
+      "called": [
+        "vector_search",
+        "table_query",
+        "table_query"
+      ],
+      "strict": false,
+      "loose": true,
+      "over": true,
+      "answer_ok": true,
+      "answer_hits": [
+        "李伟"
+      ],
+      "answer_wanted": [
+        "李伟"
+      ],
+      "refusal_ok": null,
+      "answer": "根据查询到的信息，\"李伟\"在公司内有两个身份：\n\n### 1. 技术部负责人（部门主管）\n- **部门**：技术部\n- **职务**：技术部负责人，同时兼任部门直属小组组长 [1][2]。\n- **团队规模**：技术部共 32 人，部门直属小组 5 人 [1][2]。\n\n### 2. 市场部实习生（同名同姓的另一个人）\n- **部门**：市场部\n- **入职时间**：2026 年 3 月\n- **职务**：实习生，协助渠道组进行合作方数据整理，实习期 6 个月 [1]。\n\n### 3. 费用报销记录（技术部李伟）\n技术部的李伟有两笔已通过的报销：\n| 单号 | 类别 | 金额 | 消费日期 | 城市等级 | 状态 |\n|------|------|------|----------|----------|------|\n| BX26040104 | 餐饮 | 860 元 | 2026-04-11 | 一线 | 已通过 |\n| BX26060305 | 住宿 | 440 元 | 2026-06-13 | 二线 | 已通过 |\n\n**注意**：存在同名情况。文档中提到市场部有一位实习生也叫李伟（2026年3月入职），与技术部负责人李伟不是同一人 [1][2]。",
+      "sqls": [
+        "{\"sql\": \"SELECT * FROM t_2a65a95a WHERE \\\"组长\\\" = '李伟'\"}",
+        "{\"sql\": \"SELECT * FROM t_3b19b2d9 WHERE \\\"员工\\\" = '李伟'\"}"
+      ],
+      "error": null,
+      "seconds": 10.1,
+      "why": "★实体消歧：语料里有两个李伟（技术部负责人 + 市场部实习生）。测会不会只报一个就收工"
+    }
+  ]
+}

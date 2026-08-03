@@ -43,6 +43,33 @@ uv run minibrain-purge --list     # 先看会删什么
 uv run minibrain-purge            # 清掉 smoke_ / live_ 前缀的用户及其全部数据
 ```
 
+## 评测（结论是测出来的，不是声称的）
+
+这个项目的每个主张都要有数字撑着。评测分两块，结果都在版本库里：
+
+```sh
+uv run --no-sync python scripts/probe_vector_rag.py    # 向量链路在什么问题上失效
+uv run --no-sync python scripts/probe_multihop.py      # 多跳失败是召回率还是召回时机
+uv run --no-sync python scripts/probe_silent_error.py  # 召回不全时模型会不会静默答错
+uv run --no-sync python scripts/eval_routing.py        # 43 题路由准确率
+```
+
+| 报告 | 结论摘要 |
+|---|---|
+| [`eval/RESULTS.md`](eval/RESULTS.md) | 全局聚合类问题 k=3 时 **0/3**，要 k=10（语料共 15 篇）才全绿——**这类问题不能靠调参解决**。多跳失败的根因是"召回时机"不是"召回率"：同样 k=3，单次检索漏掉目标文档（实测排第 6），两步检索命中。 |
+| [`eval/ROUTING.md`](eval/ROUTING.md) | 严格路由准确率 **79.1%~83.7%**（3 轮）。19 道表格题三轮全对，失败集中在"文档·组织事实"1/6 且三轮完全一致——根因是两条链路数据重叠 + system prompt 只注入了表结构没注入文档清单。 |
+
+两条最该被记住的：
+
+**1. 向量链路会静默答错。** 问"公司总共多少人"，top_k=5 漏掉财务部，模型答"合计约 73 人"
+（真值 84，少算 13%），而回答列了明细、标了来源、语气自然，用户无从察觉。
+**检索的缺陷被生成层完美掩盖了**——这是"必须有评测体系"最直接的论据。
+
+**2. 路由错了但答案对了，比路由错更危险。** 三轮答案正确率 100%，路由准确率只有 83.7%，
+差额全是"走错链路但因数据重叠碰巧答对"。`doc-08` 是运气用完的地方：走表格链路查出
+4 个小组（多了一个记账行），文档里写的是 3 个——**而子串匹配的答案检查没抓到**。
+子串匹配只能抓"少答"，抓不到"多答"。
+
 ### embedding 维度
 
 `qwen/qwen3-embedding-8b` 实际输出 **4096** 维。代码按 `EMBEDDING_DIMENSIONS` 做
@@ -55,6 +82,13 @@ query 和 chunk 走同一个函数、同一套截断口径——这两边一旦�
 
 ```
 schema.sql                  三个 schema。改结构就改这个文件，不要迁移框架
+eval/
+  corpus/                   15 篇虚构公司文档（非结构化）
+  corpus_table/             3 张 CSV（花名册/销售/报销），和文档是同一家公司
+  probes.json               10 道检索探针，每题标注"答对必须召回哪几篇"
+  routing.json              43 道路由用例，每题标注"该调哪几个工具"
+  RESULTS.md / ROUTING.md   ★ 评测结论，全部可复现
+scripts/                    冒烟 + 三个探针 + 路由评测
 src/minibrain/
   config.py                 环境变量，一次读取一次校验
   contracts.py              UserContext / ModuleId / Evidence，薄契约
