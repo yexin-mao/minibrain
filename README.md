@@ -31,11 +31,24 @@ uv run uvicorn minibrain.web.app:app --reload --port 8000
 不填 API key 时：表格链路完整可用（不需要模型），文档链路的文档会落 `failed` 并写明原因，
 提问会提示 `agent_not_configured`。**这是设计好的降级，不是坏掉了。**
 
+## 测试
+
 ```sh
-uv run python scripts/smoke.py    # 23 项冒烟检查，不需要 API key 也能跑
+uv run pytest            # 50 个用例，不需要 API key 也能跑
+uv run pytest -k 权限     # 或 guardrail / cleanup
 ```
 
-冒烟脚本建的是真实用户和真实数据，跑完会自己清理干净（第 7 组就是验证这件事）。
+**不 mock 数据库**——要验证的恰恰是 SQL 里的权限过滤和只读事务，
+mock 掉数据库等于把被测对象本身删了。所以测试建的是真实用户和真实数据，
+session fixture 结束时统一清理，`test_cleanup.py` 专门验证清理本身。
+
+配了 embedding key 跑 49 passed / 1 skipped，没配跑 48 / 2——
+**两条分支都被覆盖**：没配 key 时文档必须落 `failed` 并写明原因，不许假装 ready。
+CI 刻意不注入密钥，所以那条降级路径由 CI 守门（本地有 key 反而测不到）。
+
+测试有没有牙，是验证过的：把 `_visibility_clause()` 的非管理员分支改成永真
+（模拟"漏一个分支"这类典型越权 bug），3 个权限测试立刻失败。
+
 如果异常中断留下了残渣：
 
 ```sh
@@ -88,7 +101,8 @@ eval/
   probes.json               10 道检索探针，每题标注"答对必须召回哪几篇"
   routing.json              43 道路由用例，每题标注"该调哪几个工具"
   RESULTS.md / ROUTING.md   ★ 评测结论，全部可复现
-scripts/                    冒烟 + 三个探针 + 路由评测
+tests/                      50 个 pytest 用例（权限/护栏/状态机/清理）
+scripts/                    三个探针 + 路由评测
 src/minibrain/
   config.py                 环境变量，一次读取一次校验
   contracts.py              UserContext / ModuleId / Evidence，薄契约
@@ -102,7 +116,8 @@ src/minibrain/
   web/                      FastAPI + Jinja2 + htmx，无构建步骤
 ```
 
-约 2200 行（含 schema、模板、冒烟脚本）。作为对照，同一个立意的"完整版"是 6.3 万行。
+应用代码约 2200 行（含 schema 与模板），测试 545 行，评测 631 行。
+作为对照，同一个立意的"完整版"是 6.3 万行。
 
 ## 四条不将就的规矩
 
@@ -158,3 +173,8 @@ LLM 会写 SQL，所以护栏必须是纵深的，任何一层单独都不够：
 - 会话存明文 token，没有轮换和刷新。
 - 全量加载可见 chunk 到内存算余弦，几万条以上会明显变慢。
 - 后台处理用 FastAPI `BackgroundTasks`，进程重启会丢在途任务（原文已落库，重跑即可）。
+- **路由基线只有 83.7%**，且失败集中在"事实同时存在于文档和表"的题上。
+  根因和四条修法都写在 [`eval/ROUTING.md`](eval/ROUTING.md)，还没实施——
+  实施后必须重跑评测对比数字，否则"我优化了路由"只是一句话。
+- 单轮问答，没有会话、没有历史、没有上下文压缩。
+- 答案检查用子串匹配，只能抓"少答"，抓不到"多答"（`doc-08` 就是漏网的例子）。

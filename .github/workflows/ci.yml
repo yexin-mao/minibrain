@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # 测试不 mock 数据库——要验证的恰恰是 SQL 里的权限过滤和只读事务，
+    # mock 掉数据库等于把被测对象删了。所以 CI 必须起一个真的 PG。
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: minibrain
+          POSTGRES_PASSWORD: minibrain
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://minibrain:minibrain@localhost:5432/minibrain
+      # CI 不注入真实密钥。占位值以 '<' 开头，config.py 的 *_configured
+      # 会判为未配置——于是跑的是"没配 key"那条分支：
+      # 文档必须落 failed 并写明原因，而不是假装 ready。
+      # 这条降级路径在本地反而测不到（本地有 key），CI 是它唯一的守门人。
+      EMBEDDING_BASE_URL: https://example.invalid/v1
+      EMBEDDING_API_KEY: <ci-no-key>
+      EMBEDDING_MODEL: ci-placeholder
+      EMBEDDING_DIMENSIONS: "1024"
+      AGENT_BASE_URL: https://example.invalid/v1
+      AGENT_API_KEY: <ci-no-key>
+      AGENT_MODEL: ci-placeholder
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: 安装依赖
+        run: uv sync --frozen
+
+      - name: 建库 + 跑 schema（幂等）
+        run: uv run minibrain-init-db
+
+      - name: 再跑一次 db:init，确认幂等
+        run: uv run minibrain-init-db
+
+      - name: pytest
+        run: uv run pytest
+
+      - name: 确认没有留下孤儿数据
+        run: uv run minibrain-purge --list
