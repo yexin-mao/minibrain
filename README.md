@@ -14,6 +14,13 @@
 第二条链路是表格而不是图谱，是刻意的：**一张报表切碎再向量召回回来，算不出正确的合计。**
 这是"两条链路不能合并"最无可辩驳的证据，而且它不需要 LLM 抽取、不需要图数据库、不需要第二种语言。
 
+> 第一次读这个仓库，先跑这个——它把两条链路每一步的中间产物原样打印出来，
+> 包括"把表格误传进文档链路会被切成什么样"：
+>
+> ```sh
+> uv run --no-sync python scripts/explain.py
+> ```
+
 ## 跑起来
 
 前置：PostgreSQL（跑着就行，不需要任何扩展）、[uv](https://docs.astral.sh/uv/)。
@@ -102,7 +109,10 @@ eval/
   routing.json              43 道路由用例，每题标注"该调哪几个工具"
   RESULTS.md / ROUTING.md   ★ 评测结论，全部可复现
 tests/                      50 个 pytest 用例（权限/护栏/状态机/清理）
-scripts/                    三个探针 + 路由评测
+scripts/
+  explain.py              ★ 跑一遍就看懂两条链路的差别（中间产物全打印）
+  probe_*.py              三个检索探针
+  eval_routing.py         43 题路由评测
 src/minibrain/
   config.py                 环境变量，一次读取一次校验
   contracts.py              UserContext / ModuleId / Evidence，薄契约
