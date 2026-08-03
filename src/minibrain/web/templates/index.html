@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}minibrain{% endblock %}
+{% block body %}
+<header>
+  <span class="brand">minibrain</span>
+  <span>
+    <span class="who">{{ user.username }}{% if user.is_admin %} · 管理员{% endif %}</span>
+    <form method="post" action="/logout" style="display:inline; margin-left:12px;">
+      <button type="submit" style="background:none; color:var(--muted); padding:4px 8px;">退出</button>
+    </form>
+  </span>
+</header>
+
+<main>
+  <div class="card">
+    <h2>提问</h2>
+    <p class="hint">
+      Agent 会根据问题类型自己选链路：问"怎么规定的"走语义检索，问"合计多少"走 SQL 精确计算。
+    </p>
+    <form hx-post="/ask" hx-target="#answer" hx-swap="innerHTML" hx-indicator="#ask-form">
+      <div id="ask-form">
+        <textarea name="question" placeholder="例：华东区的销售额合计是多少？&#10;例：报销制度里对差旅标准是怎么规定的？" required></textarea>
+        <div style="margin-top:10px;">
+          <button type="submit">提问</button>
+          <span class="spinner">检索中，可能需要几十秒…</span>
+        </div>
+      </div>
+    </form>
+    <div id="answer"></div>
+  </div>
+
+  <div class="card">
+    <h2>上传知识</h2>
+    <p class="hint">
+      两条链路吃的东西不一样：文档链路吃 .md / .txt，表格链路吃 .csv。
+      上传后立刻返回，处理在后台跑，下面的状态会自己刷新。
+    </p>
+    <form hx-post="/upload" hx-target="#knowledge" hx-swap="innerHTML"
+          hx-encoding="multipart/form-data" hx-indicator="#upload-form">
+      <div class="row" id="upload-form">
+        <div style="flex:0 0 220px;">
+          <label for="module">链路</label>
+          <select id="module" name="module">
+            {% for m in modules %}
+              <option value="{{ m.id }}">{{ m.label }}（{{ m.paradigm }}）</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label for="file">文件</label>
+          <input id="file" type="file" name="file" accept=".md,.txt,.csv" required>
+        </div>
+        <div style="flex:0 0 auto;">
+          <button type="submit">上传</button>
+        </div>
+      </div>
+      <span class="spinner">上传中…</span>
+    </form>
+  </div>
+
+  <div id="knowledge" hx-get="/fragments/knowledge" hx-trigger="every 3s" hx-swap="innerHTML">
+    {% include "_knowledge.html" %}
+  </div>
+</main>
+{% endblock %}

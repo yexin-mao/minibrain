@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}minibrain{% endblock %}</title>
+<script src="/static/htmx.min.js"></script>
+<style>
+  :root {
+    --bg: #f7f8fa; --panel: #fff; --fg: #1a1d21; --muted: #6b7280;
+    --border: #e3e6ea; --accent: #0369a1; --danger: #dc2626; --ok: #059669;
+    --code-bg: #f3f4f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171a; --panel: #1c2024; --fg: #e6e8ea; --muted: #9aa3ad;
+      --border: #2c3238; --accent: #38bdf8; --danger: #f87171; --ok: #34d399;
+      --code-bg: #23282e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 15px/1.6 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px; background: var(--panel); border-bottom: 1px solid var(--border);
+  }
+  header .brand { font-weight: 700; letter-spacing: .5px; }
+  header .who { color: var(--muted); font-size: 13px; }
+  main { max-width: 1080px; margin: 0 auto; padding: 24px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px; margin-bottom: 20px;
+  }
+  .card h2 { margin: 0 0 4px; font-size: 15px; }
+  .card .hint { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+  label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  input, select, textarea, button {
+    font: inherit; border-radius: 7px; border: 1px solid var(--border);
+    padding: 9px 11px; background: var(--bg); color: var(--fg); width: 100%;
+  }
+  textarea { resize: vertical; min-height: 76px; }
+  button {
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-weight: 600; width: auto; padding: 9px 20px;
+  }
+  button:hover { filter: brightness(1.08); }
+  .row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 12px; }
+  .row > div { flex: 1; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; }
+  .tag { font-size: 11px; padding: 2px 7px; border-radius: 20px; border: 1px solid var(--border); }
+  .st-ready { color: var(--ok); } .st-failed { color: var(--danger); }
+  .st-processing, .st-uploaded { color: var(--muted); }
+  .error { color: var(--danger); font-size: 13px; padding: 8px 0; }
+  .evidence { border-left: 3px solid var(--accent); padding: 6px 0 6px 12px; margin: 10px 0; }
+  .evidence .meta { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+  .evidence .snippet {
+    font-size: 13px; white-space: pre-wrap; word-break: break-word;
+    max-height: 150px; overflow: auto;
+  }
+  pre, code {
+    background: var(--code-bg); border-radius: 5px; font-size: 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  pre { padding: 9px 11px; overflow-x: auto; }
+  code { padding: 1px 5px; }
+  .answer { white-space: pre-wrap; margin: 8px 0 4px; }
+  .htmx-request .spinner { display: inline; }
+  .spinner { display: none; color: var(--muted); font-size: 13px; margin-left: 10px; }
+  details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+{% block body %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,49 @@
+{# 两条链路的知识列表刻意分开渲染：它们的内部模型本来就不一样，
+   强行合成一张表只会让契约层变厚。 #}
+<div class="grid">
+  <div class="card" style="margin:0;">
+    <h2>文档语义检索</h2>
+    <p class="hint">切分 + 向量召回</p>
+    {% if documents %}
+      <table>
+        <tr><th>文件</th><th>source</th><th>状态</th><th>片段</th></tr>
+        {% for d in documents %}
+          <tr>
+            <td>{{ d.filename }}</td>
+            <td><span class="tag">{{ d.source_name }}</span></td>
+            <td class="st-{{ d.status }}">
+              {{ d.status }}
+              {% if d.error %}<br><span style="font-size:11px;">{{ d.error.message }}</span>{% endif %}
+            </td>
+            <td>{{ d.chunk_count }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p class="hint" style="margin:0;">还没有文档。上传一个 .md 试试。</p>
+    {% endif %}
+  </div>
+
+  <div class="card" style="margin:0;">
+    <h2>表格结构化查询</h2>
+    <p class="hint">物理表 + 只读 SQL</p>
+    {% if datasets %}
+      <table>
+        <tr><th>文件</th><th>表名</th><th>状态</th><th>行数</th></tr>
+        {% for d in datasets %}
+          <tr>
+            <td>{{ d.filename }}</td>
+            <td><code>{{ d.table_name }}</code></td>
+            <td class="st-{{ d.status }}">
+              {{ d.status }}
+              {% if d.error %}<br><span style="font-size:11px;">{{ d.error.message }}</span>{% endif %}
+            </td>
+            <td>{{ d.row_count }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p class="hint" style="margin:0;">还没有数据表。上传一个 .csv 试试。</p>
+    {% endif %}
+  </div>
+</div>

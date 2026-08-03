@@ -1,0 +1,75 @@
+[
+  {
+    "id": "ctrl-1",
+    "category": "对照组·单点事实",
+    "question": "后端组有多少人？",
+    "required": ["team-backend.md"],
+    "why": "答案完整落在一篇文档里，向量检索的主场"
+  },
+  {
+    "id": "ctrl-2",
+    "category": "对照组·单点事实",
+    "question": "二线城市住宿一晚最多报多少钱？",
+    "required": ["policy-travel.md"],
+    "why": "同上。这类题做不对就不是范式问题，是实现有 bug"
+  },
+  {
+    "id": "ctrl-3",
+    "category": "对照组·单点事实",
+    "question": "入职满三年有几天年假？",
+    "required": ["policy-leave.md"],
+    "why": "同上"
+  },
+
+  {
+    "id": "hop-1",
+    "category": "多跳推理",
+    "question": "张敏的上级的上级是谁？",
+    "required": ["team-backend.md", "dept-tech.md"],
+    "why": "张敏→后端组在一篇，后端组→技术部→李伟在另一篇。第二篇里根本没有「张敏」二字"
+  },
+  {
+    "id": "hop-2",
+    "category": "多跳推理",
+    "question": "Alpha 项目的产品侧对接人向谁汇报？",
+    "required": ["project-alpha.md", "team-design.md", "dept-product.md"],
+    "why": "三跳：项目→胡静→产品设计组→产品部→王芳"
+  },
+  {
+    "id": "hop-3",
+    "category": "多跳推理",
+    "question": "陈刚和刘洋是同一个部门的吗？",
+    "required": ["team-algo.md", "team-frontend.md", "dept-tech.md"],
+    "why": "两个人分别在两篇，判断同部门还需要第三篇作为桥"
+  },
+
+  {
+    "id": "global-1",
+    "category": "全局聚合",
+    "question": "公司一共有几个部门，分别是什么？",
+    "required": ["dept-tech.md", "dept-product.md", "dept-market.md", "dept-hr.md", "dept-finance.md"],
+    "why": "答案不在任何一篇里，而是分布在全部五篇上。top-k 天然只给 k 条"
+  },
+  {
+    "id": "global-2",
+    "category": "全局聚合",
+    "question": "哪个部门的人最多？",
+    "required": ["dept-tech.md", "dept-product.md", "dept-market.md", "dept-hr.md", "dept-finance.md"],
+    "why": "需要看全所有部门才能比较，少召回一篇结论就可能错"
+  },
+  {
+    "id": "global-3",
+    "category": "全局聚合",
+    "question": "公司总共大约多少人？",
+    "required": ["dept-tech.md", "dept-product.md", "dept-market.md", "dept-hr.md", "dept-finance.md"],
+    "why": "求和问题。和表格链路那条「切碎了算不出合计」是同一个病根"
+  },
+
+  {
+    "id": "ambig-1",
+    "category": "实体消歧",
+    "question": "李伟负责什么工作？",
+    "required": ["dept-tech.md", "intern-liwei.md"],
+    "why": "语料里有两个李伟。只召回一个就会给出自信但片面的答案，且用户无从察觉"
+  }
+]

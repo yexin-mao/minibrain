@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}登录 · minibrain{% endblock %}
+{% block body %}
+<main style="max-width: 380px; margin-top: 12vh;">
+  <div class="card">
+    <h2>minibrain</h2>
+    <p class="hint">两条范式不同的检索链路，一个统一入口。</p>
+    <form method="post" action="/login">
+      <div style="margin-bottom: 12px;">
+        <label for="username">用户名</label>
+        <input id="username" name="username" autocomplete="username" autofocus required>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <label for="password">密码</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      {% if error %}<div class="error">{{ error }}</div>{% endif %}
+      <button type="submit">登录</button>
+    </form>
+    <p class="hint" style="margin: 14px 0 0;">
+      还没有账号？运行 <code>uv run minibrain-create-user</code>
+    </p>
+  </div>
+</main>
+{% endblock %}

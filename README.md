@@ -1,0 +1,126 @@
+# minibrain
+
+最小知识中台。**两条范式不同的检索链路，各自独立存储和判权限；一个统一入口按问题类型编排。**
+
+不是"又一个 RAG demo"——一条链路的 RAG 没有边界需要验证。这个项目要证明的是边界本身。
+
+```
+用户提问
+  └─ Agent（手写 tool loop，两个工具）
+       ├─ vector-rag  文档 → 切分 → embedding → 语义召回      "报销标准是怎么规定的？"
+       └─ table-rag   CSV  → 物理表 → 受限只读 SQL            "华东区销售额合计是多少？"
+```
+
+第二条链路是表格而不是图谱，是刻意的：**一张报表切碎再向量召回回来，算不出正确的合计。**
+这是"两条链路不能合并"最无可辩驳的证据，而且它不需要 LLM 抽取、不需要图数据库、不需要第二种语言。
+
+## 跑起来
+
+前置：PostgreSQL（跑着就行，不需要任何扩展）、[uv](https://docs.astral.sh/uv/)。
+
+```sh
+uv sync
+cp .env.example .env          # 填 DATABASE_URL；两个 API key 先不填也能跑通表格链路
+uv run minibrain-init-db      # 建库 + 跑 schema.sql，幂等
+uv run minibrain-create-user alice alice123   # 第一个用户自动是管理员
+uv run uvicorn minibrain.web.app:app --reload --port 8000
+```
+
+打开 http://127.0.0.1:8000 。上传 `.csv` 走表格链路，`.md` / `.txt` 走文档链路。
+
+不填 API key 时：表格链路完整可用（不需要模型），文档链路的文档会落 `failed` 并写明原因，
+提问会提示 `agent_not_configured`。**这是设计好的降级，不是坏掉了。**
+
+```sh
+uv run python scripts/smoke.py    # 23 项冒烟检查，不需要 API key 也能跑
+```
+
+冒烟脚本建的是真实用户和真实数据，跑完会自己清理干净（第 7 组就是验证这件事）。
+如果异常中断留下了残渣：
+
+```sh
+uv run minibrain-purge --list     # 先看会删什么
+uv run minibrain-purge            # 清掉 smoke_ / live_ 前缀的用户及其全部数据
+```
+
+### embedding 维度
+
+`qwen/qwen3-embedding-8b` 实际输出 **4096** 维。代码按 `EMBEDDING_DIMENSIONS` 做
+MRL 截断 + 重新归一化（默认降到 1024，与 ff-companybrain 同口径），省 4 倍内存和存储。
+
+query 和 chunk 走同一个函数、同一套截断口径——这两边一旦不同，检索会悄悄变差且极难查。
+改 `EMBEDDING_DIMENSIONS` 必须重新索引全部文档。
+
+## 结构
+
+```
+schema.sql                  三个 schema。改结构就改这个文件，不要迁移框架
+src/minibrain/
+  config.py                 环境变量，一次读取一次校验
+  contracts.py              UserContext / ModuleId / Evidence，薄契约
+  db.py                     三个连接池，各自锁死 search_path ← 边界的物理落点
+  gateway.py                模块分发。唯一允许 import modules/ 的地方
+  identity/                 用户名密码 + bcrypt + 会话
+  modules/
+    vector_rag/             切分 + embedding + 内存余弦
+    table_rag/              CSV 建表 + 只读 SQL + 四层护栏
+  agent/                    手写 tool loop，不上框架
+  web/                      FastAPI + Jinja2 + htmx，无构建步骤
+```
+
+约 2200 行（含 schema、模板、冒烟脚本）。作为对照，同一个立意的"完整版"是 6.3 万行。
+
+## 四条不将就的规矩
+
+尺寸可以小，这四条不能松——它们事后返工的成本极高，而现在遵守它们的成本几乎为零。
+
+**1. 权限过滤写在 SQL 的 WHERE 里，不是查完再筛。**
+`_visibility_clause()` 是两个模块各自唯一的可见性判定，永远出现在 WHERE 里。
+`chunks.source_id` 是从 `documents` 冗余下来的，就是为了让过滤不必 join。
+应用层后过滤是最容易长出越权 bug 的地方：漏一个分支就是数据泄露。
+
+**2. `core.py` 里永远不 import fastapi。**
+模块只收 `UserContext` 和普通参数，只返回 dataclass。
+做到这点，后面加 MCP、加 CLI、加定时任务都是白送的。
+
+**3. 业务逻辑不进 `web/app.py`。**
+路由只做解析、鉴权、调 gateway、渲染。一旦开了"就这一处先放这儿"的口子，
+它会长成一个上千行、几十个分支的路由文件，然后再也搬不回去。
+
+**4. 状态机带 `failed` 态，失败不伪装成 ready。**
+上传接口只登记就立刻返回，处理在后台跑，前端轮询状态。
+向量化是分钟级的，同步阻塞在生产上会被反代掐断——这个坑要在第一天就避开。
+
+## 表格链路的四层护栏
+
+LLM 会写 SQL，所以护栏必须是纵深的，任何一层单独都不够：
+
+1. **表名白名单** —— 先用 SQL 算出当前用户看得见哪些表，权限的真正落点
+2. **只允许单条 SELECT / WITH**
+3. **强制外层 LIMIT**（把语句包进子查询）
+4. **只读事务 + statement_timeout** —— 在连接层面，不依赖上面三层的正确性
+
+第 4 层用 `SET default_transaction_read_only = on` 实现，不需要建 PG 角色，
+也就不需要超级用户权限。物理表名由模块生成（`t_<8位hex>`），用户输入永远不进标识符。
+
+## 留好的缝
+
+这些都是设计好的升级路径，不是欠的债：
+
+| 现在 | 将来 | 改哪里 |
+|---|---|---|
+| 单进程、gateway 是 dispatch table | 模块拆成独立 HTTP 服务 | `gateway.call` 改成带 `x-ff-*` header 的 fetch，调用方零改动 |
+| 内存 numpy 余弦 | pgvector | `vector_rag/core.py` 的 `search` 一个函数 |
+| 一库三 schema | 三个独立数据库 | `db.py` 的 conninfo；每个 schema 一次 pg_dump |
+| 手写 tool loop | LangGraph + checkpoint | `agent/loop.py`；等真需要长会话摘要时再换 |
+| 两条链路 | 加 GraphRAG 第三条 | 新建 `modules/graph_rag/`，在 `gateway._REGISTRY` 注册 |
+
+加第三条链路是最能验证边界的时刻——前两条已经把 gateway 和 UserContext 的形状压出来了。
+
+## 已知边界
+
+- 表名白名单靠正则提取 `FROM` / `JOIN` 后的标识符。只读事务和 search_path 锁定是兜底，
+  但足够刁钻的构造可能绕过白名单这一层。真要上生产，这里应该换成真正的 SQL 解析。
+- 会话存明文 token，没有轮换和刷新。
+- 全量加载可见 chunk 到内存算余弦，几万条以上会明显变慢。
+- 后台处理用 FastAPI `BackgroundTasks`，进程重启会丢在途任务（原文已落库，重跑即可）。

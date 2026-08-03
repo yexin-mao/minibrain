@@ -1,0 +1,33 @@
+{# 答案 + 证据链。证据面板不是装饰：回答里每个结论都要能指回其中一条。 #}
+<div style="margin-top:16px; border-top:1px solid var(--border); padding-top:14px;">
+  <div class="answer">{{ result.answer }}</div>
+
+  {% if result.trace %}
+    <details style="margin-top:12px;">
+      <summary>Agent 调了 {{ result.trace|length }} 次工具（点开看它怎么选的链路）</summary>
+      {% for t in result.trace %}
+        <div style="margin:10px 0 0;">
+          <div class="meta" style="font-size:12px; color:var(--muted);">第 {{ loop.index }} 步 · {{ t.name }}</div>
+          <pre>{{ t.arguments }}</pre>
+        </div>
+      {% endfor %}
+    </details>
+  {% endif %}
+
+  {% if result.evidence %}
+    <div style="margin-top:14px;">
+      <div style="font-size:13px; color:var(--muted); margin-bottom:6px;">
+        证据（{{ result.evidence|length }} 条）
+      </div>
+      {% for e in result.evidence %}
+        <div class="evidence">
+          <div class="meta">
+            [{{ loop.index }}] {{ e.module }} · source={{ e.source_name }} · {{ e.location }}
+            {% if e.score is not none %} · 相似度 {{ e.score }}{% endif %}
+          </div>
+          <div class="snippet">{{ e.snippet }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
