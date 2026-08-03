@@ -46,7 +46,23 @@ class AnswerResult:
 
 
 def _system_prompt(user: UserContext) -> str:
+    """两条链路的可用资源必须**对称**地注入。
+
+    原来只注入了表结构（表名/列名/行数），文档侧只有一句泛泛描述。
+    模型看得见表里有"组长"这一列，完全不知道文档里写了什么，于是两边都有的
+    事实一律去查表——「文档·组织事实」类因此只有 1/6，三轮一致。
+
+    消融实验（eval/PROMPT_ABLATION.md，43 题 × 4 版本 × 3 轮）证明：
+      只加文件名        88.4% → 94.6%   目标类别 39% → 61%
+      加文件名 + 标题    92.2%           目标类别 78%
+      再加权威来源规则   97.7%           目标类别 100%（三轮 42/42/42）
+
+    关键结论：**给资料 ≠ 给判断依据**。光列出文档修不好 doc-08——
+    花名册里确实有"技术部"的 4 行记录，模型没理由怀疑它，
+    除非明确告诉它那里面有记账用的辅助行。
+    """
     table_schema = gateway.call("table-rag", "describe_schema", user)
+    doc_catalog = gateway.call("vector-rag", "describe_corpus", user)
     modules = "\n".join(
         f"- {m.label}（{m.paradigm}）：{m.description}" for m in gateway.list_modules()
     )
@@ -59,6 +75,14 @@ def _system_prompt(user: UserContext) -> str:
 - 问"怎么规定的""材料里怎么说"→ vector_search
 - 问"多少""合计""平均""排名""按X分组"→ table_query。这类问题绝不能用向量检索猜，必须算。
 - 一个问题同时涉及两类，就分别调用两个工具，再合并回答。
+
+可检索的文档（只列出你有权访问的）：
+{doc_catalog}
+
+权威来源规则（重要）：同一个事实可能在文档和表格里都出现，此时以下面的规定为准：
+- 组织架构、岗位职责、制度规定、项目信息 → **以文档为准**，用 vector_search
+- 人数、金额、日期等需要统计计算的 → 以表格为准，用 table_query
+- 表格里的行可能包含记账用的辅助行，不代表真实的组织单元。
 
 可查询的数据表（只列出你有权访问的）：
 {table_schema}

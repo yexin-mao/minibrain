@@ -1,0 +1,133 @@
+语料：15 篇文档 + 3 张表 | 用例 43 题 | 模型 deepseek/deepseek-v4-flash | 并发 4
+
+==============================================================================
+文档·制度定义
+==============================================================================
+  ✓ doc-01   期望[vector_search] 实际[vector_search]  3.6s
+  ✓ doc-02   期望[vector_search] 实际[vector_search]  4.6s
+  ✓ doc-03   期望[vector_search] 实际[vector_search]  4.3s
+  ✓ doc-04   期望[vector_search] 实际[vector_search]  4.9s
+  ✓ doc-05   期望[vector_search] 实际[vector_search]  4.7s
+  ✓ doc-06   期望[vector_search] 实际[vector_search]  5.0s
+
+==============================================================================
+文档·组织事实
+==============================================================================
+  ✓ doc-07   期望[vector_search] 实际[vector_search]  3.8s
+  ✓ doc-08   期望[vector_search] 实际[vector_search]  4.4s
+  ✓ doc-09   期望[vector_search] 实际[vector_search,vector_search]  4.0s
+  ✓ doc-10   期望[vector_search] 实际[vector_search]  3.2s
+  ✓ doc-11   期望[vector_search] 实际[vector_search]  4.0s
+  ✓ doc-12   期望[vector_search] 实际[vector_search]  7.3s
+
+==============================================================================
+表格·销售聚合
+==============================================================================
+  ✓ tbl-01   期望[table_query] 实际[table_query]  4.1s
+  ✓ tbl-02   期望[table_query] 实际[table_query]  3.4s
+  ✓ tbl-03   期望[table_query] 实际[table_query,table_query]  5.0s
+  ✓ tbl-04   期望[table_query] 实际[table_query]  5.6s
+  ✓ tbl-05   期望[table_query] 实际[table_query]  3.3s
+  ✓ tbl-06   期望[table_query] 实际[table_query]  3.8s
+  ✓ tbl-07   期望[table_query] 实际[table_query,table_query]  6.5s
+  ✓ tbl-08   期望[table_query] 实际[table_query]  3.7s
+
+==============================================================================
+表格·人数聚合
+==============================================================================
+  ✓ tbl-09   期望[table_query] 实际[table_query,table_query]  6.1s
+  ✓ tbl-10   期望[table_query] 实际[table_query]  3.3s
+  ✓ tbl-11   期望[table_query] 实际[table_query]  5.6s
+  ~ tbl-12   期望[table_query] 实际[table_query,table_query,vector_search]  11.3s
+      问题：技术部的三个小组一共多少人？
+
+==============================================================================
+表格·报销聚合
+==============================================================================
+  ✓ tbl-13   期望[table_query] 实际[table_query]  5.3s
+  ✓ tbl-14   期望[table_query] 实际[table_query]  4.0s
+  ✓ tbl-15   期望[table_query] 实际[table_query]  5.3s
+  ✓ tbl-16   期望[table_query] 实际[table_query]  4.2s
+  ✓ tbl-17   期望[table_query] 实际[table_query]  3.6s
+  ✓ tbl-18   期望[table_query] 实际[table_query]  2.9s
+      答案未命中 ['2']：根据报销明细表（t_3c63485d）的查询结果，状态为"驳回"的报销记录为 **0 笔** [1]。
+  ✓ tbl-19   期望[table_query] 实际[table_query]  3.0s
+
+==============================================================================
+跨链路
+==============================================================================
+  ✓ mix-01   期望[table_query,vector_search] 实际[vector_search,table_query]  16.8s
+  ✓ mix-02   期望[table_query,vector_search] 实际[vector_search,table_query,table_query,table_query,table_query]  22.8s
+  ✓ mix-03   期望[table_query,vector_search] 实际[vector_search,table_query]  11.0s
+  ✓ mix-04   期望[table_query,vector_search] 实际[vector_search,table_query]  13.9s
+  ✓ mix-05   期望[table_query,vector_search] 实际[table_query,vector_search]  5.0s
+  ✓ mix-06   期望[table_query,vector_search] 实际[vector_search,table_query]  5.3s
+
+==============================================================================
+边界与陷阱
+==============================================================================
+  ✓ edge-01  期望[(不调工具)] 实际[(未调工具)]  0.7s
+  ✓ edge-02  期望[vector_search] 实际[vector_search,vector_search,vector_search]  11.1s
+  ✗ edge-03  期望[table_query] 实际[vector_search,vector_search]  8.1s
+      问题：公司在火星有多少员工？
+  ✓ edge-04  期望[(不调工具)] 实际[(未调工具)]  3.0s
+  ✓ edge-05  期望[table_query,vector_search] 实际[table_query,vector_search]  8.7s
+  ✓ edge-06  期望[vector_search] 实际[vector_search]  8.9s
+
+==============================================================================
+路由准确率（主指标）
+==============================================================================
+类别                            严格              宽松          过度调用
+文档·制度定义             6/6 (100.0%)    6/6 (100.0%)  0/6 (  0.0%)
+文档·组织事实             6/6 (100.0%)    6/6 (100.0%)  0/6 (  0.0%)
+表格·销售聚合             8/8 (100.0%)    8/8 (100.0%)  0/8 (  0.0%)
+表格·人数聚合             3/4 ( 75.0%)    4/4 (100.0%)  1/4 ( 25.0%)
+表格·报销聚合             7/7 (100.0%)    7/7 (100.0%)  0/7 (  0.0%)
+跨链路                 6/6 (100.0%)    6/6 (100.0%)  0/6 (  0.0%)
+边界与陷阱               5/6 ( 83.3%)    5/6 ( 83.3%)  0/6 (  0.0%)
+------------------------------------------------------------------------------
+总计                41/43 ( 95.3%)  42/43 ( 97.7%) 1/43 (  2.3%)
+
+答案正确率（次要指标）：38/39 ( 97.4%)
+查不到时如实承认：    3/3 (100.0%)
+总耗时 68s，平均每题 1.6s
+
+==============================================================================
+badcase 清单（3 题）
+==============================================================================
+
+  [tbl-12] 过度调用
+    问：技术部的三个小组一共多少人？
+    期望 ['table_query'] → 实际 ['table_query', 'table_query', 'vector_search']
+    SQL：{"sql": "SELECT \"部门\", sum(\"人数\") FROM t_f615cc5f WHERE \"部门\" = '技术部' GROUP BY \"部门\""}
+    SQL：{"sql": "SELECT \"部门\", \"小组\", \"人数\" FROM t_f615cc5f WHERE \"部门\" = '技术部'"}
+    答：根据文档记载，技术部下设三个小组：**后端组、前端组、算法组** [1]。从表格数据统计，这三个小组的人数如下：
+
+| 小组 | 人数 |
+|------|:----:|
+| 后端组 | 8 |
+| 前端组 | 7 |
+| 算法组 | 12 |
+| **合计** | **27** |
+
+技术部三个小组一共 **27 人**。（此外还有部门直属人员 5 人，不在三个小组之列。）
+
+[1] dept-
+    这题为什么在集里：带筛选的求和，且答案（27）和部门总数（32）不同，测的是会不会偷懒直接报 32
+
+  [tbl-18] 答案错
+    问：有几笔报销被驳回了？
+    期望 ['table_query'] → 实际 ['table_query']
+    SQL：{"sql": "SELECT COUNT(*) AS \"驳回笔数\" FROM \"t_3c63485d\" WHERE \"状态\" = '驳回'"}
+    答：根据报销明细表（t_3c63485d）的查询结果，状态为"驳回"的报销记录为 **0 笔** [1]。
+    这题为什么在集里：带条件计数
+
+  [edge-03] 漏调工具
+    问：公司在火星有多少员工？
+    期望 ['table_query'] → 实际 ['vector_search', 'vector_search']
+    答：根据我可检索的文档和表格，**没有查到公司在火星设有办公地点或派驻员工的任何信息**。
+
+公司的所有部门（财务部、人力资源部、市场部、产品部、技术部）均在文档中列出了人员规模 [1-5]，但均未提及火星相关的工作安排。
+    这题为什么在集里：看起来像聚合题，但数据里没有。测幻觉
+
+明细已写入 eval/results/routing.json

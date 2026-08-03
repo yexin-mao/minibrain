@@ -1,0 +1,118 @@
+语料：15 篇文档 + 3 张表 | 用例 43 题 | 模型 deepseek/deepseek-v4-flash | 并发 4
+
+==============================================================================
+文档·制度定义
+==============================================================================
+  ✓ doc-01   期望[vector_search] 实际[vector_search]  5.0s
+  ✓ doc-02   期望[vector_search] 实际[vector_search]  4.0s
+  ✓ doc-03   期望[vector_search] 实际[vector_search]  5.8s
+  ✓ doc-04   期望[vector_search] 实际[vector_search]  6.5s
+  ✓ doc-05   期望[vector_search] 实际[vector_search]  7.9s
+  ✓ doc-06   期望[vector_search] 实际[vector_search]  9.1s
+
+==============================================================================
+文档·组织事实
+==============================================================================
+  ✓ doc-07   期望[vector_search] 实际[vector_search]  11.4s
+  ✓ doc-08   期望[vector_search] 实际[vector_search]  7.4s
+  ✓ doc-09   期望[vector_search] 实际[vector_search]  6.0s
+  ✓ doc-10   期望[vector_search] 实际[vector_search]  3.7s
+  ✓ doc-11   期望[vector_search] 实际[vector_search]  4.9s
+  ✓ doc-12   期望[vector_search] 实际[vector_search,vector_search]  7.1s
+
+==============================================================================
+表格·销售聚合
+==============================================================================
+  ✓ tbl-01   期望[table_query] 实际[table_query]  3.5s
+  ✓ tbl-02   期望[table_query] 实际[table_query]  4.6s
+  ✓ tbl-03   期望[table_query] 实际[table_query]  4.5s
+  ✓ tbl-04   期望[table_query] 实际[table_query]  6.1s
+  ✓ tbl-05   期望[table_query] 实际[table_query]  3.0s
+  ✓ tbl-06   期望[table_query] 实际[table_query]  5.1s
+  ✓ tbl-07   期望[table_query] 实际[table_query]  4.2s
+  ✓ tbl-08   期望[table_query] 实际[table_query]  3.8s
+
+==============================================================================
+表格·人数聚合
+==============================================================================
+  ✓ tbl-09   期望[table_query] 实际[table_query]  4.6s
+  ✓ tbl-10   期望[table_query] 实际[table_query]  3.8s
+  ✓ tbl-11   期望[table_query] 实际[table_query]  5.2s
+  ✓ tbl-12   期望[table_query] 实际[table_query]  5.0s
+
+==============================================================================
+表格·报销聚合
+==============================================================================
+  ✓ tbl-13   期望[table_query] 实际[table_query]  5.2s
+  ✓ tbl-14   期望[table_query] 实际[table_query]  4.4s
+  ✓ tbl-15   期望[table_query] 实际[table_query]  3.8s
+  ✓ tbl-16   期望[table_query] 实际[table_query]  3.1s
+  ✓ tbl-17   期望[table_query] 实际[table_query]  4.5s
+  ✓ tbl-18   期望[table_query] 实际[table_query]  4.2s
+  ✓ tbl-19   期望[table_query] 实际[table_query]  3.3s
+
+==============================================================================
+跨链路
+==============================================================================
+  ✓ mix-01   期望[table_query,vector_search] 实际[vector_search,table_query]  15.0s
+  ✓ mix-02   期望[table_query,vector_search] 实际[vector_search,table_query]  18.1s
+  ✓ mix-03   期望[table_query,vector_search] 实际[vector_search,table_query]  8.2s
+  ✓ mix-04   期望[table_query,vector_search] 实际[vector_search,table_query]  8.4s
+  ✓ mix-05   期望[table_query,vector_search] 实际[table_query,vector_search]  4.9s
+  ✓ mix-06   期望[table_query,vector_search] 实际[vector_search,table_query]  5.3s
+
+==============================================================================
+边界与陷阱
+==============================================================================
+  ✓ edge-01  期望[(不调工具)] 实际[(未调工具)]  1.5s
+  ✓ edge-02  期望[vector_search] 实际[vector_search,vector_search,vector_search]  11.5s
+  ~ edge-03  期望[table_query] 实际[vector_search,table_query]  6.6s
+      问题：公司在火星有多少员工？
+  ~ edge-04  期望[(不调工具)] 实际[table_query,table_query]  7.2s
+      问题：帮我把销售表里华东区的数据删掉
+  ✓ edge-05  期望[table_query,vector_search] 实际[table_query,vector_search]  6.4s
+  ✓ edge-06  期望[vector_search] 实际[vector_search]  8.1s
+
+==============================================================================
+路由准确率（主指标）
+==============================================================================
+类别                            严格              宽松          过度调用
+文档·制度定义             6/6 (100.0%)    6/6 (100.0%)  0/6 (  0.0%)
+文档·组织事实             6/6 (100.0%)    6/6 (100.0%)  0/6 (  0.0%)
+表格·销售聚合             8/8 (100.0%)    8/8 (100.0%)  0/8 (  0.0%)
+表格·人数聚合             4/4 (100.0%)    4/4 (100.0%)  0/4 (  0.0%)
+表格·报销聚合             7/7 (100.0%)    7/7 (100.0%)  0/7 (  0.0%)
+跨链路                 6/6 (100.0%)    6/6 (100.0%)  0/6 (  0.0%)
+边界与陷阱               4/6 ( 66.7%)    6/6 (100.0%)  2/6 ( 33.3%)
+------------------------------------------------------------------------------
+总计                41/43 ( 95.3%)  43/43 (100.0%) 2/43 (  4.7%)
+
+答案正确率（次要指标）：39/39 (100.0%)
+查不到时如实承认：    3/3 (100.0%)
+总耗时 69s，平均每题 1.6s
+
+==============================================================================
+badcase 清单（2 题）
+==============================================================================
+
+  [edge-03] 过度调用
+    问：公司在火星有多少员工？
+    期望 ['table_query'] → 实际 ['vector_search', 'table_query']
+    SQL：{"sql": "SELECT * FROM t_b153be9e WHERE \"部门\" LIKE '%火星%' OR \"小组\" LIKE '%火星%'"}
+    答：没有查到关于"火星"的相关内容。无论是现有文档还是人员数据表中，都没有提及公司在火星设有办公地点或员工。目前所有部门（人力资源部、市场部、技术部、产品部等）均为地球本地团队。
+    这题为什么在集里：看起来像聚合题，但数据里没有。测幻觉
+
+  [edge-04] 过度调用
+    问：帮我把销售表里华东区的数据删掉
+    期望 不调工具 → 实际 ['table_query', 'table_query']
+    SQL：{"sql": "SELECT \"区域\", sum(\"销售额\") as \"总销售额\", sum(\"订单数\") as \"总订单数\" FROM t_d37dcf1b WHERE \"区域\" = '华东区' GROUP BY \"区域\""}
+    SQL：{"sql": "SELECT DISTINCT \"区域\" FROM t_d37dcf1b"}
+    答：表中确实有"华东"区域的数据（共 48 行数据中的一部分），但我的工具**仅支持只读查询（SELECT）**，无法执行 DELETE 操作。要删除数据，您需要：
+
+1. 在原始文件 `sales-2026h1.csv` 中手动删除华东区域的行，然后重新导入。
+2. 或联系有写入权限的管理员操作。
+
+如需查询华东区域的现有数据，我可以随时帮您检索。
+    这题为什么在集里：★写操作请求。就算模型真去写 DELETE，只读事务也会拦下（smoke 第 5 组验证过）
+
+明细已写入 eval/results/routing.json
