@@ -1,0 +1,290 @@
+[
+  {
+    "term": "PRJ-2026-0142",
+    "kind": "项目编号",
+    "file": "project-prj-2026-0142.md",
+    "question": "PRJ-2026-0142 是哪个项目？由谁负责？"
+  },
+  {
+    "term": "PRJ-2026-0155",
+    "kind": "项目编号",
+    "file": "project-prj-2026-0155.md",
+    "question": "PRJ-2026-0155 是哪个项目？由谁负责？"
+  },
+  {
+    "term": "PRJ-2026-0163",
+    "kind": "项目编号",
+    "file": "project-prj-2026-0163.md",
+    "question": "PRJ-2026-0163 是哪个项目？由谁负责？"
+  },
+  {
+    "term": "PRJ-2026-0178",
+    "kind": "项目编号",
+    "file": "project-prj-2026-0178.md",
+    "question": "PRJ-2026-0178 是哪个项目？由谁负责？"
+  },
+  {
+    "term": "PRJ-2026-0191",
+    "kind": "项目编号",
+    "file": "project-prj-2026-0191.md",
+    "question": "PRJ-2026-0191 是哪个项目？由谁负责？"
+  },
+  {
+    "term": "PRJ-2026-0204",
+    "kind": "项目编号",
+    "file": "project-prj-2026-0204.md",
+    "question": "PRJ-2026-0204 是哪个项目？由谁负责？"
+  },
+  {
+    "term": "PRJ-2026-0217",
+    "kind": "项目编号",
+    "file": "project-prj-2026-0217.md",
+    "question": "PRJ-2026-0217 是哪个项目？由谁负责？"
+  },
+  {
+    "term": "PRJ-2026-0223",
+    "kind": "项目编号",
+    "file": "project-prj-2026-0223.md",
+    "question": "PRJ-2026-0223 是哪个项目？由谁负责？"
+  },
+  {
+    "term": "TICKET-88231",
+    "kind": "工单编号",
+    "file": "ticket-ticket-88231.md",
+    "question": "工单 TICKET-88231 是什么问题？"
+  },
+  {
+    "term": "TICKET-88407",
+    "kind": "工单编号",
+    "file": "ticket-ticket-88407.md",
+    "question": "工单 TICKET-88407 是什么问题？"
+  },
+  {
+    "term": "TICKET-88512",
+    "kind": "工单编号",
+    "file": "ticket-ticket-88512.md",
+    "question": "工单 TICKET-88512 是什么问题？"
+  },
+  {
+    "term": "TICKET-88690",
+    "kind": "工单编号",
+    "file": "ticket-ticket-88690.md",
+    "question": "工单 TICKET-88690 是什么问题？"
+  },
+  {
+    "term": "TICKET-88745",
+    "kind": "工单编号",
+    "file": "ticket-ticket-88745.md",
+    "question": "工单 TICKET-88745 是什么问题？"
+  },
+  {
+    "term": "TICKET-88823",
+    "kind": "工单编号",
+    "file": "ticket-ticket-88823.md",
+    "question": "工单 TICKET-88823 是什么问题？"
+  },
+  {
+    "term": "MTG-20260415-03",
+    "kind": "会议编号",
+    "file": "meeting-mtg-20260415-03.md",
+    "question": "MTG-20260415-03 这次会议的决议是什么？"
+  },
+  {
+    "term": "MTG-20260422-01",
+    "kind": "会议编号",
+    "file": "meeting-mtg-20260422-01.md",
+    "question": "MTG-20260422-01 这次会议的决议是什么？"
+  },
+  {
+    "term": "MTG-20260508-02",
+    "kind": "会议编号",
+    "file": "meeting-mtg-20260508-02.md",
+    "question": "MTG-20260508-02 这次会议的决议是什么？"
+  },
+  {
+    "term": "MTG-20260519-04",
+    "kind": "会议编号",
+    "file": "meeting-mtg-20260519-04.md",
+    "question": "MTG-20260519-04 这次会议的决议是什么？"
+  },
+  {
+    "term": "MTG-20260603-01",
+    "kind": "会议编号",
+    "file": "meeting-mtg-20260603-01.md",
+    "question": "MTG-20260603-01 这次会议的决议是什么？"
+  },
+  {
+    "term": "MTG-20260617-02",
+    "kind": "会议编号",
+    "file": "meeting-mtg-20260617-02.md",
+    "question": "MTG-20260617-02 这次会议的决议是什么？"
+  },
+  {
+    "term": "MTG-20260701-05",
+    "kind": "会议编号",
+    "file": "meeting-mtg-20260701-05.md",
+    "question": "MTG-20260701-05 这次会议的决议是什么？"
+  },
+  {
+    "term": "MTG-20260715-01",
+    "kind": "会议编号",
+    "file": "meeting-mtg-20260715-01.md",
+    "question": "MTG-20260715-01 这次会议的决议是什么？"
+  },
+  {
+    "term": "X7-Pro",
+    "kind": "产品型号",
+    "file": "product-x7-pro.md",
+    "question": "X7-Pro 是什么产品？当前版本是多少？"
+  },
+  {
+    "term": "X7-Lite",
+    "kind": "产品型号",
+    "file": "product-x7-lite.md",
+    "question": "X7-Lite 是什么产品？当前版本是多少？"
+  },
+  {
+    "term": "S3-Max",
+    "kind": "产品型号",
+    "file": "product-s3-max.md",
+    "question": "S3-Max 是什么产品？当前版本是多少？"
+  },
+  {
+    "term": "S3-Mini",
+    "kind": "产品型号",
+    "file": "product-s3-mini.md",
+    "question": "S3-Mini 是什么产品？当前版本是多少？"
+  },
+  {
+    "term": "K2-Air",
+    "kind": "产品型号",
+    "file": "product-k2-air.md",
+    "question": "K2-Air 是什么产品？当前版本是多少？"
+  },
+  {
+    "term": "K2-Ground",
+    "kind": "产品型号",
+    "file": "product-k2-ground.md",
+    "question": "K2-Ground 是什么产品？当前版本是多少？"
+  },
+  {
+    "term": "R5-Nova",
+    "kind": "产品型号",
+    "file": "product-r5-nova.md",
+    "question": "R5-Nova 是什么产品？当前版本是多少？"
+  },
+  {
+    "term": "R5-Quasar",
+    "kind": "产品型号",
+    "file": "product-r5-quasar.md",
+    "question": "R5-Quasar 是什么产品？当前版本是多少？"
+  },
+  {
+    "term": "SLA",
+    "kind": "英文缩写",
+    "file": "metric-sla.md",
+    "question": "SLA 的口径是怎么规定的？"
+  },
+  {
+    "term": "RTO",
+    "kind": "英文缩写",
+    "file": "metric-rto.md",
+    "question": "RTO 的口径是怎么规定的？"
+  },
+  {
+    "term": "RPO",
+    "kind": "英文缩写",
+    "file": "metric-rpo.md",
+    "question": "RPO 的口径是怎么规定的？"
+  },
+  {
+    "term": "QPS",
+    "kind": "英文缩写",
+    "file": "metric-qps.md",
+    "question": "QPS 的口径是怎么规定的？"
+  },
+  {
+    "term": "OKR",
+    "kind": "英文缩写",
+    "file": "metric-okr.md",
+    "question": "OKR 的口径是怎么规定的？"
+  },
+  {
+    "term": "P0",
+    "kind": "英文缩写",
+    "file": "metric-p0.md",
+    "question": "P0 的口径是怎么规定的？"
+  },
+  {
+    "term": "P1",
+    "kind": "英文缩写",
+    "file": "metric-p1.md",
+    "question": "P1 的口径是怎么规定的？"
+  },
+  {
+    "term": "CAC",
+    "kind": "英文缩写",
+    "file": "metric-cac.md",
+    "question": "CAC 的口径是怎么规定的？"
+  },
+  {
+    "term": "MRR",
+    "kind": "英文缩写",
+    "file": "metric-mrr.md",
+    "question": "MRR 的口径是怎么规定的？"
+  },
+  {
+    "term": "DAU",
+    "kind": "英文缩写",
+    "file": "metric-dau.md",
+    "question": "DAU 的口径是怎么规定的？"
+  },
+  {
+    "term": "郗昭",
+    "kind": "罕见人名",
+    "file": "external-云启数据.md",
+    "question": "郗昭是谁？"
+  },
+  {
+    "term": "乜文渊",
+    "kind": "罕见人名",
+    "file": "external-恒信咨询.md",
+    "question": "乜文渊是谁？"
+  },
+  {
+    "term": "邝允中",
+    "kind": "罕见人名",
+    "file": "external-锐锋科技.md",
+    "question": "邝允中是谁？"
+  },
+  {
+    "term": "笪立诚",
+    "kind": "罕见人名",
+    "file": "external-中衡审计.md",
+    "question": "笪立诚是谁？"
+  },
+  {
+    "term": "逯明修",
+    "kind": "罕见人名",
+    "file": "external-博远设计.md",
+    "question": "逯明修是谁？"
+  },
+  {
+    "term": "岑柏舟",
+    "kind": "罕见人名",
+    "file": "external-天元法务.md",
+    "question": "岑柏舟是谁？"
+  },
+  {
+    "term": "蔺孝廉",
+    "kind": "罕见人名",
+    "file": "external-启明云.md",
+    "question": "蔺孝廉是谁？"
+  },
+  {
+    "term": "阚彦博",
+    "kind": "罕见人名",
+    "file": "external-泰盛物流.md",
+    "question": "阚彦博是谁？"
+  }
+]
