@@ -7,7 +7,7 @@
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Literal
 
 import numpy as np
 
@@ -15,6 +15,8 @@ from ...config import get_config
 from ...contracts import Evidence, ModuleError, NotFound, PermissionDenied, SearchResult, UserContext
 from ...db import vector_db
 from .chunking import split_text
+from .fusion import reciprocal_rank_fusion
+from .keyword import rank_by_bm25
 from .embeddings import embed_query, embed_texts
 
 MODULE_ID = "vector-rag"
@@ -258,16 +260,10 @@ def process_document(document_id: str) -> None:
 
 # ---------------------------------------------------------------- 检索
 
-def search(user: UserContext, query: str, top_k: int = 5) -> SearchResult:
-    """语义召回。
+SearchMode = Literal["hybrid", "vector", "keyword"]
 
-    先用 SQL 把当前用户看得见的 chunk 捞出来，再在内存里算余弦。
-    几千条 chunk 是亚毫秒级；等真到几万条再换 pgvector —— 换的只是这一个函数。
-    """
-    query = query.strip()
-    if not query:
-        raise ModuleError("查询不能为空", code="empty_query")
 
+def _visible_chunks(user: UserContext) -> list[dict]:
     where, params = _visibility_clause(user)
     with vector_db() as cur:
         cur.execute(
@@ -281,11 +277,15 @@ def search(user: UserContext, query: str, top_k: int = 5) -> SearchResult:
             """,
             params,
         )
-        rows = cur.fetchall()
+        return cur.fetchall()
 
-    if not rows:
-        return SearchResult(evidence=[], note="没有可检索的内容：当前用户可见范围内还没有处理完成的文档。")
 
+def _vector_ranking(query: str, rows: list[dict]) -> tuple[list[int], np.ndarray]:
+    """返回 (按余弦降序的下标, 每个片段的余弦分)。
+
+    覆盖**全部**片段——余弦对任何一对文本都有值，哪怕毫不相关。
+    这和 BM25 不同，后者一个词都没命中就是 0，直接不进排名。
+    """
     matrix = np.asarray([row["embedding"] for row in rows], dtype=np.float32)
     vector = np.asarray(embed_query(query), dtype=np.float32)
 
@@ -299,16 +299,67 @@ def search(user: UserContext, query: str, top_k: int = 5) -> SearchResult:
 
     matrix /= np.linalg.norm(matrix, axis=1, keepdims=True) + 1e-10
     vector /= np.linalg.norm(vector) + 1e-10
-    scores = matrix @ vector
+    cosine = matrix @ vector
+    return list(np.argsort(-cosine)), cosine
 
-    top = np.argsort(-scores)[:top_k]
+
+def search(user: UserContext, query: str, top_k: int = 5,
+           mode: SearchMode = "hybrid") -> SearchResult:
+    """混合检索：向量召回 + BM25 关键词召回，RRF 融合。
+
+    为什么要两条路（数据在 eval/RESULTS.md）：
+      向量擅长「意思相近」——「住酒店能报多少」能找到「差旅住宿标准」，
+      但对「前缀相同、只差几位数字」的编号几乎无能为力：
+      8 篇会议纪要的余弦相似度全挤在 0.60~0.67，跨度仅 0.0738，MRR 只有 0.489。
+      而 BM25 对 MTG-20260617-02 这种词是精确命中，一击到位。
+
+      反过来，产品型号 / 英文缩写 / 罕见人名这三类向量是满分 1.000，
+      关键词反而容易被"同一个词出现在多篇里"干扰。
+      **两边强弱互补，所以融合，而不是替换。**
+
+    mode 参数是为了**评测**存在的（scripts/probe_hybrid.py 要跑三种模式做对比），
+    不是给调用方日常挑的。默认 hybrid。
+
+    已知边界：向量和 BM25 都在内存里算，把可见片段全量拉进来。
+    几万条以上要换 pgvector + PG 全文检索，见 SCALING.md。
+    """
+    query = query.strip()
+    if not query:
+        raise ModuleError("查询不能为空", code="empty_query")
+    if mode not in ("hybrid", "vector", "keyword"):
+        raise ModuleError(f"未知检索模式 {mode}", code="unknown_search_mode")
+
+    rows = _visible_chunks(user)
+    if not rows:
+        return SearchResult(evidence=[], note="没有可检索的内容：当前用户可见范围内还没有处理完成的文档。")
+
+    contents = [row["content"] for row in rows]
+
+    cosine = None
+    if mode == "vector":
+        ranking, cosine = _vector_ranking(query, rows)
+        top = ranking[:top_k]
+    elif mode == "keyword":
+        top = rank_by_bm25(query, contents)[:top_k]
+        if not top:
+            return SearchResult(evidence=[], note="关键词检索没有命中任何内容。")
+    else:
+        vector_ranking, cosine = _vector_ranking(query, rows)
+        keyword_ranking = rank_by_bm25(query, contents)
+        # 平局时让关键词路说了算：它被标识符门槛限制成"只在查询含精确标识符时才发声"，
+        # 那种情况下首位命中几乎必对。默认的按下标破平没有任何检索学意义。
+        fused = reciprocal_rank_fusion(
+            [vector_ranking, keyword_ranking], tie_breaker=keyword_ranking)
+        top = [index for index, _fused in fused][:top_k]
     evidence = [
         Evidence(
             module=MODULE_ID,
             source_name=rows[i]["source_name"],
             location=f"{rows[i]['filename']} #{rows[i]['ordinal']}",
             snippet=rows[i]["content"],
-            score=round(float(scores[i]), 4),
+            # 报余弦相似度而不是融合分：RRF 分数（0.016 这种）对人没有意义，
+            # 而余弦是"这段话和问题有多像"，看得懂。keyword 模式没算过余弦，留空。
+            score=round(float(cosine[i]), 4) if cosine is not None else None,
         )
         for i in top
     ]
