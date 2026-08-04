@@ -1,0 +1,834 @@
+{
+  "label": "before",
+  "model": "deepseek/deepseek-v4-flash",
+  "corpus_files": 84,
+  "rounds": 1,
+  "cases": 24,
+  "summary": {
+    "多跳·新增": {
+      "follow_up_rate": 0.6,
+      "coverage": 0.6,
+      "avg_calls": 2.066666666666667
+    },
+    "对照·单点事实": {
+      "follow_up_rate": 0.0,
+      "coverage": 0.6666666666666666,
+      "avg_calls": 1.0
+    },
+    "多跳·原有": {
+      "follow_up_rate": 0.6666666666666666,
+      "coverage": 1.0,
+      "avg_calls": 3.3333333333333335
+    },
+    "全局聚合": {
+      "follow_up_rate": 0.0,
+      "coverage": 0.3333333333333333,
+      "avg_calls": 1.3333333333333333
+    }
+  },
+  "rows": [
+    {
+      "id": "mh-01",
+      "group": "多跳·新增",
+      "question": "PRJ-2026-0142 的负责人属于哪个部门？",
+      "calls": [
+        "vector_search",
+        "table_query"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "dept-tech.md",
+        "project-prj-2026-0142.md"
+      ],
+      "retrieved": [
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0163.md",
+        "project-prj-2026-0191.md",
+        "project-prj-2026-0204.md"
+      ],
+      "missing": [
+        "dept-tech.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": true,
+      "answer": "PRJ-2026-0142（Beta 项目）由**算法组**承担，负责人是陈刚 [1]。而算法组归属于**技术部** [2]。\n\n**结论：负责人陈刚属于技术部。**",
+      "error": null,
+      "bridge": "PRJ-2026-0142 → 算法组 → 技术部",
+      "round": 1
+    },
+    {
+      "id": "mh-02",
+      "group": "多跳·新增",
+      "question": "TICKET-88407 影响的那个产品，产品侧对接人是谁？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "product-k2-air.md",
+        "ticket-ticket-88407.md"
+      ],
+      "retrieved": [
+        "dept-product.md",
+        "meeting-mtg-20260519-04.md",
+        "product-k2-air.md",
+        "product-k2-ground.md",
+        "ticket-ticket-88231.md",
+        "ticket-ticket-88407.md",
+        "ticket-ticket-88512.md",
+        "ticket-ticket-88745.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "根据 TICKET-88407 工单记录，该故障影响的产品为 **K2-Air**[1]。K2-Air 的产品侧对接人是 **王芳**[2]。",
+      "error": null,
+      "bridge": "TICKET-88407 → K2-Air → 王芳",
+      "round": 1
+    },
+    {
+      "id": "mh-03",
+      "group": "多跳·新增",
+      "question": "MTG-20260519-04 复盘的那个工单，故障等级是什么？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "meeting-mtg-20260519-04.md",
+        "ticket-ticket-88407.md"
+      ],
+      "retrieved": [
+        "meeting-mtg-20260422-01.md",
+        "meeting-mtg-20260508-02.md",
+        "meeting-mtg-20260519-04.md",
+        "meeting-mtg-20260603-01.md",
+        "meeting-mtg-20260617-02.md",
+        "ticket-ticket-88231.md",
+        "ticket-ticket-88407.md",
+        "ticket-ticket-88512.md",
+        "ticket-ticket-88823.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "MTG-20260519-04 复盘的是工单 **TICKET-88407**（移动端崩溃率上升），该工单的故障等级为 **P0**（最高优先级故障）[1][2]。\n\n根因是 K2-Air v0.9.11 版本存在内存泄漏，已在 v0.9.12 版本修复 [2]。",
+      "error": null,
+      "bridge": "MTG-20260519-04 → TICKET-88407 → P0",
+      "round": 1
+    },
+    {
+      "id": "mh-04",
+      "group": "多跳·新增",
+      "question": "Eta 项目的负责人所在的组，属于哪个部门？",
+      "calls": [
+        "vector_search",
+        "table_query"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "dept-finance.md",
+        "project-prj-2026-0204.md"
+      ],
+      "retrieved": [
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0163.md",
+        "project-prj-2026-0191.md",
+        "project-prj-2026-0204.md",
+        "project-prj-2026-0223.md"
+      ],
+      "missing": [
+        "dept-finance.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": true,
+      "answer": "Eta 项目的负责人是 **曹敏**，所在的组是 **会计组**，属于 **财务部**。\n\n- 项目文档显示：Eta 项目由会计组承担，负责人曹敏 [1]\n- 人员表显示：会计组归属于财务部 [2]",
+      "error": null,
+      "bridge": "Eta → 会计组 → 财务部",
+      "round": 1
+    },
+    {
+      "id": "mh-05",
+      "group": "多跳·新增",
+      "question": "Delta 项目的负责人管理的小组有多少人？",
+      "calls": [
+        "vector_search",
+        "table_query",
+        "table_query"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "project-prj-2026-0163.md",
+        "team-backend.md"
+      ],
+      "retrieved": [
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0163.md",
+        "project-prj-2026-0204.md",
+        "project-prj-2026-0223.md"
+      ],
+      "missing": [
+        "team-backend.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": true,
+      "answer": "Delta 项目的负责人是**张敏**，她同时也是**后端组**的组长[1]。后端组共有 **8 人**[2]。",
+      "error": null,
+      "bridge": "Delta → 张敏/后端组 → 8 人",
+      "round": 1
+    },
+    {
+      "id": "mh-06",
+      "group": "多跳·新增",
+      "question": "Gamma 项目的负责人还是哪个组的组长？那个组负责什么工作？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "project-prj-2026-0155.md",
+        "team-frontend.md"
+      ],
+      "retrieved": [
+        "dept-product.md",
+        "dept-tech.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0163.md",
+        "project-prj-2026-0204.md",
+        "project-prj-2026-0223.md",
+        "team-algo.md",
+        "team-backend.md",
+        "team-frontend.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "**Gamma 项目**（PRJ-2026-0155）由**前端组**承担，项目负责人是**刘洋**，而他同时也是**前端组的组长**[1]。\n\n**前端组**的工作职责是：**负责 Web 与移动端界面**的开发与维护，现有 7 人，隶属于技术部[1]。",
+      "error": null,
+      "bridge": "Gamma → 刘洋/前端组 → Web 与移动端界面",
+      "round": 1
+    },
+    {
+      "id": "mh-07",
+      "group": "多跳·新增",
+      "question": "Iota 项目由谁负责？这个人所在部门的负责人是谁？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "dept-hr.md",
+        "project-prj-2026-0223.md"
+      ],
+      "retrieved": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md",
+        "meeting-mtg-20260603-01.md",
+        "project-alpha.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0163.md",
+        "project-prj-2026-0223.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "根据查询结果：\n\n1. **Iota 项目负责人**：**何静** —— 项目由招聘组承担，何静为负责人 [1]。\n2. **所在部门负责人**：招聘组隶属于**人力资源部**，人力资源部的负责人是**孙红** [1]。",
+      "error": null,
+      "bridge": "Iota → 何静/招聘组 → 人力资源部 → 孙红",
+      "round": 1
+    },
+    {
+      "id": "mh-08",
+      "group": "多跳·新增",
+      "question": "郗昭对接的是哪家公司？和这类公司签合同前要做什么？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "external-云启数据.md",
+        "policy-supplier.md"
+      ],
+      "retrieved": [
+        "external-云启数据.md",
+        "external-启明云.md",
+        "external-天元法务.md",
+        "external-泰盛物流.md",
+        "policy-data.md",
+        "policy-recruit.md",
+        "policy-reimburse.md",
+        "policy-supplier.md",
+        "runbook-access.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "根据查到的信息，回答如下：\n\n**1. 郗昭对接的是哪家公司？**\n\n郗昭是**云启数据**的供应商对接人，负责合同履约与交付验收对接。[1]\n\n**2. 和这类公司（供应商）签合同前要做什么？**\n\n根据《供应商管理制度》，与供应商签订合同前需要：\n\n1. **采购比价**：新增供应商需经采购比价流程。[1]\n2. **三家比价**：单笔金额超过 **5 万元**的，须至少三家供应商比价。[1]\n3. **法务审核**：所有合同须经 **天元法务**审核后方可签署。[1]\n\n此外，供应商资质每年复审一次，复审不通过的暂停合作。[1] 合同相关事宜统一归口财务部处理。",
+      "error": null,
+      "bridge": "郗昭 → 云启数据/供应商 → 采购比价 + 天元法务审核",
+      "round": 1
+    },
+    {
+      "id": "mh-09",
+      "group": "多跳·新增",
+      "question": "TICKET-88823 的处理人是哪个小组的组长？",
+      "calls": [
+        "vector_search",
+        "table_query"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "team-algo.md",
+        "ticket-ticket-88823.md"
+      ],
+      "retrieved": [
+        "ticket-ticket-88231.md",
+        "ticket-ticket-88512.md",
+        "ticket-ticket-88690.md",
+        "ticket-ticket-88745.md",
+        "ticket-ticket-88823.md"
+      ],
+      "missing": [
+        "team-algo.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": true,
+      "answer": "TICKET-88823 的处理人是**陈刚**[1]。根据人员信息，陈刚是**技术部 - 算法组**的组长[1]。",
+      "error": null,
+      "bridge": "TICKET-88823 → 陈刚 → 算法组",
+      "round": 1
+    },
+    {
+      "id": "mh-10",
+      "group": "多跳·新增",
+      "question": "负责推荐策略重构的那个项目，它的负责人所在小组有多少人？",
+      "calls": [
+        "vector_search",
+        "table_query"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "project-prj-2026-0142.md",
+        "team-algo.md"
+      ],
+      "retrieved": [
+        "product-k2-air.md",
+        "product-k2-ground.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0163.md",
+        "project-prj-2026-0191.md",
+        "project-prj-2026-0217.md",
+        "project-prj-2026-0223.md",
+        "runbook-access.md",
+        "ticket-ticket-88512.md"
+      ],
+      "missing": [
+        "team-algo.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": true,
+      "answer": "负责推荐策略重构的项目是 **Beta 项目（PRJ-2026-0142）**，由**算法组**承担，负责人是**陈刚**[1]。\n\n算法组共有 **12 人**[2]。\n\n[1] 来源：project-prj-2026-0142.md\n[2] 来源：t_9e83fa14（headcount 表）",
+      "error": null,
+      "bridge": "推荐策略重构 → Beta/陈刚/算法组 → 12 人",
+      "round": 1
+    },
+    {
+      "id": "mh-11",
+      "group": "多跳·新增",
+      "question": "MTG-20260617-02 批准预算的那个项目，负责人是谁？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "meeting-mtg-20260617-02.md",
+        "project-prj-2026-0204.md"
+      ],
+      "retrieved": [
+        "meeting-mtg-20260422-01.md",
+        "meeting-mtg-20260508-02.md",
+        "meeting-mtg-20260603-01.md",
+        "meeting-mtg-20260617-02.md",
+        "meeting-mtg-20260715-01.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0191.md",
+        "project-prj-2026-0204.md",
+        "project-prj-2026-0223.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "MTG-20260617-02（财务预算评审纪要）批准的是 **Eta 项目（PRJ-2026-0204）**的费用系统对接预算 48 万元 [1]。根据项目文档，**Eta 项目由会计组承担，负责人是曹敏** [1]。",
+      "error": null,
+      "bridge": "MTG-20260617-02 → Eta 项目 → 曹敏",
+      "round": 1
+    },
+    {
+      "id": "mh-12",
+      "group": "多跳·新增",
+      "question": "MTG-20260603-01 通过的那个扩编方案属于哪个项目？该项目谁负责？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "meeting-mtg-20260603-01.md",
+        "project-prj-2026-0223.md"
+      ],
+      "retrieved": [
+        "meeting-mtg-20260415-03.md",
+        "meeting-mtg-20260422-01.md",
+        "meeting-mtg-20260603-01.md",
+        "meeting-mtg-20260617-02.md",
+        "meeting-mtg-20260715-01.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0204.md",
+        "project-prj-2026-0223.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "根据会议纪要，MTG-20260603-01（人力季度例会）通过的扩编方案属于 **Iota 项目**（PRJ-2026-0223）[1]。该项目由 **何静** 负责 [1]。\n\n补充信息：该项目由招聘组承担，项目范围为校园招聘扩编，周期为 2026 年 9 月至 12 月 [1]。",
+      "error": null,
+      "bridge": "MTG-20260603-01 → Iota 项目 → 何静",
+      "round": 1
+    },
+    {
+      "id": "mh-13",
+      "group": "多跳·新增",
+      "question": "Zeta 项目的负责人属于哪个部门？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "dept-market.md",
+        "project-prj-2026-0191.md"
+      ],
+      "retrieved": [
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md",
+        "project-alpha.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0191.md",
+        "project-prj-2026-0204.md",
+        "project-prj-2026-0217.md",
+        "team-backend.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "Zeta 项目（PRJ-2026-0191）由**品牌组**承担，负责人是**冯磊**[1]。品牌组隶属于**市场部**（市场部下设品牌组、渠道组两个小组）[2]，因此冯磊属于**市场部**。",
+      "error": null,
+      "bridge": "Zeta → 冯磊/品牌组 → 市场部",
+      "round": 1
+    },
+    {
+      "id": "mh-14",
+      "group": "多跳·新增",
+      "question": "Theta 项目的负责人所在小组有多少人？",
+      "calls": [
+        "vector_search",
+        "table_query"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "project-prj-2026-0217.md",
+        "team-design.md"
+      ],
+      "retrieved": [
+        "meeting-mtg-20260715-01.md",
+        "project-alpha.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0217.md",
+        "project-prj-2026-0223.md"
+      ],
+      "missing": [
+        "team-design.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": true,
+      "answer": "Theta 项目负责人是胡静，属于**产品设计组**[1]。产品设计组共有 **6 人**[2]。\n\n**答案：6 人。**",
+      "error": null,
+      "bridge": "Theta → 胡静/产品设计组 → 6 人",
+      "round": 1
+    },
+    {
+      "id": "mh-15",
+      "group": "多跳·新增",
+      "question": "Epsilon 项目的负责人所在小组负责什么工作？",
+      "calls": [
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 2,
+      "followed_up": true,
+      "required": [
+        "project-prj-2026-0178.md",
+        "team-research.md"
+      ],
+      "retrieved": [
+        "dept-market.md",
+        "dept-product.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0163.md",
+        "project-prj-2026-0178.md",
+        "project-prj-2026-0204.md",
+        "team-design.md",
+        "team-frontend.md",
+        "team-research.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": true,
+      "answer": "Epsilon 项目由**用户研究组**承担，负责人是 **吴倩** [1]。用户研究组负责**用户访谈与可用性测试** [1]。",
+      "error": null,
+      "bridge": "Epsilon → 吴倩/用户研究组 → 用户访谈与可用性测试",
+      "round": 1
+    },
+    {
+      "id": "ctrl-1",
+      "group": "对照·单点事实",
+      "question": "后端组有多少人？",
+      "calls": [
+        "table_query"
+      ],
+      "searches": 0,
+      "followed_up": false,
+      "required": [
+        "team-backend.md"
+      ],
+      "retrieved": [],
+      "missing": [
+        "team-backend.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": null,
+      "answer": "后端组有 **8 人**。[1]",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    },
+    {
+      "id": "ctrl-2",
+      "group": "对照·单点事实",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "calls": [
+        "vector_search"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "policy-travel.md"
+      ],
+      "retrieved": [
+        "meeting-mtg-20260617-02.md",
+        "policy-reimburse.md",
+        "policy-team-building.md",
+        "policy-travel.md",
+        "policy-trip-approval.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": null,
+      "answer": "根据 **差旅住宿标准**，二线城市每晚不超过 **400 元**[1]。",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    },
+    {
+      "id": "ctrl-3",
+      "group": "对照·单点事实",
+      "question": "入职满三年有几天年假？",
+      "calls": [
+        "vector_search"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "policy-leave.md"
+      ],
+      "retrieved": [
+        "policy-leave.md",
+        "policy-overtime.md",
+        "policy-reimburse.md",
+        "policy-resign.md",
+        "policy-training.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": null,
+      "answer": "根据公司年假制度，**入职满 3 年享有 10 天年假**，且年假当年有效，不可跨年结转。[1]",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    },
+    {
+      "id": "hop-1",
+      "group": "多跳·原有",
+      "question": "张敏的上级的上级是谁？",
+      "calls": [
+        "vector_search",
+        "vector_search",
+        "vector_search",
+        "vector_search",
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 6,
+      "followed_up": true,
+      "required": [
+        "dept-tech.md",
+        "team-backend.md"
+      ],
+      "retrieved": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md",
+        "external-博远设计.md",
+        "external-启明云.md",
+        "external-锐锋科技.md",
+        "intern-liwei.md",
+        "runbook-oncall.md",
+        "team-backend.md",
+        "team-frontend.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": null,
+      "answer": "超过最大工具调用轮数仍未得到结论，请把问题问得更具体一些。",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    },
+    {
+      "id": "hop-2",
+      "group": "多跳·原有",
+      "question": "Alpha 项目的产品侧对接人向谁汇报？",
+      "calls": [
+        "vector_search",
+        "vector_search",
+        "vector_search"
+      ],
+      "searches": 3,
+      "followed_up": true,
+      "required": [
+        "dept-product.md",
+        "project-alpha.md",
+        "team-design.md"
+      ],
+      "retrieved": [
+        "dept-market.md",
+        "dept-product.md",
+        "product-r5-nova.md",
+        "product-r5-quasar.md",
+        "project-alpha.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0155.md",
+        "team-design.md",
+        "team-frontend.md",
+        "team-research.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": null,
+      "answer": "根据查询到的信息：\n\n1. **Alpha 项目**的产品侧对接人是 **胡静** [1]。\n2. 胡静是 **产品设计组组长**，产品设计组隶属于 **产品部** [1]。\n3. **产品部**的负责人是 **王芳** [2]。\n\n因此，胡静向**产品部负责人王芳**汇报。",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    },
+    {
+      "id": "hop-3",
+      "group": "多跳·原有",
+      "question": "陈刚和刘洋是同一个部门的吗？",
+      "calls": [
+        "vector_search"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "dept-tech.md",
+        "team-algo.md",
+        "team-frontend.md"
+      ],
+      "retrieved": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md",
+        "external-启明云.md",
+        "external-恒信咨询.md",
+        "team-algo.md",
+        "team-backend.md",
+        "team-frontend.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": false,
+      "answer_ok": null,
+      "answer": "根据查询到的信息：\n\n- **陈刚** 是**算法组**的组长 [2]\n- **刘洋** 是**前端组**的组长 [1]\n- 算法组和前端组都属于**技术部** [3]\n\n因此，**陈刚和刘洋是同一个部门的**，两人都属于**技术部**。",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    },
+    {
+      "id": "global-1",
+      "group": "全局聚合",
+      "question": "公司一共有几个部门，分别是什么？",
+      "calls": [
+        "vector_search",
+        "table_query"
+      ],
+      "searches": 1,
+      "followed_up": false,
+      "required": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md"
+      ],
+      "retrieved": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md",
+        "external-博远设计.md",
+        "external-启明云.md",
+        "external-天元法务.md",
+        "external-泰盛物流.md",
+        "policy-recruit.md"
+      ],
+      "missing": [],
+      "covered": true,
+      "used_table": true,
+      "answer_ok": null,
+      "answer": "公司共有 **5 个部门**，分别是：\n\n| 序号 | 部门 | 负责人 | 下设小组 |\n|:---:|:---:|:---:|:---:|\n| 1 | **财务部** | 周涛 | 会计组、审计组 [4] |\n| 2 | **人力资源部** | 孙红 | 招聘组、薪酬组 [3] |\n| 3 | **市场部** | 赵磊 | 品牌组、渠道组 [5] |\n| 4 | **技术部** | 李伟 | 后端组、前端组、算法组 [1] |\n| 5 | **产品部** | 王芳 | 产品设计组、用户研究组 [2] |\n\n以上部门信息来自组织架构文档，并经人员花名册表数据交叉确认 [1-5][表格]。",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    },
+    {
+      "id": "global-2",
+      "group": "全局聚合",
+      "question": "哪个部门的人最多？",
+      "calls": [
+        "table_query"
+      ],
+      "searches": 0,
+      "followed_up": false,
+      "required": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md"
+      ],
+      "retrieved": [],
+      "missing": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": null,
+      "answer": "**技术部**人数最多，共 **32 人**。其他部门人数依次为：市场部 18 人、产品部 14 人、财务部 11 人、人力资源部 9 人。[1]",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    },
+    {
+      "id": "global-3",
+      "group": "全局聚合",
+      "question": "公司总共大约多少人？",
+      "calls": [
+        "table_query"
+      ],
+      "searches": 0,
+      "followed_up": false,
+      "required": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md"
+      ],
+      "retrieved": [],
+      "missing": [
+        "dept-finance.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-tech.md"
+      ],
+      "covered": false,
+      "used_table": true,
+      "answer_ok": null,
+      "answer": "根据人力资源部门的人员统计表，公司目前总共有 **84 人**。[1]\n\n各小组人数明细如下：\n\n| 部门 | 总人数 |\n|------|:------:|\n| 技术部 | 38 |\n| 市场部 | 19 |\n| 产品部 | 14 |\n| 财务部 | 7 |\n| 人力资源部 | 6 |\n\n总计 **84 人**。",
+      "error": null,
+      "bridge": "",
+      "round": 1
+    }
+  ]
+}

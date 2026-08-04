@@ -1,0 +1,122 @@
+[
+  {
+    "id": "mh-01",
+    "question": "PRJ-2026-0142 的负责人属于哪个部门？",
+    "required": ["project-prj-2026-0142.md", "dept-tech.md"],
+    "bridge": "PRJ-2026-0142 → 算法组 → 技术部",
+    "expect_answer": ["技术部"],
+    "why": "dept-tech.md 里没有 PRJ-2026-0142 也没有陈刚，只有「下设…算法组」"
+  },
+  {
+    "id": "mh-02",
+    "question": "TICKET-88407 影响的那个产品，产品侧对接人是谁？",
+    "required": ["ticket-ticket-88407.md", "product-k2-air.md"],
+    "bridge": "TICKET-88407 → K2-Air → 王芳",
+    "expect_answer": ["王芳"],
+    "why": "product-k2-air.md 里没有工单号"
+  },
+  {
+    "id": "mh-03",
+    "question": "MTG-20260519-04 复盘的那个工单，故障等级是什么？",
+    "required": ["meeting-mtg-20260519-04.md", "ticket-ticket-88407.md"],
+    "bridge": "MTG-20260519-04 → TICKET-88407 → P0",
+    "expect_answer": ["P0"],
+    "why": "工单文档里没有会议编号"
+  },
+  {
+    "id": "mh-04",
+    "question": "Eta 项目的负责人所在的组，属于哪个部门？",
+    "required": ["project-prj-2026-0204.md", "dept-finance.md"],
+    "bridge": "Eta → 会计组 → 财务部",
+    "expect_answer": ["财务部"],
+    "why": "dept-finance.md 里没有 Eta 也没有曹敏"
+  },
+  {
+    "id": "mh-05",
+    "question": "Delta 项目的负责人管理的小组有多少人？",
+    "required": ["project-prj-2026-0163.md", "team-backend.md"],
+    "bridge": "Delta → 张敏/后端组 → 8 人",
+    "expect_answer": ["8"],
+    "why": "team-backend.md 里没有 Delta 也没有项目编号"
+  },
+  {
+    "id": "mh-06",
+    "question": "Gamma 项目的负责人还是哪个组的组长？那个组负责什么工作？",
+    "required": ["project-prj-2026-0155.md", "team-frontend.md"],
+    "bridge": "Gamma → 刘洋/前端组 → Web 与移动端界面",
+    "expect_answer": ["前端组"],
+    "why": "team-frontend.md 里没有 Gamma"
+  },
+  {
+    "id": "mh-07",
+    "question": "Iota 项目由谁负责？这个人所在部门的负责人是谁？",
+    "required": ["project-prj-2026-0223.md", "dept-hr.md"],
+    "bridge": "Iota → 何静/招聘组 → 人力资源部 → 孙红",
+    "expect_answer": ["孙红"],
+    "why": "dept-hr.md 里没有 Iota 也没有何静"
+  },
+  {
+    "id": "mh-08",
+    "question": "郗昭对接的是哪家公司？和这类公司签合同前要做什么？",
+    "required": ["external-云启数据.md", "policy-supplier.md"],
+    "bridge": "郗昭 → 云启数据/供应商 → 采购比价 + 天元法务审核",
+    "expect_answer": ["比价"],
+    "why": "policy-supplier.md 里没有郗昭也没有云启数据"
+  },
+  {
+    "id": "mh-09",
+    "question": "TICKET-88823 的处理人是哪个小组的组长？",
+    "required": ["ticket-ticket-88823.md", "team-algo.md"],
+    "bridge": "TICKET-88823 → 陈刚 → 算法组",
+    "expect_answer": ["算法组"],
+    "why": "team-algo.md 里没有工单号"
+  },
+  {
+    "id": "mh-10",
+    "question": "负责推荐策略重构的那个项目，它的负责人所在小组有多少人？",
+    "required": ["project-prj-2026-0142.md", "team-algo.md"],
+    "bridge": "推荐策略重构 → Beta/陈刚/算法组 → 12 人",
+    "expect_answer": ["12"],
+    "why": "team-algo.md 里没有「推荐策略重构」这个说法"
+  },
+  {
+    "id": "mh-11",
+    "question": "MTG-20260617-02 批准预算的那个项目，负责人是谁？",
+    "required": ["meeting-mtg-20260617-02.md", "project-prj-2026-0204.md"],
+    "bridge": "MTG-20260617-02 → Eta 项目 → 曹敏",
+    "expect_answer": ["曹敏"],
+    "why": "项目文档里没有会议编号"
+  },
+  {
+    "id": "mh-12",
+    "question": "MTG-20260603-01 通过的那个扩编方案属于哪个项目？该项目谁负责？",
+    "required": ["meeting-mtg-20260603-01.md", "project-prj-2026-0223.md"],
+    "bridge": "MTG-20260603-01 → Iota 项目 → 何静",
+    "expect_answer": ["何静"],
+    "why": "项目文档里没有会议编号"
+  },
+  {
+    "id": "mh-13",
+    "question": "Zeta 项目的负责人属于哪个部门？",
+    "required": ["project-prj-2026-0191.md", "dept-market.md"],
+    "bridge": "Zeta → 冯磊/品牌组 → 市场部",
+    "expect_answer": ["市场部"],
+    "why": "dept-market.md 里没有 Zeta 也没有冯磊"
+  },
+  {
+    "id": "mh-14",
+    "question": "Theta 项目的负责人所在小组有多少人？",
+    "required": ["project-prj-2026-0217.md", "team-design.md"],
+    "bridge": "Theta → 胡静/产品设计组 → 6 人",
+    "expect_answer": ["6"],
+    "why": "team-design.md 里没有 Theta"
+  },
+  {
+    "id": "mh-15",
+    "question": "Epsilon 项目的负责人所在小组负责什么工作？",
+    "required": ["project-prj-2026-0178.md", "team-research.md"],
+    "bridge": "Epsilon → 吴倩/用户研究组 → 用户访谈与可用性测试",
+    "expect_answer": ["用户访谈"],
+    "why": "team-research.md 里没有 Epsilon"
+  }
+]
