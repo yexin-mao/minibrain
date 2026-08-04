@@ -63,6 +63,36 @@ uv run minibrain-purge --list     # 先看会删什么
 uv run minibrain-purge            # 清掉 smoke_ / live_ 前缀的用户及其全部数据
 ```
 
+## 开发流程：改动必须走 PR
+
+```sh
+git config core.hooksPath .githooks    # 一次性，启用 pre-push 拦截
+
+git switch -c fix/你的改动
+git push -u origin fix/你的改动
+gh pr create --fill
+gh pr checks --watch                   # 等 CI 绿
+gh pr merge --squash --delete-branch
+```
+
+**为什么不直接推 main**——这不是形式主义，是实测出来的：
+
+这个仓库的代码几乎全部由 AI 生成。推上 GitHub 之前，本地 87 个测试全绿。
+**CI 第一次真跑，连续失败两次，各抓到一个本地永远碰不到的问题：**
+
+| # | 问题 | 为什么本地发现不了 |
+|---|---|---|
+| 1 | `url.replace(f"/{dbname}", "/postgres")` 把连接串改烂 | `str.replace` 替换所有匹配。CI 的连接串里**用户名恰好等于库名**，本地的不是 |
+| 2 | 三个测试在无 API key 时断言恒真 | CI 不带 key → 文档落 `failed` → 清单为空 → `assert X not in 空` 恒真。**其中一个是权限测试，等于从来没测过** |
+
+第二个尤其危险：**假绿比红更糟**——红了你会去修，假绿你以为有覆盖，其实没有。
+
+所以规则是：**本地绿不等于对，CI 绿了才能合。**
+CI 的价值不是重复跑本地已经绿的测试，是跑本地跑不到的那条路径。
+
+> 服务端分支保护对免费私有仓库不开放，所以用 `.githooks/pre-push` 客户端兜底。
+> 它挡不住 `--no-verify`，但挡得住手滑——而手滑正是实际会发生的那种。
+
 ## 评测（结论是测出来的，不是声称的）
 
 这个项目的每个主张都要有数字撑着。评测分两块，结果都在版本库里：

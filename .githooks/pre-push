@@ -1,0 +1,38 @@
+#!/bin/sh
+# 拦住直接推 main。
+#
+# 为什么需要它：这个仓库的代码几乎全部由 AI 生成，本地测试全绿也不代表对——
+# CI 第一次真跑就抓到两个本地永远碰不到的问题（连接串被 str.replace 改烂、
+# 三个测试在无 API key 环境下断言恒真）。所以「合并前必须过 CI」不是形式，
+# 是这个项目实测出来的必要条件。
+#
+# GitHub 的服务端分支保护对免费私有仓库不开放，所以用客户端 hook 兜底。
+# 它挡不住铁了心的人（--no-verify 就能绕过），但挡得住手滑——
+# 而手滑正是实际会发生的那种。
+#
+# 启用：git config core.hooksPath .githooks
+
+protected="main"
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+    case "$remote_ref" in
+        "refs/heads/$protected")
+            echo ""
+            echo "  ✗ 拒绝直接推送到 $protected"
+            echo ""
+            echo "  这个仓库要求走 PR，让 CI 在合并前把关。"
+            echo "  CI 第一次跑就抓到两个本地测试全绿也发现不了的问题。"
+            echo ""
+            echo "  正确流程："
+            echo "    git switch -c fix/你的改动"
+            echo "    git push -u origin fix/你的改动"
+            echo "    gh pr create --fill"
+            echo "    gh pr checks --watch     # 等 CI 绿"
+            echo "    gh pr merge --squash --delete-branch"
+            echo ""
+            echo "  确实需要绕过（比如修 CI 本身）：git push --no-verify"
+            echo ""
+            exit 1
+            ;;
+    esac
+done
+exit 0
