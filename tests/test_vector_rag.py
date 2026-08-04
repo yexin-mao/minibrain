@@ -107,7 +107,16 @@ def test_split_applies_overlap_between_chunks():
 
 
 # ---------------------------------------------------------------- 文档清单（注入 system prompt）
+#
+# describe_corpus 只列 status='ready' 的文档——没索引成功的文档列出来会误导模型：
+# 它会据此路由到 vector_search，然后什么也搜不到。
+#
+# 所以「清单里有内容」的测试**必须有 embedding key**。这不是可有可无的标注：
+# CI 不带 key，这几个测试在那边跑出来目录是空的，断言会**恒真通过**——
+# 假绿比红更危险，尤其其中还有一个是权限测试。
+# 这三个用 @needs_embedding 明确标掉，另外补两个不需要 key 也能真正验证的。
 
+@needs_embedding
 def test_describe_corpus_lists_filenames_and_titles(alice):
     """这段文本会进 system prompt，是路由质量的直接输入（见 eval/PROMPT_ABLATION.md）。"""
     doc_id = gateway.call(
@@ -120,19 +129,48 @@ def test_describe_corpus_lists_filenames_and_titles(alice):
     assert "技术部" in catalog          # 标题被抽出来了
 
 
+@needs_embedding
 def test_describe_corpus_without_titles(alice):
     """只列文件名的版本。消融实验证明这一版修不好 doc-08，保留是为了结论可复现。"""
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "plain.md", "# 纯文件名\n\n正文。"
+    )
+    gateway.process("vector-rag", doc_id)
     catalog = gateway.call("vector-rag", "describe_corpus", alice, with_titles=False)
-    assert "——" not in catalog
+    assert "plain.md" in catalog
+    assert "——" not in catalog          # 没有标题那一段
 
 
+@needs_embedding
 def test_describe_corpus_respects_permissions(alice, bob):
-    """★ 清单要进 prompt，所以它本身必须是过滤过的，否则 prompt 就泄露了。"""
+    """★ 清单要进 prompt，所以它本身必须是过滤过的，否则 prompt 就泄露了。
+
+    必须先确认 alice 自己看得见——否则 bob 看不见只是因为清单本来就是空的，
+    这个断言就白测了。
+    """
     doc_id = gateway.call(
         "vector-rag", "upload_document", alice, None, "secret-plan.md", "# 机密计划\n\n不该被看到。"
     )
     gateway.process("vector-rag", doc_id)
+    assert "secret-plan.md" in gateway.call("vector-rag", "describe_corpus", alice)
     assert "secret-plan.md" not in gateway.call("vector-rag", "describe_corpus", bob)
+
+
+def test_describe_corpus_excludes_failed_documents(alice):
+    """★ 处理失败的文档不许进清单——列出来模型会去搜，然后什么也搜不到。
+
+    这条不需要 API key：空文档必然落 failed，两条路径都能验证。
+    """
+    doc_id = gateway.call("vector-rag", "upload_document", alice, None, "broken.md", "   ")
+    gateway.process("vector-rag", doc_id)
+    assert _status_of(alice, doc_id)["status"] == "failed"
+    assert "broken.md" not in gateway.call("vector-rag", "describe_corpus", alice)
+
+
+def test_describe_corpus_excludes_unprocessed_documents(alice):
+    """刚上传还没处理的也不许进清单——它还没有 chunk，搜不到。"""
+    gateway.call("vector-rag", "upload_document", alice, None, "pending.md", "# 待处理\n\n正文。")
+    assert "pending.md" not in gateway.call("vector-rag", "describe_corpus", alice)
 
 
 def test_describe_corpus_empty_is_explicit(bob):
