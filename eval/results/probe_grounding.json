@@ -1,0 +1,2423 @@
+{
+  "model": "deepseek/deepseek-v4-flash",
+  "rounds": 3,
+  "cases": 33,
+  "rows": [
+    {
+      "id": "hal-01",
+      "group": "幻觉·属性不存在",
+      "question": "Beta 项目的预算是多少万元？",
+      "answer": "关于 Beta 项目（PRJ-2026-0142）的预算，目前查阅到的项目文档和会议纪要中均未记录具体金额。文档中仅提到\"预算与里程碑登记在项目管理系统\" [1]，语料库中未包含该项目管理系统的明细数据，因此无法查到 Beta 项目的具体预算金额。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "2026",
+        "0142"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "hal-02",
+      "group": "幻觉·属性不存在",
+      "question": "技术部去年的离职率是多少？",
+      "answer": "经过检索，现有的文档和数据表中**没有查到技术部去年的离职率或离职人数等统计信息**。\n\n目前已掌握的信息仅限于：\n- 技术部目前共 **32 人**，是公司规模最大的部门，下设后端组、前端组、算法组三个小组，负责人为李伟 [1]。\n- 文档中有离职流程规定（如正式员工需提前30天申请）[2]，但**没有记录历史离职数据或离职率**。\n\n建议向人力资源部（孙红）或查阅年度人力报表获取该数据。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "32",
+        "30"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 2,
+      "grounded_claims": 2,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "hal-03",
+      "group": "幻觉·属性不存在",
+      "question": "用户研究组具体负责哪些工作？请详细说明工作流程。",
+      "answer": "根据已有材料，关于用户研究组的具体信息如下：\n\n---\n\n## 用户研究组概况\n\n- **所属部门**：产品部（产品部负责人：王芳）[2]\n- **组长**：吴倩 [1]\n- **人数**：现有 5 人 [1]\n- **主要职责**：负责**用户访谈**与**可用性测试** [1]\n\n## 工作流程说明\n\n材料中记录的内容较为概括，目前查到的详细工作流程信息如下：\n\n根据现有资料 [1]，用户研究组的核心工作分为两大方向：\n\n### 1. 用户访谈\n- 用户研究组承担企业客户访谈等工作。例如，Epsilon 项目（PRJ-2026-0178）即为\"企业客户访谈计划\"，由用户研究组负责，组长吴倩担任项目负责人，项目周期为 2026 年 7 月至 11 月 [2]。\n\n### 2. 可用性测试\n- 该组还负责对产品进行可用性测试，具体测试流程、方法步骤等更详细的 SOP 在现有语料中**没有进一步展开描述**。\n\n---\n\n**总结**：用户研究组的职责明确为\"用户访谈\"和\"可用性测试\"两大块，但具体的操作步骤（如招募用户、制定测试脚本、数据分析等）在当前可检索的文档中未有更详细记录。如需深入了解流程细节，建议向用户研究组组长吴倩或产品部负责人王芳进一步咨询。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0178",
+        "7",
+        "11"
+      ],
+      "identifiers": [
+        "PRJ-2026-0178",
+        "SOP"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [
+        "SOP"
+      ],
+      "total_claims": 6,
+      "grounded_claims": 5,
+      "grounding_rate": 0.8333333333333334,
+      "round": 1
+    },
+    {
+      "id": "hal-04",
+      "group": "幻觉·实体不存在",
+      "question": "PRJ-2026-0999 这个项目的负责人是谁？",
+      "answer": "没有查到 **PRJ-2026-0999** 这个项目的相关信息。在我的知识库中可检索到的项目编号均为 PRJ-2026-0142 ~ PRJ-2026-0223 之间的编号，未包含 PRJ-2026-0999 的记录。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "2026",
+        "0999",
+        "0142",
+        "0223"
+      ],
+      "identifiers": [
+        "PRJ-2026-0999",
+        "PRJ-2026-0142",
+        "PRJ-2026-0223"
+      ],
+      "ungrounded_numbers": [
+        "0999"
+      ],
+      "ungrounded_identifiers": [
+        "PRJ-2026-0999"
+      ],
+      "total_claims": 7,
+      "grounded_claims": 5,
+      "grounding_rate": 0.7142857142857143,
+      "round": 1
+    },
+    {
+      "id": "hal-05",
+      "group": "幻觉·实体不存在",
+      "question": "运维部有多少人？部门负责人是谁？",
+      "answer": "根据查询结果，公司**没有设立独立的\"运维部\"**。\n\n目前的组织架构中，运维相关的职责（如值班与故障响应）归属于**技术部** [1][3]：\n\n- **技术部负责人**：**李伟**\n- **技术部人数**：**32 人**\n- **技术部下设小组**：后端组、前端组、算法组（未单独设立运维组）[1]\n\n其余部门情况如下：\n\n| 部门 | 负责人 | 人数 |\n|------|--------|------|\n| 产品部 | 王芳 | 14 |\n| 市场部 | 赵磊 | 18 |\n| 人力资源部 | 孙红 | 9 |\n| 财务部 | 周涛 | 11 |\n\n如果您要找的是负责值班与故障响应的团队，相关制度文档中说明其归属技术部管理，故障升级路径为：值班人 → 组长 → 李伟 [3]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": true,
+      "refusal_ok": false,
+      "answer_ok": null,
+      "numbers": [
+        "32",
+        "14",
+        "18",
+        "9",
+        "11"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "hal-06",
+      "group": "幻觉·诱导性前提",
+      "question": "X7-Pro 在 v2.4.0 里修复了哪些问题？",
+      "answer": "根据现有资料，**没有查到 X7-Pro v2.4.0 版本的修复内容**。\n\n文档显示 X7-Pro 的**当前发布版本是 v2.3.1** [1]，且说明\"版本的变更记录与已知问题登记在内部知识库，升级前须查阅\"，但该知识库的具体内容不在我可访问的文档范围内 [1]。\n\n两次检索均未找到 v2.4.0 变更日志或修复列表，建议查阅内部知识库或联系产品对接人王芳（技术部）获取详细信息。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "7",
+        "2.4",
+        "2.3"
+      ],
+      "identifiers": [
+        "X7-Pro",
+        "v2.4.0",
+        "v2.3.1"
+      ],
+      "ungrounded_numbers": [
+        "2.4"
+      ],
+      "ungrounded_identifiers": [
+        "v2.4.0"
+      ],
+      "total_claims": 6,
+      "grounded_claims": 4,
+      "grounding_rate": 0.6666666666666666,
+      "round": 1
+    },
+    {
+      "id": "hal-07",
+      "group": "幻觉·诱导性前提",
+      "question": "郗昭在公司工作了几年？他属于哪个部门？",
+      "answer": "郗昭是**云启数据**的供应商对接人，属于**外部联系人**，并非公司内部员工，因此不涉及工作年限也不属于公司任何部门。[1]",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 1
+    },
+    {
+      "id": "hal-08",
+      "group": "幻觉·跨界推断",
+      "question": "根据销售数据，明年华东区的销售额预计是多少？",
+      "answer": "从现有数据来看，**我没有查到关于华东区明年（2027年）销售额的预测或目标数据**。库中包含的信息主要是：\n\n### 已有的华东区销售数据（2026年上半年）\n\n| 月份 | 标准版销售额 | 企业版销售额 | 月合计 |\n|:---:|:----------:|:----------:|:-----:|\n| 1月 | 182,000 | 265,000 | **447,000** |\n| 2月 | 196,500 | 238,000 | **434,500** |\n| 3月 | 221,000 | 310,000 | **531,000** |\n| 4月 | 205,000 | 287,500 | **492,500** |\n| 5月 | 234,000 | 325,000 | **559,000** |\n| 6月 | 248,000 | 341,000 | **589,000** |\n\n**上半年合计：3,053,000元**（标准版1,286,500 + 企业版1,766,500）[来源：t_ca7ef3fa 表]\n\n### 与华东区相关的文档内容\n\n文档中仅提到华东区渠道投放的**CAC考核上限调整**（从420元下调至380元）[1]，并未涉及明年销售额的预测或目标。\n\n### 结论\n\n**语料中没有明年（2027年）华东区销售额的预测数据**，只记录了2026年上半年的实际销售情况。如果需要做预测，建议根据上半年数据（呈稳步上升趋势）结合业务增长预期另行推算。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "182000",
+        "265000",
+        "447000",
+        "196500",
+        "238000",
+        "434500",
+        "221000",
+        "310000",
+        "531000",
+        "205000",
+        "287500",
+        "492500",
+        "234000",
+        "325000",
+        "559000",
+        "248000",
+        "341000",
+        "589000",
+        "3053000",
+        "1286500",
+        "1766500",
+        "2027",
+        "2026",
+        "6",
+        "7",
+        "420",
+        "380"
+      ],
+      "identifiers": [
+        "CAC"
+      ],
+      "ungrounded_numbers": [
+        "447000",
+        "434500",
+        "531000",
+        "492500",
+        "559000",
+        "589000",
+        "3053000",
+        "1286500",
+        "1766500",
+        "2027"
+      ],
+      "ungrounded_identifiers": [],
+      "total_claims": 28,
+      "grounded_claims": 18,
+      "grounding_rate": 0.6428571428571429,
+      "round": 1
+    },
+    {
+      "id": "hal-09",
+      "group": "幻觉·跨界推断",
+      "question": "报销最多的那个员工，他的月薪大概是多少？",
+      "answer": "张敏是**后端组组长**（属于技术部）[1]，但现有的资料中**没有查到她的月薪或工资信息**。可检索的文档和表格均不包含员工薪资数据，因此无法回答她的月薪大概是多少。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 1
+    },
+    {
+      "id": "hal-10",
+      "group": "幻觉·对照·应当答出",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "answer": "根据差旅住宿标准，二线城市每晚不超过 **400 元**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "400"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "hal-11",
+      "group": "幻觉·对照·应当答出",
+      "question": "华东区上半年销售额合计是多少？",
+      "answer": "华东区上半年销售额合计为 **3,053,000 元**。[1]\n\n> 数据来源：销售报表，筛选区域=华东、月份1-6月。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "3053000",
+        "6"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 2,
+      "grounded_claims": 2,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "hal-12",
+      "group": "幻觉·对照·应当答出",
+      "question": "TICKET-88407 的故障等级是什么？",
+      "answer": "TICKET-88407 的故障等级为 **P0**（最高优先级故障）[1]。该工单记录了 K2-Air 移动端因内存泄漏导致的崩溃率上升问题，已在 v0.9.12 版本修复 [2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "88407",
+        "0.9",
+        "12"
+      ],
+      "identifiers": [
+        "TICKET-88407",
+        "K2-Air",
+        "v0.9.12"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 6,
+      "grounded_claims": 6,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-01",
+      "group": "正常·多跳",
+      "question": "PRJ-2026-0142 的负责人属于哪个部门？",
+      "answer": "PRJ-2026-0142（Beta 项目）由**算法组**承担，负责人是**陈刚**[1]（算法组组长[1]）。算法组隶属于**技术部**[2]。因此，该项目的负责人属于 **技术部**。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0142"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-02",
+      "group": "正常·多跳",
+      "question": "TICKET-88407 影响的那个产品，产品侧对接人是谁？",
+      "answer": "TICKET-88407 影响的产品是 **K2-Air** [1]，该产品的产品侧对接人是 **王芳** [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "88407"
+      ],
+      "identifiers": [
+        "TICKET-88407",
+        "K2-Air"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-03",
+      "group": "正常·多跳",
+      "question": "MTG-20260519-04 复盘的那个工单，故障等级是什么？",
+      "answer": "MTG-20260519-04 复盘的是 **TICKET-88407（移动端崩溃率上升）**，该工单的故障等级为 **P0**[1][2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "20260519",
+        "04",
+        "88407"
+      ],
+      "identifiers": [
+        "MTG-20260519-04",
+        "TICKET-88407"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-04",
+      "group": "正常·多跳",
+      "question": "Eta 项目的负责人所在的组，属于哪个部门？",
+      "answer": "Eta 项目（PRJ-2026-0204）由**会计组**承担，负责人是曹敏 [1]。而会计组属于**财务部** [2]。\n\n所以答案是：Eta 项目的负责人（曹敏）所在的组是会计组，属于**财务部**。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0204"
+      ],
+      "identifiers": [
+        "PRJ-2026-0204"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-05",
+      "group": "正常·多跳",
+      "question": "Delta 项目的负责人管理的小组有多少人？",
+      "answer": "Delta 项目负责人是 **张敏**，她同时也是 **后端组** 的组长 [1]。后端组的人数为 **8 人** [2]。\n\n**答案：8 人**",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "8"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-06",
+      "group": "正常·多跳",
+      "question": "Gamma 项目的负责人还是哪个组的组长？那个组负责什么工作？",
+      "answer": "**Gamma 项目（PRJ-2026-0155）** 由 **前端组** 承担，项目负责人是 **刘洋** [1]。\n\n刘洋同时也是 **前端组组长** [1]。前端组现有 **7 人**，负责 **Web 与移动端界面** 的开发工作 [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0155",
+        "7"
+      ],
+      "identifiers": [
+        "PRJ-2026-0155"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 4,
+      "grounded_claims": 4,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-07",
+      "group": "正常·多跳",
+      "question": "Iota 项目由谁负责？这个人所在部门的负责人是谁？",
+      "answer": "**Iota 项目**（PRJ-2026-0223）由招聘组承担，项目负责人是 **何静** [1]。\n\n根据表格信息，招聘组隶属于 **人力资源部**，招聘组组长为何静 [2]；而人力资源部的部门负责人是 **孙红** [3]。\n\n**总结：**\n- Iota 项目负责人：**何静**\n- 何静所在部门（人力资源部）的负责人：**孙红**",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0223"
+      ],
+      "identifiers": [
+        "PRJ-2026-0223"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-08",
+      "group": "正常·多跳",
+      "question": "郗昭对接的是哪家公司？和这类公司签合同前要做什么？",
+      "answer": "**郗昭对接的是云启数据**，他是云启数据的供应商对接人，负责合同履约与交付验收对接。[1]\n\n和这类供应商签合同前，公司制度规定需做以下工作[1]：\n\n1. **采购比价**——新增供应商需经采购比价，单笔金额超过 **5 万元**的须**三家比价**。\n2. **资质审核**——供应商资质每年复审一次，复审不通过的暂停合作。\n3. **法务审核**——所有合同须经**天元法务**审核。\n\n（合同事宜统一归口财务部对接。）",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 1
+    },
+    {
+      "id": "mh-09",
+      "group": "正常·多跳",
+      "question": "TICKET-88823 的处理人是哪个小组的组长？",
+      "answer": "TICKET-88823 的处理人是**陈刚**，他是**算法组的组长**[1][2]。\n\n- 工单记录：TICKET-88823（数据采集延迟，P0 故障）的处理人 = 陈刚 [1]\n- 组织信息：算法组组长是陈刚，算法组隶属于技术部 [2][3]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "88823"
+      ],
+      "identifiers": [
+        "TICKET-88823"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 2,
+      "grounded_claims": 2,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-10",
+      "group": "正常·多跳",
+      "question": "负责推荐策略重构的那个项目，它的负责人所在小组有多少人？",
+      "answer": "负责推荐策略重构的 **Beta 项目（PRJ-2026-0142）** 由**算法组**承担，**负责人是陈刚**，他也是算法组的组长 [1]。\n\n算法组的人数为 **12 人** [2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0142",
+        "12"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 4,
+      "grounded_claims": 4,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-11",
+      "group": "正常·多跳",
+      "question": "MTG-20260617-02 批准预算的那个项目，负责人是谁？",
+      "answer": "MTG-20260617-02（财务预算评审纪要）批准的是 **Eta 项目**（费用系统对接）的预算，**项目负责人是曹敏**。[1][2]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "20260617",
+        "02"
+      ],
+      "identifiers": [
+        "MTG-20260617-02"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-12",
+      "group": "正常·多跳",
+      "question": "MTG-20260603-01 通过的那个扩编方案属于哪个项目？该项目谁负责？",
+      "answer": "该扩编方案属于 **Iota 项目（PRJ-2026-0223）**，项目负责人是 **何静**。[1][9]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0223"
+      ],
+      "identifiers": [
+        "PRJ-2026-0223"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-13",
+      "group": "正常·多跳",
+      "question": "Zeta 项目的负责人属于哪个部门？",
+      "answer": "Zeta 项目（PRJ-2026-0191）由**品牌组**承担，项目负责人是**冯磊**[1]。而品牌组归属于**市场部**[2]，因此冯磊属于**市场部**。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0191"
+      ],
+      "identifiers": [
+        "PRJ-2026-0191"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-14",
+      "group": "正常·多跳",
+      "question": "Theta 项目的负责人所在小组有多少人？",
+      "answer": "根据文档，**Theta 项目（PRJ-2026-0217）** 由产品设计组承担，负责人是**胡静** [2]。查询人员表，产品设计组的人数为 **6 人** [1]。\n\n因此，Theta 项目负责人所在小组共有 **6 人**。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0217",
+        "6"
+      ],
+      "identifiers": [
+        "PRJ-2026-0217"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 4,
+      "grounded_claims": 4,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "mh-15",
+      "group": "正常·多跳",
+      "question": "Epsilon 项目的负责人所在小组负责什么工作？",
+      "answer": "Epsilon 项目的负责人是**吴倩**，她所在的是**用户研究组**。\n\n用户研究组负责**用户访谈与可用性测试**，现有 5 人，组长也是吴倩本人 [1][2]。\n\n**信息链路：**\n- Epsilon 项目文档显示，该项目由\"用户研究组承担，负责人是吴倩\"[1]。\n- 用户研究组文档显示，该组\"负责用户访谈与可用性测试\"[1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 1
+    },
+    {
+      "id": "ctrl-1",
+      "group": "正常·对照组·单点事实",
+      "question": "后端组有多少人？",
+      "answer": "后端组有 **8 人**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "8"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "ctrl-2",
+      "group": "正常·对照组·单点事实",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "answer": "根据公司差旅住宿标准，**二线城市住宿一晚最多报销 400 元**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "400"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "ctrl-3",
+      "group": "正常·对照组·单点事实",
+      "question": "入职满三年有几天年假？",
+      "answer": "根据公司年假制度规定，**入职满 3 年享有 10 天年假**。年假当年有效，不可跨年结转。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "10"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "global-1",
+      "group": "正常·全局聚合",
+      "question": "公司一共有几个部门，分别是什么？",
+      "answer": "根据公司文档资料，公司共有 **5 个部门**，分别是：\n\n| 序号 | 部门名称 | 负责人 | 下设小组 |\n|:---:|:--------:|:------:|:---------|\n| 1 | **技术部** | 李伟 | 后端组、前端组、算法组 [1] |\n| 2 | **产品部** | 王芳 | 产品设计组、用户研究组 [2] |\n| 3 | **市场部** | 赵磊 | 品牌组、渠道组 [3] |\n| 4 | **财务部** | 周涛 | 会计组、审计组 [4] |\n| 5 | **人力资源部** | 孙红 | 招聘组、薪酬组 [5] |\n\n以上信息来源于各部门的正式文档。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 1
+    },
+    {
+      "id": "global-2",
+      "group": "正常·全局聚合",
+      "question": "哪个部门的人最多？",
+      "answer": "**技术部**人数最多，共 **32 人**。各部门排名如下 [1]：\n\n| 部门 | 总人数 |\n|------|------:|\n| 技术部 | 32 |\n| 市场部 | 18 |\n| 产品部 | 14 |\n| 财务部 | 11 |\n| 人力资源部 | 9 |",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "32",
+        "18",
+        "14",
+        "11",
+        "9"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "global-3",
+      "group": "正常·全局聚合",
+      "question": "公司总共大约多少人？",
+      "answer": "根据人力数据表统计，公司目前总人数为 **84 人**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "84"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 1
+    },
+    {
+      "id": "hal-01",
+      "group": "幻觉·属性不存在",
+      "question": "Beta 项目的预算是多少万元？",
+      "answer": "很抱歉，在现有的资料中没有查到 Beta 项目（PRJ-2026-0142）的具体预算金额。\n\nBeta 项目的文档中写明：**\"立项审批已完成，预算与里程碑登记在项目管理系统\"**[1]，但预算的具体数字并未记录在可检索的文档中，而是登记在项目管理系统里，我目前无法访问该系统获取该数据。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "2026",
+        "0142"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "hal-02",
+      "group": "幻觉·属性不存在",
+      "question": "技术部去年的离职率是多少？",
+      "answer": "根据目前已检索到的资料，**没有查询到技术部去年的离职率数据**。\n\n在可检索的文档和数据表中，我能找到的信息是：\n\n- **当前规模**：技术部目前共 **32 人**，下设后端组（8人）、前端组（7人）、算法组（12人）和部门直属（5人）[1]。\n- **离职流程规定**：正式员工离职需提前30天申请，试用期员工提前3天[4]。\n\n但关于**去年的离职人数、期初/期末人数**等用于计算离职率的历史数据，在我可访问的语料中均**没有记录**，因此无法计算出技术部去年的离职率。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "32",
+        "8",
+        "7",
+        "12",
+        "30"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "hal-03",
+      "group": "幻觉·属性不存在",
+      "question": "用户研究组具体负责哪些工作？请详细说明工作流程。",
+      "answer": "根据现有资料，关于用户研究组的具体工作内容如下：\n\n---\n\n## 用户研究组概况\n\n- **所属部门**：产品部（产品部下设产品设计组和用户研究组两个小组）[2]\n- **组长**：吴倩 [1]\n- **人员规模**：现有 5 人 [1]\n\n## 核心工作职责\n\n用户研究组负责 **用户访谈** 与 **可用性测试** 两项主要工作 [1]。\n\n**用户访谈**方面，目前组内正在执行的具体项目是 **Epsilon 项目（PRJ-2026-0178）**——企业客户访谈计划，项目周期为 2026 年 7 月至 11 月，由吴倩担任负责人 [5]。\n\n## 工作流程说明\n\n遗憾的是，现有资料中（包括用户研究组文档 `team-research.md`、产品部文档 `dept-product.md` 及相关会议纪要）**没有详细记录**用户访谈和可用性测试的具体工作流程、方法步骤或操作规范。仅能从职责描述概括为两大板块：\n\n1. **用户访谈** —— 围绕企业客户等目标用户开展访谈，了解需求、痛点和使用体验。\n2. **可用性测试** —— 对产品/原型进行测试，评估用户使用的便捷性和体验效果。\n\n如需更详细的流程说明（如访谈提纲设计、测试样本量要求、结果分析标准等），建议向用户研究组组长 **吴倩** 或产品部负责人 **王芳** 进一步了解。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0178",
+        "7",
+        "11"
+      ],
+      "identifiers": [
+        "PRJ-2026-0178",
+        "team-research.md",
+        "dept-product.md"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 7,
+      "grounded_claims": 7,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "hal-04",
+      "group": "幻觉·实体不存在",
+      "question": "PRJ-2026-0999 这个项目的负责人是谁？",
+      "answer": "没有查到关于 PRJ-2026-0999 这个项目的记录。可检索的项目文档中，项目编号范围在 PRJ-2026-0142 至 PRJ-2026-0223 之间，不包含 PRJ-2026-0999。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "2026",
+        "0999",
+        "0142",
+        "0223"
+      ],
+      "identifiers": [
+        "PRJ-2026-0999",
+        "PRJ-2026-0142",
+        "PRJ-2026-0223"
+      ],
+      "ungrounded_numbers": [
+        "0999"
+      ],
+      "ungrounded_identifiers": [
+        "PRJ-2026-0999"
+      ],
+      "total_claims": 7,
+      "grounded_claims": 5,
+      "grounding_rate": 0.7142857142857143,
+      "round": 2
+    },
+    {
+      "id": "hal-05",
+      "group": "幻觉·实体不存在",
+      "question": "运维部有多少人？部门负责人是谁？",
+      "answer": "根据已有资料，**公司没有名为\"运维部\"的部门**。\n\n可检索到的部门包括：技术部、人力资源部、产品部、市场部、财务部，其中均未列出\"运维部\"。[1][2][3][4][5]\n\n组织架构表格中也未找到\"运维部\"的任何记录。\n\n如需进一步了解，可以确认一下您是否指的是**技术部**（负责人李伟，共32人）或其他部门？",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "32"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "hal-06",
+      "group": "幻觉·诱导性前提",
+      "question": "X7-Pro 在 v2.4.0 里修复了哪些问题？",
+      "answer": "根据已检索的文档，**没有查到 X7-Pro v2.4.0 的相关记录**。当前可获取的信息如下：\n\n1. **当前版本**：X7-Pro 目前发布的版本为 **v2.3.1**，变更记录与已知问题登记在内部知识库中，升级前须查阅 [1]。\n2. **未找到 v2.4.0**：在可访问的文档（产品文档、会议纪要、故障工单等）中，均未出现 v2.4.0 版本的信息。\n\n此外，有一份与 X7-Pro 相关的故障工单（TICKET-88512），处理了\"推荐结果重复\"的 P1 故障，已由陈刚完成定位与修复 [4]，但该记录并未标注修复版本号，无法确认是否属于 v2.4.0 的一部分。\n\n**总结**：语料中不存在 X7-Pro v2.4.0 的版本记录或发布说明。如需了解 v2.4.0 的修复内容，建议查阅内部知识库中 X7-Pro 的变更日志。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "7",
+        "2.4",
+        "2.3",
+        "88512"
+      ],
+      "identifiers": [
+        "X7-Pro",
+        "v2.4.0",
+        "v2.3.1",
+        "TICKET-88512"
+      ],
+      "ungrounded_numbers": [
+        "2.4"
+      ],
+      "ungrounded_identifiers": [
+        "v2.4.0"
+      ],
+      "total_claims": 8,
+      "grounded_claims": 6,
+      "grounding_rate": 0.75,
+      "round": 2
+    },
+    {
+      "id": "hal-07",
+      "group": "幻觉·诱导性前提",
+      "question": "郗昭在公司工作了几年？他属于哪个部门？",
+      "answer": "**郗昭不属于公司员工**，他是云启数据的供应商对接人（外部联系人）[1]。\n\n- **工作年限**：不适用。他是外部供应商人员，不在公司编制内，没有入职日期，不计入部门人数 [1]。\n- **所属部门**：不适用。他属于外部合作方（云启数据），日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部 [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": true,
+      "refusal_ok": false,
+      "answer_ok": null,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 2
+    },
+    {
+      "id": "hal-08",
+      "group": "幻觉·跨界推断",
+      "question": "根据销售数据，明年华东区的销售额预计是多少？",
+      "answer": "根据现有数据，**没有查到关于明年（2027 年）华东区销售额的预测信息**。销售数据表 `t_ca7ef3fa` 仅包含 2026 年上半年的实际销售数据，文档中也未找到未来预测或预算的内容。\n\n不过我可以提供 2026 年上半年华东区各月销售总额，供你参考趋势：\n\n| 月份 | 华东区销售额 |\n|------|------------|\n| 1 月 | 447,000 元 |\n| 2 月 | 434,500 元 |\n| 3 月 | 531,000 元 |\n| 4 月 | 492,500 元 |\n| 5 月 | 559,000 元 |\n| 6 月 | 589,000 元 |\n\n上半年合计 **3,053,000 元**，整体呈现逐月上升趋势。另外，在市场部季度复盘纪要中提到，华东区渠道投放的 CAC 考核上限已从 420 元下调到 380 元 [2]，但未给出具体销售预测金额。\n\n如果需要做明年的销售预测，建议结合业务增长目标、渠道投放计划等因素另行测算。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "447000",
+        "434500",
+        "531000",
+        "492500",
+        "559000",
+        "589000",
+        "3053000",
+        "2027",
+        "7",
+        "2026",
+        "6",
+        "420",
+        "380"
+      ],
+      "identifiers": [
+        "CAC"
+      ],
+      "ungrounded_numbers": [
+        "3053000",
+        "2027"
+      ],
+      "ungrounded_identifiers": [],
+      "total_claims": 14,
+      "grounded_claims": 12,
+      "grounding_rate": 0.8571428571428571,
+      "round": 2
+    },
+    {
+      "id": "hal-09",
+      "group": "幻觉·跨界推断",
+      "question": "报销最多的那个员工，他的月薪大概是多少？",
+      "answer": "报销最多的员工是**张敏**，报销总额为 **2,195 元** [1]。张敏是**后端组组长** [1]。\n\n不过，当前语料中没有记录任何员工的月薪信息，所以无法回答张敏的月薪是多少。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "2195"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "hal-10",
+      "group": "幻觉·对照·应当答出",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "answer": "根据公司差旅住宿标准，二线城市每晚不超过 **400 元**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "400"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "hal-11",
+      "group": "幻觉·对照·应当答出",
+      "question": "华东区上半年销售额合计是多少？",
+      "answer": "华东区2026年上半年（1-6月）销售额合计为 **3,053,000 元**，各月明细如下：\n\n| 月份 | 销售额（元） |\n|------|------------|\n| 1月  | 447,000    |\n| 2月  | 434,500    |\n| 3月  | 531,000    |\n| 4月  | 492,500    |\n| 5月  | 559,000    |\n| 6月  | 589,000    |\n\n呈逐月增长趋势，其中6月为最高月份（589,000元）。[来源：表 t_ca7ef3fa]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "3053000",
+        "447000",
+        "434500",
+        "531000",
+        "492500",
+        "559000",
+        "589000",
+        "2026",
+        "6",
+        "7"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 10,
+      "grounded_claims": 10,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "hal-12",
+      "group": "幻觉·对照·应当答出",
+      "question": "TICKET-88407 的故障等级是什么？",
+      "answer": "TICKET-88407 **故障等级为 P0**（最高优先级故障），影响产品 K2-Air，处理人为刘洋。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "88407"
+      ],
+      "identifiers": [
+        "TICKET-88407",
+        "K2-Air"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-01",
+      "group": "正常·多跳",
+      "question": "PRJ-2026-0142 的负责人属于哪个部门？",
+      "answer": "PRJ-2026-0142（Beta 项目）的负责人是**陈刚**，他担任算法组组长 [1]，而算法组隶属于**技术部** [1]。因此，负责人陈刚属于**技术部**。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0142"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-02",
+      "group": "正常·多跳",
+      "question": "TICKET-88407 影响的那个产品，产品侧对接人是谁？",
+      "answer": "TICKET-88407 影响的产品是 **K2-Air**[1]，该产品的产品侧对接人是 **王芳**[2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "88407"
+      ],
+      "identifiers": [
+        "TICKET-88407",
+        "K2-Air"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-03",
+      "group": "正常·多跳",
+      "question": "MTG-20260519-04 复盘的那个工单，故障等级是什么？",
+      "answer": "MTG-20260519-04 复盘的是工单 **TICKET-88407**（移动端崩溃），该工单的故障等级为 **P0**（最高优先级故障）。[1][2]\n\n- 原因：K2-Air v0.9.11 的内存泄漏，已在 v0.9.12 修复。[2]\n- 处理人：刘洋。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "20260519",
+        "04",
+        "88407",
+        "0.9",
+        "11",
+        "12"
+      ],
+      "identifiers": [
+        "MTG-20260519-04",
+        "TICKET-88407",
+        "K2-Air",
+        "v0.9.11",
+        "v0.9.12"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 11,
+      "grounded_claims": 11,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-04",
+      "group": "正常·多跳",
+      "question": "Eta 项目的负责人所在的组，属于哪个部门？",
+      "answer": "Eta 项目的负责人是曹敏，所在小组为 **会计组**[1]，会计组属于 **财务部**[2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 2
+    },
+    {
+      "id": "mh-05",
+      "group": "正常·多跳",
+      "question": "Delta 项目的负责人管理的小组有多少人？",
+      "answer": "Delta 项目的负责人是 **张敏**，该项目由**后端组**承担 [1]。后端组当前共有 **8 人**（技术部 - 后端组）[2]。\n\n**答案：8 人。**",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "8"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-06",
+      "group": "正常·多跳",
+      "question": "Gamma 项目的负责人还是哪个组的组长？那个组负责什么工作？",
+      "answer": "Gamma 项目的负责人是 **刘洋**，他也是**前端组**的组长。前端组现有 7 人，负责 **Web 与移动端界面** 的开发工作 [1][2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "7"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-07",
+      "group": "正常·多跳",
+      "question": "Iota 项目由谁负责？这个人所在部门的负责人是谁？",
+      "answer": "以下是查询结果：\n\n1. **Iota 项目负责人**：**何静** —— 项目由招聘组承担，何静为负责人 [1]。\n2. **招聘组所在部门**：**人力资源部**（招聘组归属于人力资源部，组长为何静本人）[table]。\n3. **人力资源部负责人**：**孙红** —— 人力资源部负责人是孙红 [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 2
+    },
+    {
+      "id": "mh-08",
+      "group": "正常·多跳",
+      "question": "郗昭对接的是哪家公司？和这类公司签合同前要做什么？",
+      "answer": "**郗昭是对接云启数据的供应商对接人**，负责合同履约与交付验收对接。[1]\n\n**和供应商签合同前，需要完成以下流程：**\n\n1. **采购比价**——新增供应商需经采购比价，单笔金额超过5万元的须三家比价。[1]\n2. **法务审核**——所有合同须经天元法务审核。[1]\n3. **资质复审**——供应商资质每年复审一次，复审不通过的暂停合作。[1]\n\n另外，合同事宜统一归口财务部对接处理。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 2
+    },
+    {
+      "id": "mh-09",
+      "group": "正常·多跳",
+      "question": "TICKET-88823 的处理人是哪个小组的组长？",
+      "answer": "TICKET-88823 的处理人是 **陈刚**，他是 **算法组** 的组长 [1][1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "88823"
+      ],
+      "identifiers": [
+        "TICKET-88823"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 2,
+      "grounded_claims": 2,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-10",
+      "group": "正常·多跳",
+      "question": "负责推荐策略重构的那个项目，它的负责人所在小组有多少人？",
+      "answer": "推荐策略重构是 **Beta 项目（PRJ-2026-0142）**，由**算法组**承担，负责人是**陈刚** [1]。\n\n算法组目前共有 **12 人** [2]。\n\n[1] 来源：project-prj-2026-0142.md（Beta 项目文档）\n[2] 来源：t_3f5b6c76（headcount.csv），算法组人数 = 12",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0142",
+        "12",
+        "6",
+        "76"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142",
+        "project-prj-2026-0142.md",
+        "headcount.csv"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 8,
+      "grounded_claims": 8,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-11",
+      "group": "正常·多跳",
+      "question": "MTG-20260617-02 批准预算的那个项目，负责人是谁？",
+      "answer": "MTG-20260617-02（财务预算评审纪要）批准了 **Eta 项目（PRJ-2026-0204）** 的费用系统对接预算 48 万元 [1]。Eta 项目的负责人是 **曹敏** [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "20260617",
+        "02",
+        "2026",
+        "0204",
+        "48"
+      ],
+      "identifiers": [
+        "MTG-20260617-02",
+        "PRJ-2026-0204"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 7,
+      "grounded_claims": 7,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-12",
+      "group": "正常·多跳",
+      "question": "MTG-20260603-01 通过的那个扩编方案属于哪个项目？该项目谁负责？",
+      "answer": "MTG-20260603-01（人力季度例会）通过的扩编方案属于 **Iota 项目**（项目编号 PRJ-2026-0223），该项目由 **何静** 负责 [1][2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "20260603",
+        "01",
+        "2026",
+        "0223"
+      ],
+      "identifiers": [
+        "MTG-20260603-01",
+        "PRJ-2026-0223"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 6,
+      "grounded_claims": 6,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-13",
+      "group": "正常·多跳",
+      "question": "Zeta 项目的负责人属于哪个部门？",
+      "answer": "Zeta 项目（PRJ-2026-0191）由**品牌组**承担，负责人是冯磊 [1]。品牌组属于**市场部** [2]。\n\n因此，Zeta 项目的负责人冯磊属于 **市场部**。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0191"
+      ],
+      "identifiers": [
+        "PRJ-2026-0191"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-14",
+      "group": "正常·多跳",
+      "question": "Theta 项目的负责人所在小组有多少人？",
+      "answer": "Theta 项目（PRJ-2026-0217）由**产品设计组**承担，负责人为**胡静**[1]。产品设计组共有 **6 人**[2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0217",
+        "6"
+      ],
+      "identifiers": [
+        "PRJ-2026-0217"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 4,
+      "grounded_claims": 4,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "mh-15",
+      "group": "正常·多跳",
+      "question": "Epsilon 项目的负责人所在小组负责什么工作？",
+      "answer": "**Epsilon 项目（PRJ-2026-0178）** 的负责人是 **吴倩**，她所在的 **用户研究组** 负责 **用户访谈与可用性测试**。[1][2]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0178"
+      ],
+      "identifiers": [
+        "PRJ-2026-0178"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "ctrl-1",
+      "group": "正常·对照组·单点事实",
+      "question": "后端组有多少人？",
+      "answer": "后端组有 **8 人**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "8"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "ctrl-2",
+      "group": "正常·对照组·单点事实",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "answer": "根据公司《差旅住宿标准》的规定，**二线城市住宿每晚不超过 400 元** [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "400"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "ctrl-3",
+      "group": "正常·对照组·单点事实",
+      "question": "入职满三年有几天年假？",
+      "answer": "根据《年假制度》规定，入职满 **3 年** 享有 **10 天** 年假，年假当年有效，不可跨年结转 [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "10"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "global-1",
+      "group": "正常·全局聚合",
+      "question": "公司一共有几个部门，分别是什么？",
+      "answer": "公司共有 **5个部门**，分别是：\n\n| 部门 | 负责人 | 下设小组 | 人数 |\n|------|--------|----------|------|\n| **技术部** | 李伟 | 后端组、前端组、算法组 | 32人 [1] |\n| **产品部** | 王芳 | 产品设计组、用户研究组 | 14人 [2] |\n| **市场部** | 赵磊 | 品牌组、渠道组 | 18人 [5] |\n| **人力资源部** | 孙红 | 招聘组、薪酬组 | 9人 [3] |\n| **财务部** | 周涛 | 会计组、审计组 | 11人 [4] |\n\n以上信息均来自各部门的职能说明文档。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "32",
+        "14",
+        "18",
+        "9",
+        "11"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "global-2",
+      "group": "正常·全局聚合",
+      "question": "哪个部门的人最多？",
+      "answer": "**技术部**人最多，共 **32 人**，其他部门依次为：市场部 18 人、产品部 14 人、财务部 11 人、人力资源部 9 人。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "32",
+        "18",
+        "14",
+        "11",
+        "9"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "global-3",
+      "group": "正常·全局聚合",
+      "question": "公司总共大约多少人？",
+      "answer": "根据人力数据表统计，公司总人数为 **84 人**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "84"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 2
+    },
+    {
+      "id": "hal-01",
+      "group": "幻觉·属性不存在",
+      "question": "Beta 项目的预算是多少万元？",
+      "answer": "根据现有的可检索资料，**没有查到 Beta 项目（PRJ-2026-0142）的具体预算金额**。\n\n其项目文档中写明\"预算与里程碑登记在项目管理系统\"[1]，但项目管理系统中的具体预算数值并未记录在当前可访问的文档或表格中。\n\n此外，在其他文档（如财务预算评审纪要等）中也没有找到 Beta 项目的预算信息。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "2026",
+        "0142"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "hal-02",
+      "group": "幻觉·属性不存在",
+      "question": "技术部去年的离职率是多少？",
+      "answer": "根据目前可检索到的资料，**没有查询到技术部去年的离职率或离职人数信息**。\n\n现有资料中只能查到技术部当前共 **32 人**，是公司规模最大的部门 [1]，但没有任何关于离职人数或离职率的记录。建议联系人力资源部了解相关数据。\n\n[1] 来源：dept-tech.md — 技术部目前共 32 人",
+      "error": null,
+      "refused": false,
+      "expect_refusal": true,
+      "refusal_ok": false,
+      "answer_ok": null,
+      "numbers": [
+        "32"
+      ],
+      "identifiers": [
+        "dept-tech.md"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 2,
+      "grounded_claims": 2,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "hal-03",
+      "group": "幻觉·属性不存在",
+      "question": "用户研究组具体负责哪些工作？请详细说明工作流程。",
+      "answer": "根据已检索到的信息，我来为你整理用户研究组的具体信息。\n\n---\n\n## 用户研究组概况\n\n**归属部门**：产品部（产品部负责人为王芳）[3]\n**组长**：吴倩 [1]\n**编制人数**：5 人 [1]\n\n## 主要职责\n\n用户研究组负责两项核心工作 [1]：\n\n1. **用户访谈**（User Interviews）\n2. **可用性测试**（Usability Testing）\n\n## 工作流程\n\n用户研究组的具体工作流程在已有文档中**未详细展开**，但根据其承担的 **Epsilon 项目（PRJ-2026-0178）**——《企业客户访谈计划》[2]，可以侧面了解到：\n\n- 用户研究组通过**项目制**来组织执行具体的研究任务，项目周期通常为几个月（如 Epsilon 项目周期为 2026 年 7 月至 11 月）。\n- 项目立项审批完成后，预算与里程碑登记在项目管理系统中，变更须走变更评审流程。[2]\n\n## 文档说明\n\n用户研究组的专职文档（team-research.md）内容较为精简，仅概括了上述核心职责。如果需要进一步了解其详细的**工作流程、操作规范、研究方法标准**等内容，当前语料库中没有查到更详细的记录。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0178",
+        "7",
+        "11"
+      ],
+      "identifiers": [
+        "PRJ-2026-0178",
+        "team-research.md"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 6,
+      "grounded_claims": 6,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "hal-04",
+      "group": "幻觉·实体不存在",
+      "question": "PRJ-2026-0999 这个项目的负责人是谁？",
+      "answer": "没有查到关于 PRJ-2026-0999 的相关信息。在可检索的文档中，收录的项目编号范围是 PRJ-2026-0142 到 PRJ-2026-0223（以及 Alpha 项目），不包含 PRJ-2026-0999 这个编号，所以无法确认该项目的负责人。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "2026",
+        "0999",
+        "0142",
+        "0223"
+      ],
+      "identifiers": [
+        "PRJ-2026-0999",
+        "PRJ-2026-0142",
+        "PRJ-2026-0223"
+      ],
+      "ungrounded_numbers": [
+        "0999"
+      ],
+      "ungrounded_identifiers": [
+        "PRJ-2026-0999"
+      ],
+      "total_claims": 7,
+      "grounded_claims": 5,
+      "grounding_rate": 0.7142857142857143,
+      "round": 3
+    },
+    {
+      "id": "hal-05",
+      "group": "幻觉·实体不存在",
+      "question": "运维部有多少人？部门负责人是谁？",
+      "answer": "根据可查到的资料，**公司没有设立名为\"运维部\"的独立部门**。\n\n组织架构记录中存在的部门为：技术部、产品部、市场部、人力资源部、财务部，均未包含\"运维部\"。[1][2][3][4][5]\n\n如果您的意思是**技术部**，则：\n- 技术部负责人：**李伟**\n- 技术部下设后端组、前端组、算法组，共 **32 人** [1]\n\n如果您关心的运维相关职能归属在技术部下某个小组，目前文档中并未明确记录有独立的运维组。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "32"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "hal-06",
+      "group": "幻觉·诱导性前提",
+      "question": "X7-Pro 在 v2.4.0 里修复了哪些问题？",
+      "answer": "从目前能查到的资料来看，**没有找到 X7-Pro v2.4.0 版本的发布记录或变更清单**。\n\n文档显示 X7-Pro **当前发布版本为 v2.3.1**[1]，该版本的变更记录和已知问题登记在内部知识库中，但可检索的语料里没有收录该知识库的具体内容。\n\n我能查到的与 X7-Pro 相关的已知问题是 **TICKET-88512（推荐结果重复，P1 级故障）**，由陈刚处理并已修复[1]，但无法确认该修复归属于哪个版本。没有其他关于 v2.4.0 的信息。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "7",
+        "2.4",
+        "2.3",
+        "88512"
+      ],
+      "identifiers": [
+        "X7-Pro",
+        "v2.4.0",
+        "v2.3.1",
+        "TICKET-88512"
+      ],
+      "ungrounded_numbers": [
+        "2.4"
+      ],
+      "ungrounded_identifiers": [
+        "v2.4.0"
+      ],
+      "total_claims": 8,
+      "grounded_claims": 6,
+      "grounding_rate": 0.75,
+      "round": 3
+    },
+    {
+      "id": "hal-07",
+      "group": "幻觉·诱导性前提",
+      "question": "郗昭在公司工作了几年？他属于哪个部门？",
+      "answer": "根据已查阅的资料，郗昭是**外部供应商（云启数据）的对接人**，**不属于公司编制**[1]。因此：\n\n- **工作年限**：不适用——他并非公司员工，没有在公司的工作年限。\n- **所属部门**：不适用——他不属于公司任何部门。文档明确说明\"郗昭不属于公司编制，不计入部门人数\"，日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部[1]。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 3
+    },
+    {
+      "id": "hal-08",
+      "group": "幻觉·跨界推断",
+      "question": "根据销售数据，明年华东区的销售额预计是多少？",
+      "answer": "根据目前可检索到的资料，**没有查到关于明年（2027年）华东区销售额的预测或预算数据**。\n\n以下是现有数据能提供的信息：\n\n**2026年上半年华东区实际销售数据（1-6月）：**\n\n| 指标 | 数值 |\n|------|------|\n| 总销售额 | **3,053,000 元** [表格数据] |\n| 月均销售额 | 约 **254,417 元** [表格数据] |\n| 数据月份 | 2026年1月～6月 [表格数据] |\n\n另外，在市场季度复盘纪要（MTG-20260508-02）中提到了华东区的渠道投放相关调整——将 CAC 考核上限从 420 元下调至 380 元 [1]，但这也不是销售预测。\n\n**结论：** 现有销售数据仅覆盖 2026 年上半年，没有任何文档或表格记录 2027 年（明年）华东区的销售预测或目标数据。如有需要，建议向财务部或市场部确认是否有年度预算/销售预测的正式文件。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "3053000",
+        "254417",
+        "2027",
+        "2026",
+        "6",
+        "20260508",
+        "02",
+        "420",
+        "380"
+      ],
+      "identifiers": [
+        "MTG-20260508-02",
+        "CAC"
+      ],
+      "ungrounded_numbers": [
+        "254417",
+        "2027"
+      ],
+      "ungrounded_identifiers": [],
+      "total_claims": 11,
+      "grounded_claims": 9,
+      "grounding_rate": 0.8181818181818182,
+      "round": 3
+    },
+    {
+      "id": "hal-09",
+      "group": "幻觉·跨界推断",
+      "question": "报销最多的那个员工，他的月薪大概是多少？",
+      "answer": "根据已查到的数据：\n\n1. **报销最多的员工**是 **张敏**（技术部后端组组长），第二季度（Q2）已通过的报销总额为 **¥2,195**[1]。\n\n2. 在可检索的文档和表格中，**没有查到张敏的具体月薪数据**。现有的薪酬政策文档只说明了考核与年终奖的挂钩规则，但未记录任何个人薪资数额 [2]；人员数据表也只记录了组织架构信息，不含薪资字段 [3]。\n\n所以目前只能确认报销最多的是张敏，但她的月薪在现有资料中没有记录，无法回答。",
+      "error": null,
+      "refused": true,
+      "expect_refusal": true,
+      "refusal_ok": true,
+      "answer_ok": null,
+      "numbers": [
+        "2195"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "hal-10",
+      "group": "幻觉·对照·应当答出",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "answer": "根据《差旅住宿标准》规定，二线城市住宿每晚不超过 **400 元**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "400"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "hal-11",
+      "group": "幻觉·对照·应当答出",
+      "question": "华东区上半年销售额合计是多少？",
+      "answer": "华东区上半年销售额合计为 **3,053,000 元**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "3053000"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "hal-12",
+      "group": "幻觉·对照·应当答出",
+      "question": "TICKET-88407 的故障等级是什么？",
+      "answer": "TICKET-88407（移动端崩溃率上升）的故障等级是 **P0**（最高优先级故障）。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": true,
+      "answer_ok": true,
+      "numbers": [
+        "88407"
+      ],
+      "identifiers": [
+        "TICKET-88407"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 2,
+      "grounded_claims": 2,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-01",
+      "group": "正常·多跳",
+      "question": "PRJ-2026-0142 的负责人属于哪个部门？",
+      "answer": "PRJ-2026-0142（Beta 项目）的负责人是 **陈刚**，所属部门为 **技术部**（算法组）。[1][2]\n\n- 该项目由**算法组**承担，负责人陈刚同时也是算法组组长。[1]\n- 算法组是**技术部**下设的三个小组之一。[2]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0142"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-02",
+      "group": "正常·多跳",
+      "question": "TICKET-88407 影响的那个产品，产品侧对接人是谁？",
+      "answer": "TICKET-88407 影响的产品是 **K2-Air**[1]，该产品的**产品侧对接人是王芳**[1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "88407"
+      ],
+      "identifiers": [
+        "TICKET-88407",
+        "K2-Air"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-03",
+      "group": "正常·多跳",
+      "question": "MTG-20260519-04 复盘的那个工单，故障等级是什么？",
+      "answer": "MTG-20260519-04 复盘的工单是 **TICKET-88407（移动端崩溃率上升）**，该工单的故障等级为 **P0**（最高优先级故障）。[1][2]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "20260519",
+        "04",
+        "88407"
+      ],
+      "identifiers": [
+        "MTG-20260519-04",
+        "TICKET-88407"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-04",
+      "group": "正常·多跳",
+      "question": "Eta 项目的负责人所在的组，属于哪个部门？",
+      "answer": "Eta 项目由 **会计组** 承担，负责人是 **曹敏** [1]；会计组属于 **财务部** [1][2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 3
+    },
+    {
+      "id": "mh-05",
+      "group": "正常·多跳",
+      "question": "Delta 项目的负责人管理的小组有多少人？",
+      "answer": "Delta 项目的负责人是 **张敏**（后端组）[1]。张敏同时是后端组组长，该小组共有 **8 人**（文档 [1] 和表格数据一致）。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "8"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-06",
+      "group": "正常·多跳",
+      "question": "Gamma 项目的负责人还是哪个组的组长？那个组负责什么工作？",
+      "answer": "## Gamma 项目与前端组的关系\n\n**Gamma 项目（PRJ-2026-0155）** 由**前端组**承担，项目负责人是**刘洋**。[1]\n\n而刘洋同时也是**前端组的组长**。[1]\n\n**前端组**现有 **7 人**，主要负责 **Web 与移动端界面**的开发。[1] 该组隶属于技术部，技术部下设后端组、前端组、算法组三个小组。[1]\n\n**总结：** Gamma 项目负责人刘洋就是前端组组长，前端组负责 Web 与移动端界面的开发工作。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0155",
+        "7"
+      ],
+      "identifiers": [
+        "PRJ-2026-0155"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 4,
+      "grounded_claims": 4,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-07",
+      "group": "正常·多跳",
+      "question": "Iota 项目由谁负责？这个人所在部门的负责人是谁？",
+      "answer": "1. **Iota 项目负责人**：**何静**。项目 PRJ-2026-0223 由招聘组承担，负责人为何静。[1]\n\n2. **何静所在部门的负责人**：何静所在的招聘组归属 **人力资源部**。从组织架构表可以看到，人力资源部 \"部门直属\" 的组长为 **孙红**，即人力资源部的负责人。[2]\n\n**结论**：Iota 项目由 **何静** 负责，她所在的人力资源部负责人是 **孙红**。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0223"
+      ],
+      "identifiers": [
+        "PRJ-2026-0223"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-08",
+      "group": "正常·多跳",
+      "question": "郗昭对接的是哪家公司？和这类公司签合同前要做什么？",
+      "answer": "**郗昭**对接的是**云启数据**，他是云启数据的供应商对接人，负责合同履约与交付验收对接。[1]\n\n---\n\n### 和这类公司（外部供应商）签合同前需要做以下事情：\n\n根据公司 **《供应商管理》** 制度 [1]：\n\n1. **采购比价** — 新增供应商需经采购比价流程。\n2. **三家比价** — 单笔金额超过 **5 万元** 的，须三家比价。\n3. **法务审核** — 所有合同须经 **天元法务** 审核（对接人：岑柏舟）。\n4. **资质复审** — 供应商资质每年复审一次，复审不通过则暂停合作。\n\n此外，各外部联系人的合同事宜统一归口 **财务部** 处理。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 3
+    },
+    {
+      "id": "mh-09",
+      "group": "正常·多跳",
+      "question": "TICKET-88823 的处理人是哪个小组的组长？",
+      "answer": "TICKET-88823（数据采集延迟）的处理人是 **陈刚**[1]。陈刚本人就是 **技术部算法组的组长**[2]，所以这个工单的处理人就是所在小组的组长。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "88823"
+      ],
+      "identifiers": [
+        "TICKET-88823"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 2,
+      "grounded_claims": 2,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-10",
+      "group": "正常·多跳",
+      "question": "负责推荐策略重构的那个项目，它的负责人所在小组有多少人？",
+      "answer": "推荐策略重构是 **Beta 项目（PRJ-2026-0142）**，由 **算法组** 承担，负责人是 **陈刚**[1]。\n\n算法组共有 **12 人**[2]。\n\n[1] 来源：project-prj-2026-0142.md  \n[2] 来源：t_3f5b6c76（headcount.csv）",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0142",
+        "12",
+        "6",
+        "76"
+      ],
+      "identifiers": [
+        "PRJ-2026-0142",
+        "project-prj-2026-0142.md",
+        "headcount.csv"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 8,
+      "grounded_claims": 8,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-11",
+      "group": "正常·多跳",
+      "question": "MTG-20260617-02 批准预算的那个项目，负责人是谁？",
+      "answer": "根据 **MTG-20260617-02**（财务预算评审纪要），会议批准的是 **Eta 项目**（费用系统对接）的预算 48 万元 [1]。\n\nEta 项目（PRJ-2026-0204）的负责人是 **曹敏**，由会计组承担 [2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "20260617",
+        "02",
+        "48",
+        "2026",
+        "0204"
+      ],
+      "identifiers": [
+        "MTG-20260617-02",
+        "PRJ-2026-0204"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 7,
+      "grounded_claims": 7,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-12",
+      "group": "正常·多跳",
+      "question": "MTG-20260603-01 通过的那个扩编方案属于哪个项目？该项目谁负责？",
+      "answer": "**答案：**\n\n1. **项目**：该扩编方案属于 **Iota 项目**（项目编号 PRJ-2026-0223）[1]。\n2. **负责人**：该项目由 **何静** 负责 [1]。\n\n依据人力季度例会纪要（MTG-20260603-01），会议通过了 Iota 项目校园招聘扩编方案，技术部新增 6 个校招名额 [1]；而 Iota 项目的文档明确记载其负责人为何静 [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0223",
+        "20260603",
+        "01",
+        "6"
+      ],
+      "identifiers": [
+        "PRJ-2026-0223",
+        "MTG-20260603-01"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 7,
+      "grounded_claims": 7,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-13",
+      "group": "正常·多跳",
+      "question": "Zeta 项目的负责人属于哪个部门？",
+      "answer": "Zeta 项目（PRJ-2026-0191）由**品牌组**承担，负责人是**冯磊**[1]。而品牌组归属于**市场部**（通过组织架构表查得）。因此，Zeta 项目的负责人冯磊属于**市场部**。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "2026",
+        "0191"
+      ],
+      "identifiers": [
+        "PRJ-2026-0191"
+      ],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 3,
+      "grounded_claims": 3,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-14",
+      "group": "正常·多跳",
+      "question": "Theta 项目的负责人所在小组有多少人？",
+      "answer": "Theta 项目负责人是**胡静**，所属小组为**产品设计组**，该小组共有 **6 人**。\n\n- 来源：[1] Theta 项目文档（负责人胡静，产品设计组承担）\n- 来源：[2] 人员统计表（产品设计组 6 人）",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "6"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "mh-15",
+      "group": "正常·多跳",
+      "question": "Epsilon 项目的负责人所在小组负责什么工作？",
+      "answer": "Epsilon 项目的负责人是**吴倩**[1]，她同时也是**用户研究组**的组长。用户研究组目前共 **5 人**，负责**用户访谈与可用性测试**工作[1]。用户研究组隶属于产品部[2]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 0,
+      "grounded_claims": 0,
+      "grounding_rate": null,
+      "round": 3
+    },
+    {
+      "id": "ctrl-1",
+      "group": "正常·对照组·单点事实",
+      "question": "后端组有多少人？",
+      "answer": "后端组有 **8 人**。[1]",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "8"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "ctrl-2",
+      "group": "正常·对照组·单点事实",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "answer": "根据《差旅住宿标准》规定，**二线城市每晚不超过 400 元**[1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "400"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "ctrl-3",
+      "group": "正常·对照组·单点事实",
+      "question": "入职满三年有几天年假？",
+      "answer": "根据公司年假制度，入职满 **3 年**享有 **10 天**年假，当年有效，不可跨年结转 [1]。",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "10"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 1,
+      "grounded_claims": 1,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "global-1",
+      "group": "正常·全局聚合",
+      "question": "公司一共有几个部门，分别是什么？",
+      "answer": "公司**共有5个部门**，分别是：\n\n| 部门 | 负责人 | 下设小组 | 人数 |\n|------|--------|----------|:----:|\n| **技术部** | 李伟 | 后端组、前端组、算法组 | 32人 |\n| **产品部** | 王芳 | 产品设计组、用户研究组 | 14人 |\n| **市场部** | 赵磊 | 品牌组、渠道组 | 18人 |\n| **财务部** | 周涛 | 会计组、审计组 | 11人 |\n| **人力资源部** | 孙红 | 招聘组、薪酬组 | 9人 |\n\n各来源依据：[1][2][3][4][5]\n\n（此外还有一些外部合作方如启明云、博远设计等，但不属于公司内部编制。）",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "32",
+        "14",
+        "18",
+        "11",
+        "9"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "global-2",
+      "group": "正常·全局聚合",
+      "question": "哪个部门的人最多？",
+      "answer": "**技术部**人最多，共 **32 人**。各部门人数排名如下：\n\n| 部门 | 总人数 |\n|------|:------:|\n| 技术部 | 32 |\n| 市场部 | 18 |\n| 产品部 | 14 |\n| 财务部 | 11 |\n| 人力资源部 | 9 |\n\n（来源：headcount 表 [1]）",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "32",
+        "18",
+        "14",
+        "11",
+        "9"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [],
+      "ungrounded_identifiers": [],
+      "total_claims": 5,
+      "grounded_claims": 5,
+      "grounding_rate": 1.0,
+      "round": 3
+    },
+    {
+      "id": "global-3",
+      "group": "正常·全局聚合",
+      "question": "公司总共大约多少人？",
+      "answer": "公司目前总人数为 **84 人**。各部门分布如下 [1]：\n\n| 部门 | 人数 |\n|------|:----:|\n| 技术部 | 32 |\n| 市场部 | 18 |\n| 产品部 | 14 |\n| 财务部 | 11 |\n| 人力资源部 | 9 |\n| **合计** | **84** |",
+      "error": null,
+      "refused": false,
+      "expect_refusal": false,
+      "refusal_ok": null,
+      "answer_ok": true,
+      "numbers": [
+        "84",
+        "32",
+        "18",
+        "14",
+        "11",
+        "9"
+      ],
+      "identifiers": [],
+      "ungrounded_numbers": [
+        "32",
+        "18",
+        "11"
+      ],
+      "ungrounded_identifiers": [],
+      "total_claims": 6,
+      "grounded_claims": 3,
+      "grounding_rate": 0.5,
+      "round": 3
+    }
+  ]
+}
