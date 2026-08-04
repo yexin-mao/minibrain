@@ -34,6 +34,10 @@ from minibrain.scripts_purge import purge_user   # noqa: E402
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CORPUS = ROOT / "eval" / "corpus"
 PROBES = ROOT / "eval" / "probes.json"
+# 盲区探针由 gen_corpus.py 从 blindspots.json 生成。分开放是为了区分
+# "人工设计的题" 和 "由植入词自动生成的题"——后者的价值在于覆盖面，
+# 前者的价值在于每道题背后有具体的失效假设。
+PROBES_BLINDSPOT = ROOT / "eval" / "probes_blindspot.json"
 OUT_DIR = ROOT / "eval" / "results"
 K_GRID = (3, 5, 10)
 
@@ -73,6 +77,8 @@ def main() -> int:
     try:
         total = ingest(user)
         probes = json.loads(PROBES.read_text(encoding="utf-8"))
+        if PROBES_BLINDSPOT.is_file():
+            probes += json.loads(PROBES_BLINDSPOT.read_text(encoding="utf-8"))
         print(f"语料 {total} 篇，探针 {len(probes)} 题\n")
 
         by_cat: dict[str, list] = defaultdict(list)
@@ -140,7 +146,7 @@ def main() -> int:
         overall = summarize(pairs, K_GRID)
 
         print("\n" + "=" * 72)
-        print("汇总二：标准 IR 指标（全部 10 题平均）")
+        print(f"汇总二：标准 IR 指标（全部 {len(details)} 题平均）")
         print("=" * 72)
         print(f"  MRR = {overall['mrr']:.3f}   （第一个相关文档排名的倒数，越接近 1 越好）\n")
         print(f"  {'':<20}" + "".join(f"{'k='+str(k):>12}" for k in K_GRID))
