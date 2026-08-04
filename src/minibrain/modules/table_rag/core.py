@@ -287,19 +287,77 @@ def visible_tables(user: UserContext) -> list[dict]:
         return [dict(row) for row in cur.fetchall()]
 
 
+# 低基数文本列的取值一并注入 schema 说明。
+#
+# 起因：tbl-18「有几笔报销被驳回」，模型写 WHERE "状态" = '驳回'，
+# 而表里的实际值是 '已驳回'，返回 0（真值 2）。
+# 根因是 describe_schema 只注入列名和类型——那是入库时从 CSV 表头推断出来的元数据，
+# 从来没有 SELECT DISTINCT 看过实际取值。模型只能猜枚举值。
+#
+# 这在 text-to-SQL 领域叫 value linking（schema linking 的一部分），是公认的瓶颈。
+# 全量注入取值在大表上不可行，所以要设阈值：
+_ENUM_MAX_VALUES = 12    # 不同取值超过这么多就不注入（那是高基数列，列出来没意义还挤占上下文）
+_ENUM_MAX_LEN = 40       # 单个取值超过这么长也不注入（那多半是自由文本，不是枚举）
+_ENUM_MAX_TABLES = 20    # 表太多时只对前 N 张做，避免 describe_schema 变慢
+
+
+def _enum_values(cur, table_name: str, column: str) -> list[str] | None:
+    """取一列的全部不同取值。高基数或长文本返回 None，表示不该注入。
+
+    多取一条（LIMIT n+1）就能判断"是不是超过阈值"，不必先 count 一遍。
+    """
+    try:
+        cur.execute(
+            pgsql.SQL("SELECT DISTINCT {} AS v FROM {} WHERE {} IS NOT NULL LIMIT %s").format(
+                pgsql.Identifier(column), pgsql.Identifier(table_name), pgsql.Identifier(column)
+            ),
+            (_ENUM_MAX_VALUES + 1,),
+        )
+        values = [str(row["v"]) for row in cur.fetchall()]
+    except Exception:                       # noqa: BLE001  表刚被删等情况，不该让整个 prompt 失败
+        return None
+
+    if not values or len(values) > _ENUM_MAX_VALUES:
+        return None
+    if any(len(v) > _ENUM_MAX_LEN for v in values):
+        return None
+    return sorted(values)
+
+
 def describe_schema(user: UserContext) -> str:
-    """给 LLM 看的表结构说明。只描述它有权查询的表。"""
+    """给 LLM 看的表结构说明。只描述它有权查询的表。
+
+    除列名和类型外，还注入**低基数文本列的实际取值**——
+    否则模型只能猜枚举值，写出 WHERE "状态" = '驳回' 这种匹配不上的条件。
+    """
     tables = visible_tables(user)
     if not tables:
         return "（当前用户可见范围内没有任何已就绪的数据表）"
 
     lines = []
-    for t in tables:
-        cols = ", ".join(f'"{c["name"]}" {c["type"]}' for c in t["columns"])
-        lines.append(
-            f'表 {t["table_name"]}（来自 {t["filename"]}，source={t["source_name"]}，'
-            f'{t["row_count"]} 行）\n  列：{cols}'
-        )
+    with table_db() as cur:
+        for index, t in enumerate(tables):
+            cols = ", ".join(f'"{c["name"]}" {c["type"]}' for c in t["columns"])
+            block = (
+                f'表 {t["table_name"]}（来自 {t["filename"]}，source={t["source_name"]}，'
+                f'{t["row_count"]} 行）\n  列：{cols}'
+            )
+
+            if index < _ENUM_MAX_TABLES:
+                # 压成一行。第一版每列一行，把表格段从 210 撑到 668 字符，
+                # 结果模型的注意力又被拉回表格，路由准确率从 95.3% 掉到 88~91%——
+                # 信息对等不是一次性达成的，加了一边就得重新平衡。
+                enums = []
+                for column in t["columns"]:
+                    if column["type"] != "text":
+                        continue
+                    values = _enum_values(cur, t["table_name"], column["name"])
+                    if values:
+                        enums.append(f'{column["name"]}={"/".join(values)}')
+                if enums:
+                    block += "\n  取值：" + "；".join(enums)
+
+            lines.append(block)
     return "\n".join(lines)
 
 

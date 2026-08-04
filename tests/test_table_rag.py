@@ -66,3 +66,56 @@ def test_describe_schema_lists_visible_tables(alice, sales_table):
     schema = gateway.call("table-rag", "describe_schema", alice)
     assert sales_table in schema
     assert "销售额" in schema
+
+
+# ---------------------------------------------------------------- 低基数列的取值注入
+#
+# 起因：tbl-18「有几笔报销被驳回」，模型写 WHERE "状态" = '驳回'，
+# 实际值是 '已驳回'，返回 0。根因是 schema 只给列名和类型，模型只能猜枚举值。
+# text-to-SQL 领域称之为 value linking。
+
+def test_schema_includes_low_cardinality_values(alice):
+    csv = "地区,状态,金额\n华东,已通过,100\n华北,已驳回,200\n华东,已通过,300\n"
+    ds_id = gateway.call("table-rag", "upload_csv", alice, None, "status.csv", csv.encode())
+    gateway.process("table-rag", ds_id)
+
+    schema = gateway.call("table-rag", "describe_schema", alice)
+    assert "已驳回" in schema, "低基数文本列的取值必须注入，否则模型只能猜"
+    assert "已通过" in schema
+
+
+def test_schema_omits_high_cardinality_values(alice):
+    """★ 高基数列不能注入——列出来没意义，还挤占上下文。"""
+    rows = "\n".join(f"BX{i:08d},{i}" for i in range(40))
+    csv = f"单号,金额\n{rows}\n"
+    ds_id = gateway.call("table-rag", "upload_csv", alice, None, "manyids.csv", csv.encode())
+    gateway.process("table-rag", ds_id)
+
+    table = next(d["table_name"] for d in gateway.call("table-rag", "list_datasets", alice)
+                 if d["filename"] == "manyids.csv")
+    block = next(b for b in gateway.call("table-rag", "describe_schema", alice).split("表 ")
+                 if b.startswith(table))
+    assert "BX00000000" not in block
+    assert "全部取值" not in block
+
+
+def test_schema_omits_long_free_text_values(alice):
+    """自由文本列即使取值少也不注入——那不是枚举，是正文。"""
+    long_a, long_b = "这是一段很长的自由文本内容" * 4, "另一段同样很长的自由文本" * 4
+    csv = f"备注,金额\n{long_a},1\n{long_b},2\n"
+    ds_id = gateway.call("table-rag", "upload_csv", alice, None, "notes.csv", csv.encode())
+    gateway.process("table-rag", ds_id)
+
+    table = next(d["table_name"] for d in gateway.call("table-rag", "list_datasets", alice)
+                 if d["filename"] == "notes.csv")
+    block = next(b for b in gateway.call("table-rag", "describe_schema", alice).split("表 ")
+                 if b.startswith(table))
+    assert "全部取值" not in block
+
+
+def test_schema_values_respect_permissions(alice, bob):
+    """取值也是数据。别人的表的取值绝不能出现在我的 prompt 里。"""
+    csv = "地区,机密标记\n华东,绝密项目代号A\n"
+    ds_id = gateway.call("table-rag", "upload_csv", alice, None, "confidential.csv", csv.encode())
+    gateway.process("table-rag", ds_id)
+    assert "绝密项目代号A" not in gateway.call("table-rag", "describe_schema", bob)
