@@ -61,6 +61,7 @@ CORPUS_TBL = ROOT / "eval" / "corpus_table"
 OUT_DIR = ROOT / "eval" / "results"
 
 MULTIHOP = ROOT / "eval" / "probes_multihop.json"
+STOP = ROOT / "eval" / "probes_stop.json"
 PROBES = ROOT / "eval" / "probes.json"
 
 
@@ -71,6 +72,11 @@ def load_cases() -> list[dict]:
     没有对照组，一个每题都查三遍的实现也会显得很成功。
     """
     cases = [dict(c, group="多跳·新增") for c in json.loads(MULTIHOP.read_text(encoding="utf-8"))]
+    # 压力题：专门构造来触发"查到耗尽"。靠跑很多轮等罕见事件太慢，
+    # 直接造出容易跑飞的场景（答案不存在 / 链条到顶 / 三跳以上 / 指代不清 / 前提错误）。
+    if STOP.is_file():
+        cases += [dict(c, group=f"压力·{c['kind']}", required=[], expect_answer=[])
+                  for c in json.loads(STOP.read_text(encoding="utf-8"))]
     group_of = {
         "多跳推理": "多跳·原有",
         "全局聚合": "全局聚合",
@@ -129,6 +135,10 @@ def run_case(user, case: dict) -> dict:
     covered = bool(required) and required <= retrieved
     used_table = "table_query" in calls
 
+    exhausted = len(calls) >= get_config().agent_max_steps
+    # 「给出了结论」：不是超轮兜底那句话。答对、答错、或如实说查不到，都算给出了结论。
+    gave_up_cleanly = bool(text) and "轮数已达上限" not in text and "超过最大工具调用轮数" not in text
+
     wanted = case.get("expect_answer") or []
     norm = normalize(text)
     answer_ok = all(normalize(w) in norm for w in wanted) if wanted else None
@@ -139,6 +149,7 @@ def run_case(user, case: dict) -> dict:
         "required": sorted(required), "retrieved": sorted(retrieved),
         "missing": sorted(required - retrieved), "covered": covered,
         "used_table": used_table,
+        "exhausted": exhausted, "gave_up_cleanly": gave_up_cleanly,
         "answer_ok": answer_ok, "answer": text, "error": error,
         "bridge": case.get("bridge", ""),
     }
@@ -181,7 +192,7 @@ def main() -> int:
         print("\n" + "=" * 78)
         print("主表")
         print("=" * 78)
-        print(f"  {'分组':<16}{'续查触发率':>12}{'文档链覆盖':>12}{'答案正确率':>12}{'平均调用次数':>14}{'用了表格':>10}")
+        print(f"  {'分组':<16}{'续查触发率':>12}{'文档链覆盖':>12}{'答案正确率':>12}{'平均调用次数':>14}{'耗尽率':>9}{'有结论':>9}")
         for group, group_rows in by_group.items():
             n = len(group_rows)
             follow = sum(r["followed_up"] for r in group_rows) / n
@@ -190,8 +201,10 @@ def main() -> int:
             acc = (sum(r["answer_ok"] for r in scored) / len(scored)) if scored else float("nan")
             avg = sum(len(r["calls"]) for r in group_rows) / n
             acc_text = "—" if scored == [] else f"{acc:>11.1%}"
-            table = sum(r["used_table"] for r in group_rows) / n
-            print(f"  {group:<16}{follow:>11.1%}{cover:>12.1%}{acc_text:>12}{avg:>14.2f}{table:>10.0%}")
+            exh = sum(r["exhausted"] for r in group_rows) / n
+            clean = sum(r["gave_up_cleanly"] for r in group_rows) / n
+            print(f"  {group:<16}{follow:>11.1%}{cover:>12.1%}{acc_text:>12}{avg:>14.2f}"
+                  f"{exh:>9.1%}{clean:>9.0%}")
 
         print("\n  ★ 对照组的续查触发率应当接近 0——不该触发的乱触发就是白花钱")
         print("  ★ 文档链覆盖率会低估系统：Agent 常走「文档 → 表格」的跨链路多跳，")
@@ -200,6 +213,18 @@ def main() -> int:
         print("\n" + "=" * 78)
         print("逐题（✓/✗ 是答案正确性；路径列显示它怎么查的）")
         print("=" * 78)
+        stop_groups = sorted(g for g in by_group if g.startswith("压力·"))
+        if stop_groups:
+            print("\n" + "=" * 78)
+            print("压力题：会不会停")
+            print("=" * 78)
+            for group in stop_groups:
+                for row in by_group[group]:
+                    mark = "✗耗尽" if row["exhausted"] else ("✓" if row["gave_up_cleanly"] else "?")
+                    print(f"  {mark:<6}{row['id']:<9}{len(row['calls'])}次  {row['question'][:32]}")
+                    if row["exhausted"]:
+                        print(f"          调用序列：{row['calls']}")
+
         for group in ("多跳·新增", "多跳·原有", "全局聚合"):
             if group not in by_group:
                 continue

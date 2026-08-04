@@ -91,6 +91,14 @@ def _system_prompt(user: UserContext) -> str:
 写 SQL 时：标识符一律用双引号，例如 SELECT "地区", sum("销售额") FROM t_xxxx GROUP BY "地区"。
 只允许单条 SELECT。如果报错，读错误信息改写后重试，最多两次。
 
+什么时候停止检索（重要）：
+- 已经拿到足够回答的信息 → **立刻回答**，不要"再确认一下"。
+- 连续两次检索都没带来新信息 → **停止**，如实说明已经查到了什么、还缺什么。
+- 某个实体在库里查不到 → 直接说"没有查到"，**不要换个措辞反复检索同一件事**。
+- 问题的前提在库里不成立（不存在的项目/部门，或未记录的属性）→ **指出这一点**。
+  「语料里没有这个信息」是正确答案，不是失败。
+- 关系链查到头了（比如某人已是部门负责人，再往上没有记录）→ 说明查到哪一层为止。
+
 回答要求：
 - 用中文，简洁。
 - 每个事实性结论后面标注来源编号，例如 [1]，编号对应工具返回的片段序号。
@@ -155,8 +163,26 @@ def answer(user: UserContext, question: str) -> AnswerResult:
             )
             messages.append({"role": "tool", "tool_call_id": call.id, "content": text})
 
+    # 轮数用尽。原来直接返回一句"超过最大工具调用轮数"——**那是最糟的输出**：
+    # 它把已经检索到的全部内容扔掉了，用户什么也没得到。
+    #
+    # 实测（eval/RESULTS.md 探针五）：跑飞时它已经查了 6~8 次，手里有大量证据，
+    # 只是没能自己收口。所以再问模型一次，**但不给工具**——强制它基于已有信息作答。
+    messages.append({
+        "role": "user",
+        "content": "检索轮数已达上限，不要再调用工具。请基于上面已经检索到的内容作答："
+                   "能确定的部分直接给出，不能确定的明确说明缺什么。",
+    })
+    try:
+        final = client.chat.completions.create(
+            model=cfg.agent_model, messages=messages, temperature=cfg.agent_temperature,
+        )
+        text = final.choices[0].message.content
+    except Exception:                                   # noqa: BLE001
+        text = None
+
     return AnswerResult(
-        answer="超过最大工具调用轮数仍未得到结论，请把问题问得更具体一些。",
+        answer=text or "检索轮数已达上限，且未能基于已有内容归纳出结论。",
         evidence=evidence,
         trace=trace,
     )
