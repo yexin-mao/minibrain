@@ -164,7 +164,7 @@ SchemaGraphSQL 用图算法做路径查找、EviLink 用不确定性引导的证
 |---|---|---|
 | 语义路由 | 需要证明"prompt 里的清单撑不住了" | ❌ 15 篇，清单占 300 字符 |
 | 分层索引 | 需要多个领域、足够多的文档 | ❌ 语料只有一个领域 |
-| 元数据过滤 | 需要文档量大到相似度计算成本可感知 | ❌ 几十个 chunk，亚毫秒 |
+| 元数据过滤 | 需要文档量大到相似度计算成本可感知 | ❌ **实测余弦只占单次检索的 0.2%**（见 RESULTS.md 探针七） |
 | **value linking** | ✅ `tbl-18` 已经实测失败 | ✅ **可以做** |
 
 **语料规模是这些方案的前置条件。**
@@ -199,3 +199,25 @@ SchemaGraphSQL 用图算法做路径查找、EviLink 用不确定性引导的证
 - [Scaling RAG to 20M Docs: Challenges & Solutions](https://www.chitika.com/scaling-rag-20-million-documents/)
 - [Building AI Applications with Snowflake Cortex: RAG, Text-to-SQL & CoCo](https://www.snowflake.com/en/developers/guides/accelerate-app-dev-coco/)
 - [Snowflake Cortex Analyst vs Databricks Genie](https://colrows.com/blogs/cortex-analyst-vs-genie/)
+
+
+---
+
+## 附：延迟实测推翻了本文档的一个假设
+
+本文档多处提到"内存全量余弦在几万条以上会变慢"，隐含假设是**余弦计算是瓶颈**。
+
+**实测不是**（`eval/RESULTS.md` 探针七）：
+
+| | 占单次检索 | 占本地计算 |
+|---|---|---|
+| embedding 网络往返 | **98.2%** | — |
+| SQL 拉取全部片段 | 1.6% | **90.1%** |
+| BM25 | 0.2% | 9.6% |
+| **余弦计算** | **0.0%** | **0.2%** |
+
+所以 pgvector 的价值**不在"算得快"，在"不用把全部数据搬出来"**——
+瓶颈是数据搬运，不是向量运算。
+
+线性外推：本地计算要到约 **4,700 个片段**才追平网络延迟。
+当前 84 个，**差 56 倍**。在此之前换 pgvector 不会带来可感知的加速。
