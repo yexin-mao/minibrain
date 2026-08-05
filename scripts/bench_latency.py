@@ -49,11 +49,12 @@ from minibrain.db import close_all                                   # noqa: E40
 from minibrain.modules.vector_rag.core import _visible_chunks        # noqa: E402
 from minibrain.modules.vector_rag.embeddings import embed_query      # noqa: E402
 from minibrain.modules.vector_rag.fusion import reciprocal_rank_fusion  # noqa: E402
-from minibrain.modules.vector_rag.core import _keyword_ranking_indexed  # noqa: E402
+from minibrain.modules.vector_rag.core import (                       # noqa: E402
+    _keyword_ranking_indexed, _vector_search_in_db,
+)
 from minibrain.modules.vector_rag.keyword import rank_by_bm25        # noqa: E402
 from minibrain.scripts_purge import purge_user                       # noqa: E402
 
-import numpy as np                                                    # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CORPUS = ROOT / "eval" / "corpus"
@@ -114,25 +115,19 @@ def main() -> int:
         stages["SQL 拉取全部片段"] = summarize(samples)
 
         contents = [r["content"] for r in rows]
-        matrix = np.asarray([r["embedding"] for r in rows], dtype=np.float32)
-        matrix_normed = matrix / (np.linalg.norm(matrix, axis=1, keepdims=True) + 1e-10)
 
         # ---- 2. embedding：一次外部 API 调用 ----
         # 只跑一条查询、次数减半——它是网络往返，跑多了纯粹烧钱且波动大
         emb_samples, _ = timed(lambda: embed_query(QUERIES[0]), max(3, args.repeat // 2))
         stages["embedding（外部 API）"] = summarize(emb_samples)
 
-        vectors = {q: np.asarray(embed_query(q), dtype=np.float32) for q in QUERIES}
-
-        # ---- 3. 余弦计算 ----
-        def cosine_all():
-            out = []
-            for q in QUERIES:
-                v = vectors[q] / (np.linalg.norm(vectors[q]) + 1e-10)
-                out.append(np.argsort(-(matrix_normed @ v)))
-            return out
-        samples, _ = timed(cosine_all, args.repeat)
-        stages["余弦计算（5 条查询）"] = summarize(samples)
+        # ---- 3. 向量检索（现在在数据库里做）----
+        # 原来这里是「把 900×1024 浮点数搬进内存 + numpy 算余弦」，
+        # 现在是「数据库用 HNSW 索引排完序，只发回 top-5」。
+        # 注意它含 embedding 的网络往返，所以要减掉才是纯检索开销。
+        samples, _ = timed(
+            lambda: [_vector_search_in_db(user, q, 5) for q in QUERIES], args.repeat)
+        stages["向量检索 pgvector（5 条，含 embedding）"] = summarize(samples)
 
         # ---- 4. BM25 ----
         # 两个版本都测：内存版（每次重新分词）vs 倒排索引版（查表）。
@@ -146,9 +141,8 @@ def main() -> int:
         stages["BM25 倒排索引版（5 条）"] = summarize(samples)
 
         # ---- 5. RRF ----
-        vr = [list(np.argsort(-(matrix_normed @ (vectors[q] / np.linalg.norm(vectors[q])))))
-              for q in QUERIES]
         kr = [_keyword_ranking_indexed(user, q, rows) for q in QUERIES]
+        vr = [list(range(len(kr[i]))) for i in range(len(QUERIES))]   # RRF 只关心排名长度
         samples, _ = timed(
             lambda: [reciprocal_rank_fusion([v, k], tie_breaker=k)
                      for v, k in zip(vr, kr)], args.repeat)
@@ -169,7 +163,10 @@ def main() -> int:
         # ---- 拆解：本地计算 vs 网络 ----
         per_query = {
             "SQL 拉取": stages["SQL 拉取全部片段"]["median"],
-            "余弦": stages["余弦计算（5 条查询）"]["median"] / len(QUERIES),
+            "向量检索(减去embedding)": max(
+                0.0,
+                stages["向量检索 pgvector（5 条，含 embedding）"]["median"] / len(QUERIES)
+                - stages["embedding（外部 API）"]["median"]),
             "BM25": stages["BM25 倒排索引版（5 条）"]["median"] / len(QUERIES),
             "RRF": stages["RRF 融合（5 条查询）"]["median"] / len(QUERIES),
         }

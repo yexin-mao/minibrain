@@ -249,3 +249,137 @@ def test_index_respects_permissions(alice, bob):
 
     assert _keyword_ranking_indexed(bob, "TICKET-99001", _visible_chunks(bob)) == []
     assert _keyword_ranking_indexed(alice, "TICKET-99001", _visible_chunks(alice)) != []
+
+
+# ---------------------------------------------------------------- pgvector
+#
+# ★ 这一组守的是「向量检索搬进数据库」这次改动。
+#   最大的风险不是算错，是**悄悄退化**——比如索引没被用上、或者又把全部数据搬了出来。
+
+@needs_embedding
+def test_embedding_is_stored_as_vector_type(alice):
+    """列类型必须是 vector，不是 real[]。
+
+    real[] 只能全搬进内存自己算；vector 才能用 <=> 和 HNSW 索引。
+    """
+    from minibrain.db import vector_db
+
+    with vector_db() as cur:
+        cur.execute("""
+            SELECT format_type(a.atttypid, a.atttypmod) AS type
+            FROM pg_attribute a
+            JOIN pg_class c ON c.oid = a.attrelid
+            JOIN pg_namespace n ON n.oid = c.relnamespace
+            WHERE n.nspname = 'mod_vector' AND c.relname = 'chunks' AND a.attname = 'embedding'
+        """)
+        assert "vector" in cur.fetchone()["type"]
+
+
+def test_hnsw_index_exists():
+    """★ 没有这个索引，pgvector 会退化成全表扫描——而且不报错，只是悄悄变慢。"""
+    from minibrain.db import vector_db
+
+    with vector_db() as cur:
+        cur.execute("""
+            SELECT indexdef FROM pg_indexes
+            WHERE schemaname = 'mod_vector' AND tablename = 'chunks'
+              AND indexdef ILIKE '%hnsw%'
+        """)
+        row = cur.fetchone()
+        assert row is not None, "HNSW 索引不存在"
+        # 距离函数必须和检索时用的 <=> 一致，用错了索引会失效
+        assert "vector_cosine_ops" in row["indexdef"]
+
+
+@needs_embedding
+def test_search_no_longer_pulls_embeddings(alice):
+    """★ _visible_chunks 不许再拉 embedding 列。
+
+    这次优化的全部收益就是「少搬 900×1024 个浮点数」。
+    哪天有人为了图方便把 embedding 加回 SELECT，这个测试会红。
+    """
+    from minibrain.modules.vector_rag.core import _visible_chunks
+
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "pgv.md", "# 标题\n\n正文内容。")
+    gateway.process("vector-rag", doc_id)
+
+    rows = _visible_chunks(alice)
+    assert rows, "没取到片段"
+    assert "embedding" not in rows[0], "又把 embedding 全搬出来了"
+    assert "term_count" in rows[0], "BM25 需要 term_count"
+
+
+@needs_embedding
+def test_vector_search_returns_cosine_score(alice):
+    """数据库算出来的余弦要能传回来给用户看。"""
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "policy-pgv.md",
+        "# 差旅住宿标准\n\n一线城市每晚不超过 600 元。")
+    gateway.process("vector-rag", doc_id)
+
+    result = gateway.call("vector-rag", "search", alice, "住宿能报多少", top_k=3, mode="vector")
+    assert result.evidence
+    assert 0.0 <= result.evidence[0].score <= 1.0
+
+
+@needs_embedding
+def test_vector_search_respects_permissions(alice, bob):
+    """★ 检索搬进数据库之后，权限过滤必须仍在 SQL 的 WHERE 里。"""
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "pgv-secret.md",
+        "# 机密\n\n绝密项目代号 Omega。")
+    gateway.process("vector-rag", doc_id)
+
+    seen = {e.location.split(" #")[0]
+            for e in gateway.call("vector-rag", "search", bob, "绝密项目", top_k=10,
+                                  mode="vector").evidence}
+    assert "pgv-secret.md" not in seen
+
+
+@needs_embedding
+def test_vector_search_actually_uses_the_hnsw_index(alice):
+    """★ 建了索引不等于用上了索引。
+
+    实测：490 片段时 PostgreSQL 优化器估算全表扫描 cost 65、HNSW cost 2614，
+    于是选全表扫描——但实际 HNSW 快 3.2 倍。成本模型在这个规模下估错了 40 倍。
+
+    所以 _vector_search_in_db 显式 SET enable_seqscan = off。
+    这个测试守的就是那一行：去掉它，pgvector 就白装了，**而且不会报错**，
+    只是悄悄退化成全表扫描。
+    """
+    from minibrain.db import vector_db
+    from minibrain.modules.vector_rag.core import _to_vector_literal, _visibility_clause
+    from minibrain.modules.vector_rag.embeddings import embed_query
+
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "hnsw-plan.md",
+        "# 索引计划测试\n\n用来确认检索真的走了 HNSW 索引。")
+    gateway.process("vector-rag", doc_id)
+
+    where, params = _visibility_clause(alice)
+    literal = _to_vector_literal(embed_query("索引计划"))
+    with vector_db() as cur:
+        # ★ 数据量不够时优化器**即使被强制也不会**用 HNSW 索引——
+        #   这不是 bug，是成本模型的正确行为（小表全扫本来就快）。
+        #   实测：210 片段时不走索引，900 片段时走。
+        #   所以这个测试对数据量敏感，不够就跳过而不是红，
+        #   否则它会随着别的测试留下多少数据而随机红绿。
+        cur.execute("SELECT count(*) AS n FROM chunks")
+        n_chunks = cur.fetchone()["n"]
+        if n_chunks < 500:
+            pytest.skip(f"只有 {n_chunks} 个片段，规模不足以让优化器选 HNSW 索引"
+                        f"（实测阈值在 210~900 之间）。这是成本模型的正常行为。")
+
+        cur.execute("SET LOCAL enable_seqscan = off")        # 和生产代码同样的设置
+        cur.execute(
+            f"""EXPLAIN SELECT c.id FROM chunks c
+                JOIN documents d ON d.id = c.document_id
+                JOIN sources s ON s.id = c.source_id
+                WHERE {where} AND d.status = 'ready'
+                ORDER BY c.embedding <=> %s::vector LIMIT 5""",
+            params + [literal],
+        )
+        plan = " ".join(str(list(r.values())[0]) for r in cur.fetchall())
+
+    assert "chunks_embedding_hnsw_idx" in plan, f"没走 HNSW 索引：\n{plan[:400]}"

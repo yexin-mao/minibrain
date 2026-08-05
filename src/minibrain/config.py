@@ -52,6 +52,10 @@ class Config:
     chunk_size: int
     chunk_overlap: int
 
+    # HNSW 查询时的候选集大小。大 → 召回高、延迟高。pgvector 默认 40。
+    # 这是**近似检索**唯一的运行时旋钮，扫它就能画出「召回-延迟」权衡曲线。
+    hnsw_ef_search: int
+
     table_query_timeout_ms: int
     table_query_max_rows: int
 
@@ -88,6 +92,7 @@ def get_config() -> Config:
         agent_max_steps=_env_int("AGENT_MAX_STEPS", 6),
         chunk_size=_env_int("CHUNK_SIZE", 800),
         chunk_overlap=_env_int("CHUNK_OVERLAP", 120),
+        hnsw_ef_search=_env_int("HNSW_EF_SEARCH", 40),
         table_query_timeout_ms=_env_int("TABLE_QUERY_TIMEOUT_MS", 5000),
         table_query_max_rows=_env_int("TABLE_QUERY_MAX_ROWS", 200),
         session_ttl_hours=_env_int("SESSION_TTL_HOURS", 168),
