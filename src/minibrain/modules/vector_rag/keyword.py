@@ -196,3 +196,76 @@ def rank_by_bm25(query: str, documents: list[str], *,
     hits = [i for i, s in enumerate(scores) if s > 0]
     hits.sort(key=lambda i: (-scores[i], i))
     return hits
+
+
+# ---------------------------------------------------------------- 倒排索引版
+#
+# 上面那个 bm25_scores 每次查询都把**全部文档重新分词、重算 IDF**。
+# 实测（eval/RESULTS.md 探针十）：84 片段时 4.98ms，900 片段时 201.65ms——
+# 增长 40.5 倍，而片段数只涨 10.7 倍。因为它是 O(总字符数) 不是 O(片段数)。
+#
+# 下面这个版本接受**预先建好的倒排索引**，只对命中的片段打分。
+# 分词和 IDF 统计在入库时做一次，查询时不碰原文。
+#
+# ★ 两个版本必须算出**完全相同**的分数——test_keyword.py 里有等价性测试钉着。
+#   这是纯性能优化，质量指标一位小数都不许变。
+
+
+def bm25_from_postings(
+    query: str,
+    postings: dict[str, dict[str, int]],
+    doc_freq: dict[str, int],
+    doc_lengths: dict[str, int],
+    total_docs: int,
+    avg_len: float,
+) -> dict[str, float]:
+    """用预建索引给命中的片段打分。
+
+    参数全部来自数据库，不需要原文：
+
+      postings      {词: {片段id: 该词在这片段出现几次}}   —— 只含查询命中的词
+      doc_freq      {词: 含这个词的片段数}                 —— 用于 IDF
+      doc_lengths   {片段id: 该片段的总 token 数}          —— 用于长度归一化
+      total_docs    可见片段总数                           —— 用于 IDF
+      avg_len       可见片段的平均 token 数                —— 用于长度归一化
+
+    ★ doc_lengths 必须是**全量分词**的计数（含中文），不能只数索引里的标识符——
+      否则长度归一化的分母变了，分数就和内存版对不上。
+
+    返回 {片段id: 分数}，只含分数 > 0 的。
+    """
+    if total_docs == 0:
+        return {}
+    avg_len = avg_len or 1.0
+
+    scores: dict[str, float] = {}
+    for term in set(identifier_tokens(query)):
+        n_containing = doc_freq.get(term, 0)
+        if n_containing == 0:
+            continue
+        idf = math.log(1 + (total_docs - n_containing + 0.5) / (n_containing + 0.5))
+
+        for chunk_id, freq in postings.get(term, {}).items():
+            doc_len = doc_lengths.get(chunk_id, 0)
+            scores[chunk_id] = scores.get(chunk_id, 0.0) + idf * (freq * (K1 + 1)) / (
+                freq + K1 * (1 - B + B * doc_len / avg_len)
+            )
+    return scores
+
+
+def index_terms(text: str) -> dict[str, int]:
+    """入库时调用：算出这个片段要存进倒排索引的词及其出现次数。
+
+    **只存标识符**——查询侧走 identifier_tokens()，中文 token 永远查不到。
+    实测：全量索引约 112,000 行，只索引标识符 759 行，省 99% 且结果完全一致。
+    """
+    return dict(Counter(identifier_tokens(text)))
+
+
+def total_term_count(text: str) -> int:
+    """入库时调用：这个片段的**全量** token 数，存进 chunks.term_count。
+
+    必须全量（含中文二元组）——它是 BM25 长度归一化的分母，
+    只数标识符会让分数和内存版对不上。
+    """
+    return len(tokenize(text))

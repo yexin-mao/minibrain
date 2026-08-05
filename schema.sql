@@ -80,6 +80,41 @@ create table if not exists mod_vector.chunks (
 create index if not exists chunks_document_idx on mod_vector.chunks (document_id);
 create index if not exists chunks_source_idx on mod_vector.chunks (source_id);
 
+-- term_count：这个片段一共有多少个 token（含中文二元组）。
+-- BM25 的长度归一化要用它做分母，所以必须是**全量**分词的计数，
+-- 不能只数下面 chunk_terms 里的标识符。
+alter table mod_vector.chunks
+  add column if not exists term_count integer not null default 0;
+
+
+-- ============================================================
+-- chunk_terms：BM25 的倒排索引。词 → 出现在哪些片段、出现几次。
+--
+-- 为什么需要：原来 bm25_scores 每次查询都把**全部文档重新分词、重算 IDF**，
+-- 是 O(总字符数) 不是 O(片段数)。实测 84 片段时 4.98ms，
+-- 900 片段（34 万字）时涨到 201.65ms —— 增长 40.5 倍，超线性。
+-- 见 eval/RESULTS.md 探针十。
+--
+-- ★ 只索引**标识符**（字母数字 token），不索引中文二元组。
+-- 因为查询侧走 identifier_tokens()，中文 token 永远不会被查到。
+-- 实测：全量索引约 112,000 行，只索引标识符 759 行 —— 省 99% 且结果完全一致。
+--
+-- source_id 从 chunks 冗余下来，理由和 chunks.source_id 一样：
+-- 让权限过滤能在同一个 WHERE 里完成，不必 join 回去。
+-- ============================================================
+
+create table if not exists mod_vector.chunk_terms (
+  chunk_id  uuid    not null references mod_vector.chunks(id) on delete cascade,
+  source_id uuid    not null references mod_vector.sources(id) on delete cascade,
+  term      text    not null,
+  freq      integer not null,
+  primary key (chunk_id, term)
+);
+
+-- 查询按 term 找片段，这个索引是整件事的关键
+create index if not exists chunk_terms_term_idx on mod_vector.chunk_terms (term);
+create index if not exists chunk_terms_source_idx on mod_vector.chunk_terms (source_id);
+
 
 -- ============================================================
 -- mod_table：结构化表格链路。CSV → 物理表 → 受限只读 SQL。

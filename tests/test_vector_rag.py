@@ -175,3 +175,77 @@ def test_describe_corpus_excludes_unprocessed_documents(alice):
 
 def test_describe_corpus_empty_is_explicit(bob):
     assert "没有" in gateway.call("vector-rag", "describe_corpus", bob)
+
+
+# ---------------------------------------------------------------- 倒排索引
+#
+# ★ 这一组守的是本次性能优化的验收标准：
+#   索引版和内存版必须算出**完全相同**的排名。分数变了就说明实现有 bug。
+#   test_keyword.py 里已经用纯函数验过等价性，这里验的是**接上数据库之后**仍然一致。
+
+@needs_embedding
+def test_inverted_index_is_built_on_ingest(alice):
+    """入库时就该把标识符写进倒排索引，而不是查询时才分词。"""
+    from minibrain.db import vector_db
+
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "idx-a.md",
+        "# 故障工单 TICKET-77001\n\n工单编号 TICKET-77001，影响产品 X9-Test。",
+    )
+    gateway.process("vector-rag", doc_id)
+
+    with vector_db() as cur:
+        cur.execute("SELECT term FROM chunk_terms WHERE term = %s", ("ticket-77001",))
+        assert cur.fetchone() is not None, "标识符没进倒排索引"
+        cur.execute("SELECT term_count FROM chunks WHERE document_id = %s", (doc_id,))
+        assert cur.fetchone()["term_count"] > 0, "term_count 没写"
+
+
+@needs_embedding
+def test_chinese_terms_are_not_indexed(alice):
+    """★ 只索引标识符。中文二元组永远查不到，存了是浪费 99% 的空间。"""
+    from minibrain.db import vector_db
+
+    doc_id = gateway.call(
+        "vector-rag", "upload_document", alice, None, "idx-b.md",
+        "# 技术部说明\n\n技术部负责人是李伟，下设后端组。",
+    )
+    gateway.process("vector-rag", doc_id)
+    with vector_db() as cur:
+        cur.execute("SELECT count(*) AS n FROM chunk_terms ct "
+                    "JOIN chunks c ON c.id = ct.chunk_id WHERE c.document_id = %s", (doc_id,))
+        assert cur.fetchone()["n"] == 0, "纯中文文档不该产生任何索引行"
+
+
+@needs_embedding
+def test_indexed_ranking_matches_memory_ranking(alice):
+    """★ 验收标准：接上数据库之后，索引版排名 == 内存版排名。"""
+    from minibrain.modules.vector_rag.core import _keyword_ranking_indexed, _visible_chunks
+    from minibrain.modules.vector_rag.keyword import rank_by_bm25
+
+    for name, text in [
+        ("idx-c1.md", "# 工单 TICKET-77101\n\n编号 TICKET-77101，影响 X9-Alpha。"),
+        ("idx-c2.md", "# 工单 TICKET-77102\n\n编号 TICKET-77102，影响 X9-Beta。"),
+        ("idx-c3.md", "# 复盘 TICKET-77101\n\nTICKET-77101 的根因是配置未同步，涉及 X9-Alpha。"),
+    ]:
+        gateway.process("vector-rag", gateway.call(
+            "vector-rag", "upload_document", alice, None, name, text))
+
+    rows = _visible_chunks(alice)
+    for query in ("TICKET-77101 是什么问题？", "X9-Alpha", "TICKET-77102"):
+        indexed = _keyword_ranking_indexed(alice, query, rows)
+        memory = rank_by_bm25(query, [r["content"] for r in rows])
+        assert indexed == memory, f"「{query}」的排名对不上：索引 {indexed} vs 内存 {memory}"
+
+
+@needs_embedding
+def test_index_respects_permissions(alice, bob):
+    """★ 索引也是数据。别人的片段绝不能通过关键词检索被捞出来。"""
+    from minibrain.modules.vector_rag.core import _keyword_ranking_indexed, _visible_chunks
+
+    gateway.process("vector-rag", gateway.call(
+        "vector-rag", "upload_document", alice, None, "idx-secret.md",
+        "# 机密工单 TICKET-99001\n\n编号 TICKET-99001，不该被别人看到。"))
+
+    assert _keyword_ranking_indexed(bob, "TICKET-99001", _visible_chunks(bob)) == []
+    assert _keyword_ranking_indexed(alice, "TICKET-99001", _visible_chunks(alice)) != []

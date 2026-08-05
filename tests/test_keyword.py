@@ -161,3 +161,73 @@ def test_chinese_pseudo_word_no_longer_hijacks_ranking():
 def test_identifier_query_still_works_with_chinese_around_it():
     docs = ["会议 MTG-20260415-03 季度技术评审", "会议 MTG-20260617-02 财务预算评审"]
     assert rank_by_bm25("MTG-20260617-02 这次会议的决议是什么？", docs)[0] == 1
+
+
+# ---------------------------------------------------------------- 倒排索引等价性
+#
+# ★ 这一组是本次优化的验收标准：倒排索引版必须和内存版算出**完全相同**的分数。
+#   这是纯性能优化，分数变了就说明实现有 bug。
+
+from minibrain.modules.vector_rag.keyword import (      # noqa: E402
+    bm25_from_postings, index_terms, total_term_count,
+)
+
+
+def _build_index(documents: list[str]):
+    """把内存里的文档建成倒排索引，模拟数据库里存的东西。"""
+    postings: dict[str, dict[str, int]] = {}
+    doc_lengths, doc_freq = {}, {}
+    for i, doc in enumerate(documents):
+        cid = str(i)
+        doc_lengths[cid] = total_term_count(doc)
+        for term, freq in index_terms(doc).items():
+            postings.setdefault(term, {})[cid] = freq
+            doc_freq[term] = doc_freq.get(term, 0) + 1
+    avg_len = sum(doc_lengths.values()) / len(documents) if documents else 1.0
+    return postings, doc_freq, doc_lengths, avg_len
+
+
+@pytest.mark.parametrize("query", [
+    "MTG-20260617-02 这次会议的决议是什么？",
+    "MTG-20260415-03",
+    "工单 TICKET-88231 是什么问题？",
+    "X7-Pro 的 SLA 是多少",
+])
+def test_index_version_matches_memory_version(query):
+    """★ 验收标准：两个版本分数完全一致。"""
+    docs = DOCS + ["产品 X7-Pro 的 SLA 承诺 99.95%", "工单 TICKET-88231 报表导出超时"]
+    postings, doc_freq, doc_lengths, avg_len = _build_index(docs)
+
+    memory = bm25_scores(query, docs)
+    indexed = bm25_from_postings(query, postings, doc_freq, doc_lengths, len(docs), avg_len)
+
+    for i, expected in enumerate(memory):
+        actual = indexed.get(str(i), 0.0)
+        assert actual == pytest.approx(expected), f"文档 {i} 分数对不上"
+
+
+def test_index_only_stores_identifiers():
+    """中文不进索引——查询侧永远查不到它们，存了是浪费。"""
+    terms = index_terms("会议编号 MTG-20260415-03 主持人李伟")
+    assert "mtg-20260415-03" in terms
+    assert not any("会议" in t or "李伟" in t for t in terms)
+
+
+def test_term_count_is_full_tokenization():
+    """★ 长度归一化的分母必须是全量 token 数，不是索引里的标识符数。
+
+    只数标识符会让分数和内存版对不上——这是最容易写错的地方。
+    """
+    text = "会议编号 MTG-20260415-03 主持人李伟"
+    assert total_term_count(text) > len(index_terms(text))
+    assert total_term_count(text) == len(tokenize(text))
+
+
+def test_postings_miss_returns_empty():
+    postings, doc_freq, doc_lengths, avg_len = _build_index(DOCS)
+    assert bm25_from_postings("TICKET-99999", postings, doc_freq,
+                              doc_lengths, len(DOCS), avg_len) == {}
+
+
+def test_empty_corpus():
+    assert bm25_from_postings("任何查询", {}, {}, {}, 0, 1.0) == {}
