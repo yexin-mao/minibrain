@@ -308,6 +308,12 @@ def _vector_search_in_db(user: UserContext, query: str, top_k: int,
     **省的是数据搬运，不是向量运算**——实测余弦只占本地开销的 0.1%
     （eval/RESULTS.md 探针十一）。这个区别不测出来说不清。
 
+    ★★ 收益来自 `ORDER BY ... LIMIT`，**不是来自 HNSW 索引**。
+       这两件事常被混为一谈，本项目一度也混了（见探针十二）。
+       实际情况是：带权限过滤的查询走的是全表扫描，HNSW 索引一次都没用上；
+       但「排序和截断在数据库里完成、只发回 k 行」这个收益照样成立——
+       它跟走不走索引无关。所以 pgvector 这一步**是有价值的，只是价值不在索引**。
+
     exact=True 时用 `SET LOCAL enable_indexscan = off` 强制走全表精确扫描，
     作为 HNSW 的**对照组**——HNSW 是近似算法，不留对照就量不出它丢了多少召回。
     """
@@ -323,22 +329,32 @@ def _vector_search_in_db(user: UserContext, query: str, top_k: int,
             # ef_search：HNSW 查询时的候选集大小。大 → 召回高、慢。
             cur.execute(f"SET LOCAL hnsw.ef_search = {get_config().hnsw_ef_search}")
 
-            # ★ 必须显式关掉全表扫描，否则优化器根本不会用 HNSW 索引，pgvector 等于白装。
+            # ★★ 这里曾经有一行 `SET LOCAL enable_seqscan = off`，注释写着
+            #    「不加这行 pgvector 白装」。**已删除**，理由是它没有收益。
             #
-            # 实测（EXPLAIN，490 片段）：
-            #     全表扫描 cost 65   ← 优化器选这个
-            #     HNSW 索引 cost 2614
-            # 但实际跑：全表 2.73ms vs HNSW 0.86ms —— **成本模型估错了 40 倍**。
+            #    900 片段实测（eval/RESULTS.md 探针十二，逐档 EXPLAIN 核对过计划）：
             #
-            # 这是小数据量下的已知现象：seq scan 对小表本来就便宜，
-            # 而 pgvector 对 HNSW 的代价估算偏保守。数据量大了优化器会自己选对，
-            # 但在那之前不强制的话，建了索引也用不上，而且**不报错**——
-            # 只是悄悄慢，最难发现的那种。
+            #        不干预 → 优化器选全表扫描      2.24ms
+            #        强制走 HNSW                  2.22ms   ← 差值在噪声里
+            #        一致率 100%，ef 从 10 调到 200 毫无区别
             #
-            # 代价：强制之后，如果哪天索引真的不适用（比如过滤条件极严导致
-            # 索引扫描要遍历大半个图），我们也失去了让优化器兜底的机会。
-            # 所以这是个**该随规模复查的决定**，不是一劳永逸的。
-            cur.execute("SET LOCAL enable_seqscan = off")
+            #    索引**能**走上（强制之后确实走了），但走上之后什么也没带来：
+            #    900 片段太小，全表扫描本来就只要 2.2ms，而端到端有 92% 的时间
+            #    在等 embedding 的网络往返（探针十一）。
+            #
+            #    **没有实测收益的强制不该写进生产代码**——它剥夺了优化器在数据
+            #    变化后重新决策的机会，换来的是零。语料涨上去之后要重新量：
+            #    tests/test_vector_rag.py 里那个
+            #    test_production_search_does_not_use_hnsw_at_current_scale
+            #    会在优化器改主意时变红，那就是重测的信号。
+            #
+            #    ⚠ 下面这行 hnsw.ef_search 目前**调了也没用**（见上表），
+            #      保留是为了规模上去后配置就位，不是因为它现在有效果。
+            #
+            # ⚠⚠ 另有一个静默陷阱：**HNSW 索引会因为反复 upload/delete 而膨胀**。
+            #     开发过程中它一度涨到 1125MB（表仅 18MB，死行 6 万），
+            #     膨胀后优化器不选它、图结构也被撑坏导致召回下降，
+            #     **两件事都不报错**。定期 `REINDEX INDEX chunks_embedding_hnsw_idx`。
 
         cur.execute(
             f"""

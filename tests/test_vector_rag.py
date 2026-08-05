@@ -337,49 +337,104 @@ def test_vector_search_respects_permissions(alice, bob):
     assert "pgv-secret.md" not in seen
 
 
+def _explain(cur, sql, params) -> str:
+    cur.execute("EXPLAIN " + sql, params)
+    return " ".join(str(next(iter(r.values()))) for r in cur.fetchall())
+
+
+def _need_chunks(cur, minimum: int = 500) -> None:
+    """规模不够就跳过。
+
+    优化器在小表上不选 HNSW 是**正确行为**（小表全扫本来就快），不是 bug。
+    实测 210 片段不走、900 片段走。不加这个门槛的话，测试会随着
+    别的用例留下多少数据而随机红绿——那种测试比没有更糟。
+    """
+    cur.execute("SELECT count(*) AS n FROM chunks")
+    n = cur.fetchone()["n"]
+    if n < minimum:
+        pytest.skip(f"只有 {n} 个片段，规模不足以让优化器选 HNSW 索引"
+                    f"（实测阈值在 210~900 之间）。这是成本模型的正常行为。")
+
+
 @needs_embedding
-def test_vector_search_actually_uses_the_hnsw_index(alice):
-    """★ 建了索引不等于用上了索引。
+def test_hnsw_index_is_functional_on_unfiltered_search(alice):
+    """索引本身是好的：无过滤的向量检索能走上 HNSW。
 
-    实测：490 片段时 PostgreSQL 优化器估算全表扫描 cost 65、HNSW cost 2614，
-    于是选全表扫描——但实际 HNSW 快 3.2 倍。成本模型在这个规模下估错了 40 倍。
+    这个测试守的是「索引建对了」——维度、算子类（vector_cosine_ops）、
+    `<=>` 用的距离函数三者匹配。任何一个错了，计划里都不会出现 HNSW。
 
-    所以 _vector_search_in_db 显式 SET enable_seqscan = off。
-    这个测试守的就是那一行：去掉它，pgvector 就白装了，**而且不会报错**，
-    只是悄悄退化成全表扫描。
+    ★ 它**不**代表生产检索走了 HNSW——那是下面那个测试的事。
+
+    ⚠ 这个测试对数据量敏感，片段少时会跳过（见 _need_chunks）。
+      也就是说它在 CI 里基本不跑。真正的守门人是 `scripts/probe_hnsw.py`
+      里的 `check_plans()`——那里计划不对会直接中止测量。
+      这里保留一份，是为了在本地跑完探针、库里有数据时能顺手验一下。
+    """
+    from minibrain.db import vector_db
+    from minibrain.modules.vector_rag.core import _to_vector_literal
+    from minibrain.modules.vector_rag.embeddings import embed_query
+
+    gateway.process("vector-rag", gateway.call(
+        "vector-rag", "upload_document", alice, None, "hnsw-plan.md",
+        "# 索引计划测试\n\n用来确认索引本身可用。"))
+
+    literal = _to_vector_literal(embed_query("索引计划"))
+    with vector_db() as cur:
+        _need_chunks(cur)
+        cur.execute("SET LOCAL enable_seqscan = off")
+        plan = _explain(
+            cur, "SELECT id FROM chunks ORDER BY embedding <=> %s::vector LIMIT 5",
+            [literal])
+
+    assert "chunks_embedding_hnsw_idx" in plan, f"索引本身就走不上：\n{plan[:400]}"
+
+
+@needs_embedding
+def test_production_search_does_not_use_hnsw_at_current_scale(alice):
+    """★ 这是一个「记录现状」的测试，而且它**希望自己有一天变红**。
+
+    现状（eval/RESULTS.md 探针十二，900 片段实测）：生产检索不加干预时，
+    优化器选全表扫描，不用 HNSW。而且**强制它走 HNSW 也没有收益**——
+    延迟 2.22ms vs 2.24ms，在噪声里；一致率 100%，一点召回都没丢。
+    所以 `_vector_search_in_db` 里那行 `SET enable_seqscan = off` 被删掉了：
+    没有实测收益的强制，就不该写进生产代码。
+
+    为什么把现状钉成测试：
+
+      - 上一版这里断言的是「生产检索走了 HNSW」。那个断言是**假的**，
+        却一直没红——因为它要求 ≥500 片段才跑，测试库达不到，每次都跳过。
+        **一个永远跳过的测试，等于把错误结论钉死在文档里。**
+      - 钉住真实现状就有了触发器：等语料涨到优化器认为该用索引的规模，
+        **这个测试会红**，提醒我们回去重新量一遍 ef 的工作点。
+
+    它红的那天是好消息，按下面失败信息里的三步走。
     """
     from minibrain.db import vector_db
     from minibrain.modules.vector_rag.core import _to_vector_literal, _visibility_clause
     from minibrain.modules.vector_rag.embeddings import embed_query
 
-    doc_id = gateway.call(
-        "vector-rag", "upload_document", alice, None, "hnsw-plan.md",
-        "# 索引计划测试\n\n用来确认检索真的走了 HNSW 索引。")
-    gateway.process("vector-rag", doc_id)
+    gateway.process("vector-rag", gateway.call(
+        "vector-rag", "upload_document", alice, None, "hnsw-filtered.md",
+        "# 过滤计划测试\n\n用来记录生产查询默认走什么计划。"))
 
     where, params = _visibility_clause(alice)
-    literal = _to_vector_literal(embed_query("索引计划"))
+    literal = _to_vector_literal(embed_query("过滤计划"))
     with vector_db() as cur:
-        # ★ 数据量不够时优化器**即使被强制也不会**用 HNSW 索引——
-        #   这不是 bug，是成本模型的正确行为（小表全扫本来就快）。
-        #   实测：210 片段时不走索引，900 片段时走。
-        #   所以这个测试对数据量敏感，不够就跳过而不是红，
-        #   否则它会随着别的测试留下多少数据而随机红绿。
-        cur.execute("SELECT count(*) AS n FROM chunks")
-        n_chunks = cur.fetchone()["n"]
-        if n_chunks < 500:
-            pytest.skip(f"只有 {n_chunks} 个片段，规模不足以让优化器选 HNSW 索引"
-                        f"（实测阈值在 210~900 之间）。这是成本模型的正常行为。")
-
-        cur.execute("SET LOCAL enable_seqscan = off")        # 和生产代码同样的设置
-        cur.execute(
-            f"""EXPLAIN SELECT c.id FROM chunks c
+        # ★ 不做任何 SET —— 测的就是「生产代码实际会走什么」。
+        plan = _explain(
+            cur,
+            f"""SELECT c.id FROM chunks c
                 JOIN documents d ON d.id = c.document_id
                 JOIN sources s ON s.id = c.source_id
                 WHERE {where} AND d.status = 'ready'
                 ORDER BY c.embedding <=> %s::vector LIMIT 5""",
-            params + [literal],
-        )
-        plan = " ".join(str(list(r.values())[0]) for r in cur.fetchall())
+            params + [literal])
 
-    assert "chunks_embedding_hnsw_idx" in plan, f"没走 HNSW 索引：\n{plan[:400]}"
+    assert "chunks_embedding_hnsw_idx" not in plan, (
+        "好消息：优化器现在自己选 HNSW 了，说明数据量到了索引开始回本的规模。\n"
+        "请做三件事，然后把这个测试改成断言「走了 HNSW」：\n"
+        "  1. 重跑 scripts/probe_hnsw.py，重新量 ef 的工作点\n"
+        "     （900 片段时 ef 完全不起作用，那个结论到此为止）\n"
+        "  2. 更新 eval/RESULTS.md 探针十二\n"
+        "  3. 复查 core.py 里「为什么不强制」那段注释\n"
+        f"当前计划：\n{plan[:400]}")
