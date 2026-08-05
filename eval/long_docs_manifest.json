@@ -1,0 +1,734 @@
+[
+  {
+    "file": "long-design-prj-2026-0142.md",
+    "chars": 7499,
+    "facts": [
+      {
+        "section": "1. 背景与目标",
+        "fact": "PRJ-2026-0142 由算法组承担，负责人陈刚"
+      },
+      {
+        "section": "3. 方案设计",
+        "fact": "Beta 项目的 RTO 定为 45 分钟"
+      },
+      {
+        "section": "4. 容量与性能",
+        "fact": "Beta 项目单实例峰值 1500 QPS"
+      },
+      {
+        "section": "6. 评审结论",
+        "fact": "Beta 项目方案的评审人是李伟"
+      }
+    ]
+  },
+  {
+    "file": "long-design-prj-2026-0155.md",
+    "chars": 7507,
+    "facts": [
+      {
+        "section": "1. 背景与目标",
+        "fact": "PRJ-2026-0155 由前端组承担，负责人刘洋"
+      },
+      {
+        "section": "3. 方案设计",
+        "fact": "Gamma 项目的 RTO 定为 30 分钟"
+      },
+      {
+        "section": "4. 容量与性能",
+        "fact": "Gamma 项目单实例峰值 1500 QPS"
+      },
+      {
+        "section": "6. 评审结论",
+        "fact": "Gamma 项目方案的评审人是王芳"
+      }
+    ]
+  },
+  {
+    "file": "long-design-prj-2026-0163.md",
+    "chars": 7552,
+    "facts": [
+      {
+        "section": "1. 背景与目标",
+        "fact": "PRJ-2026-0163 由后端组承担，负责人张敏"
+      },
+      {
+        "section": "3. 方案设计",
+        "fact": "Delta 项目的 RTO 定为 30 分钟"
+      },
+      {
+        "section": "4. 容量与性能",
+        "fact": "Delta 项目单实例峰值 1200 QPS"
+      },
+      {
+        "section": "6. 评审结论",
+        "fact": "Delta 项目方案的评审人是李伟"
+      }
+    ]
+  },
+  {
+    "file": "long-design-prj-2026-0178.md",
+    "chars": 7634,
+    "facts": [
+      {
+        "section": "1. 背景与目标",
+        "fact": "PRJ-2026-0178 由用户研究组承担，负责人吴倩"
+      },
+      {
+        "section": "3. 方案设计",
+        "fact": "Epsilon 项目的 RTO 定为 60 分钟"
+      },
+      {
+        "section": "4. 容量与性能",
+        "fact": "Epsilon 项目单实例峰值 900 QPS"
+      },
+      {
+        "section": "6. 评审结论",
+        "fact": "Epsilon 项目方案的评审人是王芳"
+      }
+    ]
+  },
+  {
+    "file": "long-design-prj-2026-0191.md",
+    "chars": 7595,
+    "facts": [
+      {
+        "section": "1. 背景与目标",
+        "fact": "PRJ-2026-0191 由品牌组承担，负责人冯磊"
+      },
+      {
+        "section": "3. 方案设计",
+        "fact": "Zeta 项目的 RTO 定为 45 分钟"
+      },
+      {
+        "section": "4. 容量与性能",
+        "fact": "Zeta 项目单实例峰值 600 QPS"
+      },
+      {
+        "section": "6. 评审结论",
+        "fact": "Zeta 项目方案的评审人是王芳"
+      }
+    ]
+  },
+  {
+    "file": "long-design-prj-2026-0204.md",
+    "chars": 7472,
+    "facts": [
+      {
+        "section": "1. 背景与目标",
+        "fact": "PRJ-2026-0204 由会计组承担，负责人曹敏"
+      },
+      {
+        "section": "3. 方案设计",
+        "fact": "Eta 项目的 RTO 定为 15 分钟"
+      },
+      {
+        "section": "4. 容量与性能",
+        "fact": "Eta 项目单实例峰值 600 QPS"
+      },
+      {
+        "section": "6. 评审结论",
+        "fact": "Eta 项目方案的评审人是王芳"
+      }
+    ]
+  },
+  {
+    "file": "long-design-prj-2026-0217.md",
+    "chars": 7481,
+    "facts": [
+      {
+        "section": "1. 背景与目标",
+        "fact": "PRJ-2026-0217 由产品设计组承担，负责人胡静"
+      },
+      {
+        "section": "3. 方案设计",
+        "fact": "Theta 项目的 RTO 定为 30 分钟"
+      },
+      {
+        "section": "4. 容量与性能",
+        "fact": "Theta 项目单实例峰值 1200 QPS"
+      },
+      {
+        "section": "6. 评审结论",
+        "fact": "Theta 项目方案的评审人是李伟"
+      }
+    ]
+  },
+  {
+    "file": "long-design-prj-2026-0223.md",
+    "chars": 7477,
+    "facts": [
+      {
+        "section": "1. 背景与目标",
+        "fact": "PRJ-2026-0223 由招聘组承担，负责人何静"
+      },
+      {
+        "section": "3. 方案设计",
+        "fact": "Iota 项目的 RTO 定为 60 分钟"
+      },
+      {
+        "section": "4. 容量与性能",
+        "fact": "Iota 项目单实例峰值 1500 QPS"
+      },
+      {
+        "section": "6. 评审结论",
+        "fact": "Iota 项目方案的评审人是王芳"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q1-张敏.md",
+    "chars": 7130,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "后端组组长张敏，8 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "后端组本季度新增 2 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q2-张敏.md",
+    "chars": 7043,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "后端组组长张敏，8 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "后端组本季度新增 1 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q3-张敏.md",
+    "chars": 7022,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "后端组组长张敏，8 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "后端组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q4-张敏.md",
+    "chars": 7136,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "后端组组长张敏，8 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "后端组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q1-刘洋.md",
+    "chars": 7091,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "前端组组长刘洋，7 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "前端组本季度新增 2 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q2-刘洋.md",
+    "chars": 7023,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "前端组组长刘洋，7 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "前端组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q3-刘洋.md",
+    "chars": 7142,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "前端组组长刘洋，7 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "前端组本季度新增 2 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q4-刘洋.md",
+    "chars": 7124,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "前端组组长刘洋，7 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "前端组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q1-陈刚.md",
+    "chars": 7057,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "算法组组长陈刚，12 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "算法组本季度新增 2 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q2-陈刚.md",
+    "chars": 7050,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "算法组组长陈刚，12 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "算法组本季度新增 2 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q3-陈刚.md",
+    "chars": 7062,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "算法组组长陈刚，12 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "算法组本季度新增 1 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q4-陈刚.md",
+    "chars": 7040,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "算法组组长陈刚，12 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "算法组本季度新增 1 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q1-胡静.md",
+    "chars": 7126,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "产品设计组组长胡静，6 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "产品设计组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q2-胡静.md",
+    "chars": 7105,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "产品设计组组长胡静，6 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "产品设计组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q3-胡静.md",
+    "chars": 7120,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "产品设计组组长胡静，6 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "产品设计组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q4-胡静.md",
+    "chars": 7076,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "产品设计组组长胡静，6 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "产品设计组本季度新增 2 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q1-吴倩.md",
+    "chars": 7140,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "用户研究组组长吴倩，5 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "用户研究组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q2-吴倩.md",
+    "chars": 7135,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "用户研究组组长吴倩，5 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "用户研究组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q3-吴倩.md",
+    "chars": 7088,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "用户研究组组长吴倩，5 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "用户研究组本季度新增 2 人"
+      }
+    ]
+  },
+  {
+    "file": "long-report-q4-吴倩.md",
+    "chars": 7123,
+    "facts": [
+      {
+        "section": "一、团队概况",
+        "fact": "用户研究组组长吴倩，5 人"
+      },
+      {
+        "section": "四、人员变动",
+        "fact": "用户研究组本季度新增 3 人"
+      }
+    ]
+  },
+  {
+    "file": "long-manual-x7-pro.md",
+    "chars": 6797,
+    "facts": [
+      {
+        "section": "1. 产品简介",
+        "fact": "X7-Pro 当前版本 v2.3.1"
+      },
+      {
+        "section": "3. 配置说明",
+        "fact": "X7-Pro 默认端口 8080"
+      }
+    ]
+  },
+  {
+    "file": "long-manual-x7-lite.md",
+    "chars": 6810,
+    "facts": [
+      {
+        "section": "1. 产品简介",
+        "fact": "X7-Lite 当前版本 v2.3.1"
+      },
+      {
+        "section": "3. 配置说明",
+        "fact": "X7-Lite 默认端口 9443"
+      }
+    ]
+  },
+  {
+    "file": "long-manual-s3-max.md",
+    "chars": 6806,
+    "facts": [
+      {
+        "section": "1. 产品简介",
+        "fact": "S3-Max 当前版本 v1.8.4"
+      },
+      {
+        "section": "3. 配置说明",
+        "fact": "S3-Max 默认端口 9443"
+      }
+    ]
+  },
+  {
+    "file": "long-manual-s3-mini.md",
+    "chars": 6816,
+    "facts": [
+      {
+        "section": "1. 产品简介",
+        "fact": "S3-Mini 当前版本 v1.8.4"
+      },
+      {
+        "section": "3. 配置说明",
+        "fact": "S3-Mini 默认端口 8443"
+      }
+    ]
+  },
+  {
+    "file": "long-manual-k2-air.md",
+    "chars": 6808,
+    "facts": [
+      {
+        "section": "1. 产品简介",
+        "fact": "K2-Air 当前版本 v0.9.12"
+      },
+      {
+        "section": "3. 配置说明",
+        "fact": "K2-Air 默认端口 8443"
+      }
+    ]
+  },
+  {
+    "file": "long-manual-r5-nova.md",
+    "chars": 6821,
+    "facts": [
+      {
+        "section": "1. 产品简介",
+        "fact": "R5-Nova 当前版本 v4.1.0"
+      },
+      {
+        "section": "3. 配置说明",
+        "fact": "R5-Nova 默认端口 8080"
+      }
+    ]
+  },
+  {
+    "file": "long-postmortem-ticket-88231.md",
+    "chars": 7143,
+    "facts": [
+      {
+        "section": "1. 事件概述",
+        "fact": "TICKET-88231 持续 95 分钟"
+      },
+      {
+        "section": "3. 根因分析",
+        "fact": "TICKET-88231 的根因是配置未同步"
+      }
+    ]
+  },
+  {
+    "file": "long-postmortem-ticket-88407.md",
+    "chars": 7151,
+    "facts": [
+      {
+        "section": "1. 事件概述",
+        "fact": "TICKET-88407 持续 95 分钟"
+      },
+      {
+        "section": "3. 根因分析",
+        "fact": "TICKET-88407 的根因是配置未同步"
+      }
+    ]
+  },
+  {
+    "file": "long-postmortem-ticket-88512.md",
+    "chars": 7173,
+    "facts": [
+      {
+        "section": "1. 事件概述",
+        "fact": "TICKET-88512 持续 27 分钟"
+      },
+      {
+        "section": "3. 根因分析",
+        "fact": "TICKET-88512 的根因是内存泄漏"
+      }
+    ]
+  },
+  {
+    "file": "long-postmortem-ticket-88690.md",
+    "chars": 7124,
+    "facts": [
+      {
+        "section": "1. 事件概述",
+        "fact": "TICKET-88690 持续 43 分钟"
+      },
+      {
+        "section": "3. 根因分析",
+        "fact": "TICKET-88690 的根因是上游限流"
+      }
+    ]
+  },
+  {
+    "file": "long-postmortem-ticket-88745.md",
+    "chars": 7148,
+    "facts": [
+      {
+        "section": "1. 事件概述",
+        "fact": "TICKET-88745 持续 27 分钟"
+      },
+      {
+        "section": "3. 根因分析",
+        "fact": "TICKET-88745 的根因是内存泄漏"
+      }
+    ]
+  },
+  {
+    "file": "long-postmortem-ticket-88823.md",
+    "chars": 7142,
+    "facts": [
+      {
+        "section": "1. 事件概述",
+        "fact": "TICKET-88823 持续 43 分钟"
+      },
+      {
+        "section": "3. 根因分析",
+        "fact": "TICKET-88823 的根因是上游限流"
+      }
+    ]
+  },
+  {
+    "file": "long-handbook-报销.md",
+    "chars": 8300,
+    "facts": [
+      {
+        "section": "第二章 基本规定",
+        "fact": "发票需在消费后 30 天内提交"
+      },
+      {
+        "section": "第三章 申请流程",
+        "fact": "差旅与报销需提前 3 个工作日申请"
+      },
+      {
+        "section": "第五章 解释与修订",
+        "fact": "差旅与报销手册由王芳归口维护"
+      }
+    ]
+  },
+  {
+    "file": "long-handbook-考勤.md",
+    "chars": 8351,
+    "facts": [
+      {
+        "section": "第二章 基本规定",
+        "fact": "核心工作时间为 10:00 至 16:00"
+      },
+      {
+        "section": "第三章 申请流程",
+        "fact": "考勤与假期需提前 10 个工作日申请"
+      },
+      {
+        "section": "第五章 解释与修订",
+        "fact": "考勤与假期手册由李伟归口维护"
+      }
+    ]
+  },
+  {
+    "file": "long-handbook-绩效.md",
+    "chars": 8360,
+    "facts": [
+      {
+        "section": "第二章 基本规定",
+        "fact": "绩效考核每半年一次，分 S/A/B/C 四档"
+      },
+      {
+        "section": "第三章 申请流程",
+        "fact": "绩效与晋升需提前 10 个工作日申请"
+      },
+      {
+        "section": "第五章 解释与修订",
+        "fact": "绩效与晋升手册由孙红归口维护"
+      }
+    ]
+  },
+  {
+    "file": "long-handbook-安全.md",
+    "chars": 8323,
+    "facts": [
+      {
+        "section": "第二章 基本规定",
+        "fact": "机密文件不得存放在个人设备或公有云盘"
+      },
+      {
+        "section": "第三章 申请流程",
+        "fact": "信息安全需提前 7 个工作日申请"
+      },
+      {
+        "section": "第五章 解释与修订",
+        "fact": "信息安全手册由王芳归口维护"
+      }
+    ]
+  },
+  {
+    "file": "long-handbook-采购.md",
+    "chars": 8275,
+    "facts": [
+      {
+        "section": "第二章 基本规定",
+        "fact": "单笔金额超过 5 万元的须三家比价"
+      },
+      {
+        "section": "第三章 申请流程",
+        "fact": "供应商合作需提前 10 个工作日申请"
+      },
+      {
+        "section": "第五章 解释与修订",
+        "fact": "供应商合作手册由周涛归口维护"
+      }
+    ]
+  },
+  {
+    "file": "long-handbook-研发.md",
+    "chars": 8355,
+    "facts": [
+      {
+        "section": "第二章 基本规定",
+        "fact": "发布窗口为每周二、周四 20:00 至 22:00"
+      },
+      {
+        "section": "第三章 申请流程",
+        "fact": "研发流程需提前 7 个工作日申请"
+      },
+      {
+        "section": "第五章 解释与修订",
+        "fact": "研发流程手册由孙红归口维护"
+      }
+    ]
+  }
+]

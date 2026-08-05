@@ -4,126 +4,169 @@
     "category": "专有名词·项目编号",
     "question": "PRJ-2026-0142 是哪个项目？由谁负责？",
     "required": [
+      "long-design-prj-2026-0142.md",
       "project-prj-2026-0142.md"
     ],
-    "why": "植入的项目编号「PRJ-2026-0142」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的项目编号「PRJ-2026-0142」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 PRJ-2026-0142 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-02",
     "category": "专有名词·项目编号",
     "question": "PRJ-2026-0155 是哪个项目？由谁负责？",
     "required": [
+      "long-design-prj-2026-0155.md",
       "project-prj-2026-0155.md"
     ],
-    "why": "植入的项目编号「PRJ-2026-0155」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的项目编号「PRJ-2026-0155」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 PRJ-2026-0155 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-03",
     "category": "专有名词·项目编号",
     "question": "PRJ-2026-0163 是哪个项目？由谁负责？",
     "required": [
+      "long-design-prj-2026-0163.md",
       "project-prj-2026-0163.md"
     ],
-    "why": "植入的项目编号「PRJ-2026-0163」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的项目编号「PRJ-2026-0163」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 PRJ-2026-0163 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-04",
     "category": "专有名词·项目编号",
     "question": "PRJ-2026-0178 是哪个项目？由谁负责？",
     "required": [
+      "long-design-prj-2026-0178.md",
       "project-prj-2026-0178.md"
     ],
-    "why": "植入的项目编号「PRJ-2026-0178」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的项目编号「PRJ-2026-0178」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 PRJ-2026-0178 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-05",
     "category": "专有名词·项目编号",
     "question": "PRJ-2026-0191 是哪个项目？由谁负责？",
     "required": [
+      "long-design-prj-2026-0191.md",
       "project-prj-2026-0191.md"
     ],
-    "why": "植入的项目编号「PRJ-2026-0191」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的项目编号「PRJ-2026-0191」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 PRJ-2026-0191 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-06",
     "category": "专有名词·项目编号",
     "question": "PRJ-2026-0204 是哪个项目？由谁负责？",
     "required": [
+      "long-design-prj-2026-0204.md",
       "project-prj-2026-0204.md"
     ],
-    "why": "植入的项目编号「PRJ-2026-0204」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的项目编号「PRJ-2026-0204」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 PRJ-2026-0204 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-07",
     "category": "专有名词·项目编号",
     "question": "PRJ-2026-0217 是哪个项目？由谁负责？",
     "required": [
+      "long-design-prj-2026-0217.md",
       "project-prj-2026-0217.md"
     ],
-    "why": "植入的项目编号「PRJ-2026-0217」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的项目编号「PRJ-2026-0217」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 PRJ-2026-0217 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-08",
     "category": "专有名词·项目编号",
     "question": "PRJ-2026-0223 是哪个项目？由谁负责？",
     "required": [
+      "long-design-prj-2026-0223.md",
       "project-prj-2026-0223.md"
     ],
-    "why": "植入的项目编号「PRJ-2026-0223」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的项目编号「PRJ-2026-0223」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 PRJ-2026-0223 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-09",
     "category": "专有名词·工单编号",
     "question": "工单 TICKET-88231 是什么问题？",
     "required": [
+      "long-postmortem-ticket-88231.md",
       "ticket-ticket-88231.md"
     ],
-    "why": "植入的工单编号「TICKET-88231」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的工单编号「TICKET-88231」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 TICKET-88231 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-10",
     "category": "专有名词·工单编号",
     "question": "工单 TICKET-88407 是什么问题？",
     "required": [
+      "long-postmortem-ticket-88407.md",
+      "meeting-mtg-20260519-04.md",
       "ticket-ticket-88407.md"
     ],
-    "why": "植入的工单编号「TICKET-88407」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的工单编号「TICKET-88407」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 TICKET-88407 也出现在 2 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-11",
     "category": "专有名词·工单编号",
     "question": "工单 TICKET-88512 是什么问题？",
     "required": [
+      "long-postmortem-ticket-88512.md",
       "ticket-ticket-88512.md"
     ],
-    "why": "植入的工单编号「TICKET-88512」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的工单编号「TICKET-88512」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 TICKET-88512 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-12",
     "category": "专有名词·工单编号",
     "question": "工单 TICKET-88690 是什么问题？",
     "required": [
+      "long-postmortem-ticket-88690.md",
       "ticket-ticket-88690.md"
     ],
-    "why": "植入的工单编号「TICKET-88690」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的工单编号「TICKET-88690」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 TICKET-88690 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-13",
     "category": "专有名词·工单编号",
     "question": "工单 TICKET-88745 是什么问题？",
     "required": [
+      "long-postmortem-ticket-88745.md",
       "ticket-ticket-88745.md"
     ],
-    "why": "植入的工单编号「TICKET-88745」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的工单编号「TICKET-88745」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 TICKET-88745 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-14",
     "category": "专有名词·工单编号",
     "question": "工单 TICKET-88823 是什么问题？",
     "required": [
+      "long-postmortem-ticket-88823.md",
       "ticket-ticket-88823.md"
     ],
-    "why": "植入的工单编号「TICKET-88823」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的工单编号「TICKET-88823」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 TICKET-88823 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-15",
@@ -202,45 +245,71 @@
     "category": "专有名词·产品型号",
     "question": "X7-Pro 是什么产品？当前版本是多少？",
     "required": [
-      "product-x7-pro.md"
+      "long-manual-x7-pro.md",
+      "long-postmortem-ticket-88512.md",
+      "meeting-mtg-20260701-05.md",
+      "product-x7-pro.md",
+      "ticket-ticket-88512.md"
     ],
-    "why": "植入的产品型号「X7-Pro」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的产品型号「X7-Pro」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 X7-Pro 也出现在 4 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-24",
     "category": "专有名词·产品型号",
     "question": "X7-Lite 是什么产品？当前版本是多少？",
     "required": [
+      "long-manual-x7-lite.md",
+      "meeting-mtg-20260701-05.md",
       "product-x7-lite.md"
     ],
-    "why": "植入的产品型号「X7-Lite」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的产品型号「X7-Lite」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 X7-Lite 也出现在 2 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-25",
     "category": "专有名词·产品型号",
     "question": "S3-Max 是什么产品？当前版本是多少？",
     "required": [
-      "product-s3-max.md"
+      "long-manual-s3-max.md",
+      "long-postmortem-ticket-88823.md",
+      "product-s3-max.md",
+      "ticket-ticket-88823.md"
     ],
-    "why": "植入的产品型号「S3-Max」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的产品型号「S3-Max」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 S3-Max 也出现在 3 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-26",
     "category": "专有名词·产品型号",
     "question": "S3-Mini 是什么产品？当前版本是多少？",
     "required": [
-      "product-s3-mini.md"
+      "long-manual-s3-mini.md",
+      "long-postmortem-ticket-88690.md",
+      "product-s3-mini.md",
+      "ticket-ticket-88690.md"
     ],
-    "why": "植入的产品型号「S3-Mini」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的产品型号「S3-Mini」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 S3-Mini 也出现在 3 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-27",
     "category": "专有名词·产品型号",
     "question": "K2-Air 是什么产品？当前版本是多少？",
     "required": [
-      "product-k2-air.md"
+      "long-manual-k2-air.md",
+      "long-postmortem-ticket-88407.md",
+      "meeting-mtg-20260519-04.md",
+      "product-k2-air.md",
+      "ticket-ticket-88407.md"
     ],
-    "why": "植入的产品型号「K2-Air」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的产品型号「K2-Air」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 K2-Air 也出现在 4 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-28",
@@ -256,18 +325,27 @@
     "category": "专有名词·产品型号",
     "question": "R5-Nova 是什么产品？当前版本是多少？",
     "required": [
-      "product-r5-nova.md"
+      "long-manual-r5-nova.md",
+      "long-postmortem-ticket-88745.md",
+      "product-r5-nova.md",
+      "ticket-ticket-88745.md"
     ],
-    "why": "植入的产品型号「R5-Nova」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的产品型号「R5-Nova」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 R5-Nova 也出现在 3 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-30",
     "category": "专有名词·产品型号",
     "question": "R5-Quasar 是什么产品？当前版本是多少？",
     "required": [
-      "product-r5-quasar.md"
+      "long-postmortem-ticket-88231.md",
+      "product-r5-quasar.md",
+      "ticket-ticket-88231.md"
     ],
-    "why": "植入的产品型号「R5-Quasar」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的产品型号「R5-Quasar」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 R5-Quasar 也出现在 2 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-31",
@@ -283,9 +361,19 @@
     "category": "专有名词·英文缩写",
     "question": "RTO 的口径是怎么规定的？",
     "required": [
+      "long-design-prj-2026-0142.md",
+      "long-design-prj-2026-0155.md",
+      "long-design-prj-2026-0163.md",
+      "long-design-prj-2026-0178.md",
+      "long-design-prj-2026-0191.md",
+      "long-design-prj-2026-0204.md",
+      "long-design-prj-2026-0217.md",
+      "long-design-prj-2026-0223.md",
       "metric-rto.md"
     ],
-    "why": "植入的英文缩写「RTO」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的英文缩写「RTO」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 RTO 也出现在 8 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-33",
@@ -301,9 +389,20 @@
     "category": "专有名词·英文缩写",
     "question": "QPS 的口径是怎么规定的？",
     "required": [
-      "metric-qps.md"
+      "long-design-prj-2026-0142.md",
+      "long-design-prj-2026-0155.md",
+      "long-design-prj-2026-0163.md",
+      "long-design-prj-2026-0178.md",
+      "long-design-prj-2026-0191.md",
+      "long-design-prj-2026-0204.md",
+      "long-design-prj-2026-0217.md",
+      "long-design-prj-2026-0223.md",
+      "metric-qps.md",
+      "runbook-capacity.md"
     ],
-    "why": "植入的英文缩写「QPS」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的英文缩写「QPS」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 QPS 也出现在 9 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-35",
@@ -319,27 +418,50 @@
     "category": "专有名词·英文缩写",
     "question": "P0 的口径是怎么规定的？",
     "required": [
-      "metric-p0.md"
+      "long-postmortem-ticket-88407.md",
+      "long-postmortem-ticket-88823.md",
+      "metric-p0.md",
+      "runbook-monitor.md",
+      "runbook-oncall.md",
+      "ticket-ticket-88407.md",
+      "ticket-ticket-88823.md"
     ],
-    "why": "植入的英文缩写「P0」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的英文缩写「P0」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 P0 也出现在 6 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-37",
     "category": "专有名词·英文缩写",
     "question": "P1 的口径是怎么规定的？",
     "required": [
-      "metric-p1.md"
+      "long-postmortem-ticket-88231.md",
+      "long-postmortem-ticket-88512.md",
+      "long-postmortem-ticket-88690.md",
+      "long-postmortem-ticket-88745.md",
+      "metric-p1.md",
+      "runbook-monitor.md",
+      "runbook-oncall.md",
+      "ticket-ticket-88231.md",
+      "ticket-ticket-88512.md",
+      "ticket-ticket-88690.md",
+      "ticket-ticket-88745.md"
     ],
-    "why": "植入的英文缩写「P1」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的英文缩写「P1」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 P1 也出现在 10 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-38",
     "category": "专有名词·英文缩写",
     "question": "CAC 的口径是怎么规定的？",
     "required": [
+      "meeting-mtg-20260508-02.md",
       "metric-cac.md"
     ],
-    "why": "植入的英文缩写「CAC」。这类词转成向量后语义信息很弱，是向量检索的天然盲区"
+    "why": "植入的英文缩写「CAC」。这类词转成向量后语义信息很弱，是向量检索的天然盲区。扩语料后 CAC 也出现在 1 篇长文档里，标准答案已扩充",
+    "complete_required": false,
+    "note": "相关文档有多篇（短记录 + 长文档），**命中任意一篇就答得出来**。所以 Recall/MRR/NDCG 有意义，**Complete Recall 对这类题不适用**——它要求全部召回，而这里不需要。"
   },
   {
     "id": "bs-39",

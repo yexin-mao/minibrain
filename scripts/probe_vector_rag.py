@@ -129,13 +129,19 @@ def main() -> int:
         # ---------------- 汇总 ----------------
         print("=" * 72)
         print("汇总一：各类问题的 Complete Recall@k（必需文档全部召回才算）")
+        print("★ 标了 complete_required=False 的题不计入本表——它们的相关文档有多篇，")
+        print("  命中任意一篇就答得出来，要求全部召回是错误的判据。")
         print("=" * 72)
         print(f"{'类别':<18}" + "".join(f"{'k='+str(k):>10}" for k in K_GRID))
         for cat, rows in by_cat.items():
+            strict = [r for r in rows if r["probe"].get("complete_required", True)]
+            if not strict:
+                print(f"{cat:<18}{'（不适用）':>30}")
+                continue
             cells = ""
             for k in K_GRID:
-                ok = sum(1 for r in rows if r["at_k"][k]["answerable"])
-                cells += f"{ok}/{len(rows):<8}".rjust(10)
+                ok = sum(1 for r in strict if r["at_k"][k]["answerable"])
+                cells += f"{ok}/{len(strict):<8}".rjust(10)
             print(f"{cat:<18}{cells}")
 
         print(f"\n（语料共 {total} 篇。最小可答 k 接近 {total} 意味着检索基本没起作用——"
