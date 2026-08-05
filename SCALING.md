@@ -236,10 +236,30 @@ BM25 超线性的根因：`bm25_scores` **每次查询都把全部文档重新�
 
 **优化顺序因此完全反了过来：**
 
-1. BM25 预建倒排索引（增长最快，根因明确）
+1. ~~BM25 预建倒排索引~~ → ✅ **已做**（见 RESULTS.md 探针十一）
 2. SQL 只取需要的列/行（占本地 71.6%）
 3. embedding 查询缓存（占端到端 82.4%）
 4. pgvector + HNSW（**余弦只占 0.1%，收益最小**）
+
+### 倒排索引长什么样
+
+```sql
+create table mod_vector.chunk_terms (
+  chunk_id  uuid    not null references chunks(id) on delete cascade,
+  source_id uuid    not null references sources(id) on delete cascade,  -- 权限过滤用
+  term      text    not null,
+  freq      integer not null,
+  primary key (chunk_id, term)
+);
+create index chunk_terms_term_idx on chunk_terms (term);
+```
+
+**只索引标识符，不索引中文二元组**——查询侧走 `identifier_tokens()`，
+中文 token 永远查不到。实测：全量索引约 112,000 行，只索引标识符 **759 行**，
+省 **99%** 且结果完全一致。
+
+长度归一化的分母（`chunks.term_count`）必须是**全量**分词的计数，
+只数标识符会让分数和内存版对不上——这是最容易写错的地方，有测试钉着。
 
 pgvector 真正的价值是第 2 项——让数据库只返回 top-k，
 **不用把 900×1024 个浮点数搬进内存**。是"减少数据搬运"不是"加速向量运算"。

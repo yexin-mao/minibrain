@@ -16,7 +16,7 @@ from ...contracts import Evidence, ModuleError, NotFound, PermissionDenied, Sear
 from ...db import vector_db
 from .chunking import split_text
 from .fusion import reciprocal_rank_fusion
-from .keyword import rank_by_bm25
+from .keyword import bm25_from_postings, index_terms, rank_by_bm25, total_term_count
 from .embeddings import embed_query, embed_texts
 
 MODULE_ID = "vector-rag"
@@ -232,17 +232,39 @@ def process_document(document_id: str) -> None:
 
         with vector_db() as cur:
             cur.execute("DELETE FROM chunks WHERE document_id = %s", (document_id,))
+            # 一并写入 term_count：BM25 长度归一化的分母，必须是**全量**分词的计数
             cur.executemany(
                 """
                 INSERT INTO chunks
-                  (document_id, source_id, ordinal, content, embedding, embedding_model, embedding_dim)
-                VALUES (%s, %s, %s, %s, %s::real[], %s, %s)
+                  (document_id, source_id, ordinal, content, embedding,
+                   embedding_model, embedding_dim, term_count)
+                VALUES (%s, %s, %s, %s, %s::real[], %s, %s, %s)
+                RETURNING id
                 """,
                 [
-                    (document_id, source_id, i, piece, vec, cfg.embedding_model, len(vec))
+                    (document_id, source_id, i, piece, vec,
+                     cfg.embedding_model, len(vec), total_term_count(piece))
                     for i, (piece, vec) in enumerate(zip(pieces, vectors))
                 ],
             )
+
+            # 建倒排索引。原来 BM25 每次查询都把全部文档重新分词——
+            # 实测 900 片段时 201.65ms，增长 40.5 倍（见 eval/RESULTS.md 探针十）。
+            # 分词是片段的固有属性，和查询无关，所以只该做一次。
+            cur.execute(
+                "SELECT id, ordinal FROM chunks WHERE document_id = %s ORDER BY ordinal",
+                (document_id,),
+            )
+            postings = []
+            for row in cur.fetchall():
+                for term, freq in index_terms(pieces[row["ordinal"]]).items():
+                    postings.append((str(row["id"]), source_id, term, freq))
+            if postings:
+                cur.executemany(
+                    "INSERT INTO chunk_terms (chunk_id, source_id, term, freq) "
+                    "VALUES (%s, %s, %s, %s)",
+                    postings,
+                )
             cur.execute(
                 "UPDATE documents SET status = 'ready', error = NULL, updated_at = now() WHERE id = %s",
                 (document_id,),
@@ -268,7 +290,7 @@ def _visible_chunks(user: UserContext) -> list[dict]:
     with vector_db() as cur:
         cur.execute(
             f"""
-            SELECT c.content, c.ordinal, c.embedding,
+            SELECT c.id, c.content, c.ordinal, c.embedding, c.term_count,
                    d.filename, s.name AS source_name
             FROM chunks c
             JOIN documents d ON d.id = c.document_id
@@ -278,6 +300,63 @@ def _visible_chunks(user: UserContext) -> list[dict]:
             params,
         )
         return cur.fetchall()
+
+
+def _keyword_ranking_indexed(user: UserContext, query: str, rows: list[dict]) -> list[int]:
+    """走倒排索引的 BM25。只对命中查询词的片段打分，不碰其他片段。
+
+    和内存版 rank_by_bm25 算出的分数**完全一致**——
+    tests/test_keyword.py 里有等价性测试钉着。这是纯性能优化。
+    """
+    terms = sorted(set(index_terms(query)))
+    if not terms:
+        return []                       # 查询里没有标识符 → 关键词路不发声
+
+    where, params = _visibility_clause(user)
+    with vector_db() as cur:
+        # 命中的 (词, 片段, 词频)。只拿回含查询词的行，不是全表
+        cur.execute(
+            f"""
+            SELECT ct.term, ct.chunk_id, ct.freq
+            FROM chunk_terms ct
+            JOIN sources s ON s.id = ct.source_id
+            WHERE {where} AND ct.term = ANY(%s)
+            """,
+            params + [terms],
+        )
+        hits = cur.fetchall()
+
+        # 文档频率：每个词出现在几个**可见**片段里。
+        # 用可见集合算 IDF 而不是全库——权限过滤之后剩什么，稀有度就按什么算。
+        cur.execute(
+            f"""
+            SELECT ct.term, count(*) AS df
+            FROM chunk_terms ct
+            JOIN sources s ON s.id = ct.source_id
+            WHERE {where} AND ct.term = ANY(%s)
+            GROUP BY ct.term
+            """,
+            params + [terms],
+        )
+        doc_freq = {r["term"]: r["df"] for r in cur.fetchall()}
+
+    if not hits:
+        return []
+
+    postings: dict[str, dict[str, int]] = {}
+    for row in hits:
+        postings.setdefault(row["term"], {})[str(row["chunk_id"])] = row["freq"]
+
+    doc_lengths = {str(r["id"]): r["term_count"] for r in rows}
+    total = len(rows)
+    avg_len = (sum(doc_lengths.values()) / total) if total else 1.0
+
+    scores = bm25_from_postings(query, postings, doc_freq, doc_lengths, total, avg_len)
+
+    index_of = {str(r["id"]): i for i, r in enumerate(rows)}
+    ranked = [(index_of[cid], sc) for cid, sc in scores.items() if cid in index_of]
+    ranked.sort(key=lambda x: (-x[1], x[0]))
+    return [i for i, _ in ranked]
 
 
 def _vector_ranking(query: str, rows: list[dict]) -> tuple[list[int], np.ndarray]:
@@ -340,12 +419,12 @@ def search(user: UserContext, query: str, top_k: int = 5,
         ranking, cosine = _vector_ranking(query, rows)
         top = ranking[:top_k]
     elif mode == "keyword":
-        top = rank_by_bm25(query, contents)[:top_k]
+        top = _keyword_ranking_indexed(user, query, rows)[:top_k]
         if not top:
             return SearchResult(evidence=[], note="关键词检索没有命中任何内容。")
     else:
         vector_ranking, cosine = _vector_ranking(query, rows)
-        keyword_ranking = rank_by_bm25(query, contents)
+        keyword_ranking = _keyword_ranking_indexed(user, query, rows)
         # 平局时让关键词路说了算：它被标识符门槛限制成"只在查询含精确标识符时才发声"，
         # 那种情况下首位命中几乎必对。默认的按下标破平没有任何检索学意义。
         fused = reciprocal_rank_fusion(

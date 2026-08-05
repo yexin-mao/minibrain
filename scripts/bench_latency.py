@@ -49,6 +49,7 @@ from minibrain.db import close_all                                   # noqa: E40
 from minibrain.modules.vector_rag.core import _visible_chunks        # noqa: E402
 from minibrain.modules.vector_rag.embeddings import embed_query      # noqa: E402
 from minibrain.modules.vector_rag.fusion import reciprocal_rank_fusion  # noqa: E402
+from minibrain.modules.vector_rag.core import _keyword_ranking_indexed  # noqa: E402
 from minibrain.modules.vector_rag.keyword import rank_by_bm25        # noqa: E402
 from minibrain.scripts_purge import purge_user                       # noqa: E402
 
@@ -134,14 +135,20 @@ def main() -> int:
         stages["余弦计算（5 条查询）"] = summarize(samples)
 
         # ---- 4. BM25 ----
+        # 两个版本都测：内存版（每次重新分词）vs 倒排索引版（查表）。
+        # 这是本次优化的直接对照，而且质量指标必须一位小数都不变。
         samples, _ = timed(
             lambda: [rank_by_bm25(q, contents) for q in QUERIES], args.repeat)
-        stages["BM25（5 条查询）"] = summarize(samples)
+        stages["BM25 内存版（5 条）"] = summarize(samples)
+
+        samples, _ = timed(
+            lambda: [_keyword_ranking_indexed(user, q, rows) for q in QUERIES], args.repeat)
+        stages["BM25 倒排索引版（5 条）"] = summarize(samples)
 
         # ---- 5. RRF ----
         vr = [list(np.argsort(-(matrix_normed @ (vectors[q] / np.linalg.norm(vectors[q])))))
               for q in QUERIES]
-        kr = [rank_by_bm25(q, contents) for q in QUERIES]
+        kr = [_keyword_ranking_indexed(user, q, rows) for q in QUERIES]
         samples, _ = timed(
             lambda: [reciprocal_rank_fusion([v, k], tie_breaker=k)
                      for v, k in zip(vr, kr)], args.repeat)
@@ -163,7 +170,7 @@ def main() -> int:
         per_query = {
             "SQL 拉取": stages["SQL 拉取全部片段"]["median"],
             "余弦": stages["余弦计算（5 条查询）"]["median"] / len(QUERIES),
-            "BM25": stages["BM25（5 条查询）"]["median"] / len(QUERIES),
+            "BM25": stages["BM25 倒排索引版（5 条）"]["median"] / len(QUERIES),
             "RRF": stages["RRF 融合（5 条查询）"]["median"] / len(QUERIES),
         }
         local = sum(per_query.values())
