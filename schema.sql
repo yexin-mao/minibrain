@@ -4,7 +4,35 @@
 -- 边界：三个 schema 各归一个模块，每个模块用自己的连接池并锁死 search_path。
 -- 将来要拆成独立数据库/独立服务时，每个 schema 一次 pg_dump 就搬走了。
 
-create extension if not exists "pgcrypto";   -- gen_random_uuid()
+-- 扩展统一放在专用 schema，不放 public。
+--
+-- 为什么：每个模块的连接池都把 search_path 锁死在自己的 schema
+-- （db.py，这是"模块够不着别人的数据"这条边界的物理落点）。
+-- 而 vector 这类扩展提供的是**类型和运算符**，所有模块都要能解析。
+--
+-- 放 public 也能用，但那样就得把 public 加进 search_path ——
+-- public 是任何人都能建表的地方，等于给边界开了个口子。
+-- 放进只含扩展、不含任何数据表的 extensions schema，边界仍然成立。
+create schema if not exists extensions;
+
+create extension if not exists "pgcrypto" with schema extensions;   -- gen_random_uuid()
+
+-- pgvector：把向量检索搬进数据库。
+--
+-- 为什么现在才加（实测依据见 eval/RESULTS.md 探针七/十/十一）：
+--   一开始以为它是来"加速余弦计算"的 —— 错了。实测余弦只占本地开销的 0.1%，
+--   numpy 算 900×1024 的矩阵乘只要 0.1ms。
+--   真正的开销是 _visible_chunks 每次把 900 行 × 1024 维浮点数（约 3.7MB）
+--   全搬进 Python 内存（101ms，占本地 99.3%），而最后只用了 top-5。
+--
+--   所以 pgvector 解决的是**数据搬运**，不是向量运算：
+--   让数据库自己排序，只把前 k 行发回来。
+create extension if not exists "vector" with schema extensions;
+
+-- 建表时也要能解析 vector 类型和 gen_random_uuid()。
+-- apply_schema 用的是不锁 search_path 的裸连接（它要建 schema 本身），
+-- 所以这里显式加上。只影响执行 schema.sql 这一次会话。
+set search_path to public, extensions;
 
 create schema if not exists identity;
 create schema if not exists mod_vector;
@@ -72,13 +100,37 @@ create table if not exists mod_vector.chunks (
   source_id       uuid not null references mod_vector.sources(id) on delete cascade,
   ordinal         integer not null,
   content         text not null,
-  embedding       real[] not null,
+  -- vector(N) 而不是 real[]：real[] 只能全搬进内存自己算，
+  -- vector 类型才能用 <=> 距离运算符和 HNSW 索引，让排序在数据库里完成。
+  --
+  -- ★ 维度写死 1024，必须和 EMBEDDING_DIMENSIONS 一致。
+  --   这是 pgvector 的硬要求（索引需要固定维度）。
+  --   改 EMBEDDING_DIMENSIONS 要连这里一起改，并重新索引全部文档 ——
+  --   .env.example 里那条警告现在多了一个必须同步的地方。
+  embedding       vector(1024) not null,
   embedding_model text not null,
   embedding_dim   integer not null
 );
 
 create index if not exists chunks_document_idx on mod_vector.chunks (document_id);
 create index if not exists chunks_source_idx on mod_vector.chunks (source_id);
+
+-- HNSW：向量的近似最近邻索引（Hierarchical Navigable Small World）。
+--
+-- ★ 它是**近似**的 —— 用召回率换速度。所以加它必须同时测两件事：
+--   快了多少（延迟）+ 丢了多少（Recall/MRR）。
+--   本项目有 58 道标注题，正好能量出这个交换。数字见 eval/RESULTS.md 探针十二。
+--
+-- 两个建索引参数（查询参数 ef_search 是会话级的，在代码里设）：
+--   m               = 每个节点的最大连接数。大 → 召回高、索引大、建得慢
+--   ef_construction = 建索引时的候选集大小。大 → 质量高、建得慢
+-- 这里用 pgvector 的默认值（16 / 64），没有调参 ——
+-- 调参需要独立验证集，拿测试集调出来的参数是自欺。
+--
+-- vector_cosine_ops：按余弦距离建索引，和检索时用的 <=> 必须一致。
+-- 用错距离函数索引会失效（而且不报错，只是悄悄变慢变差）。
+create index if not exists chunks_embedding_hnsw_idx
+  on mod_vector.chunks using hnsw (embedding vector_cosine_ops);
 
 -- term_count：这个片段一共有多少个 token（含中文二元组）。
 -- BM25 的长度归一化要用它做分母，所以必须是**全量**分词的计数，

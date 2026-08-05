@@ -13,7 +13,9 @@ jobs:
     # mock 掉数据库等于把被测对象删了。所以 CI 必须起一个真的 PG。
     services:
       postgres:
-        image: postgres:17
+        # pgvector 官方镜像 = postgres 17 + vector 扩展。
+        # 用纯 postgres:17 的话 CREATE EXTENSION "vector" 会失败。
+        image: pgvector/pgvector:pg17
         env:
           POSTGRES_USER: minibrain
           POSTGRES_PASSWORD: minibrain

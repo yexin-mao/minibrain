@@ -9,8 +9,6 @@ from __future__ import annotations
 import json
 from typing import Any, Literal
 
-import numpy as np
-
 from ...config import get_config
 from ...contracts import Evidence, ModuleError, NotFound, PermissionDenied, SearchResult, UserContext
 from ...db import vector_db
@@ -238,11 +236,12 @@ def process_document(document_id: str) -> None:
                 INSERT INTO chunks
                   (document_id, source_id, ordinal, content, embedding,
                    embedding_model, embedding_dim, term_count)
-                VALUES (%s, %s, %s, %s, %s::real[], %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s::vector, %s, %s, %s)
                 RETURNING id
                 """,
                 [
-                    (document_id, source_id, i, piece, vec,
+                    # pgvector 的输入格式是 '[0.1,0.2,...]' 字符串，不是 Python list
+                    (document_id, source_id, i, piece, _to_vector_literal(vec),
                      cfg.embedding_model, len(vec), total_term_count(piece))
                     for i, (piece, vec) in enumerate(zip(pieces, vectors))
                 ],
@@ -284,13 +283,90 @@ def process_document(document_id: str) -> None:
 
 SearchMode = Literal["hybrid", "vector", "keyword"]
 
+# 混合模式下，向量路取 top_k 的多少倍作为候选池。
+# 太小 → 关键词认可的文档进不了候选，融合失效；太大 → 退化成"全搬"，白做 pgvector。
+FUSION_POOL = 8
+
+
+def _to_vector_literal(vec: list[float]) -> str:
+    """Python list → pgvector 的输入格式 '[0.1,0.2,...]'。"""
+    return "[" + ",".join(repr(float(v)) for v in vec) + "]"
+
+
+def _vector_search_in_db(user: UserContext, query: str, top_k: int,
+                         *, exact: bool = False) -> list[dict]:
+    """让**数据库**做向量检索，只返回 top_k 行。
+
+    这是 pgvector 的全部意义所在。对比原来的做法：
+
+        原来：SELECT 全部 900 行（含 1024 维向量，约 3.7MB）→ Python 算余弦 → 取前 5
+              数据搬运 101ms，余弦计算 0.1ms
+
+        现在：SELECT ... ORDER BY embedding <=> %s LIMIT 5
+              数据库排完只发回 5 行
+
+    **省的是数据搬运，不是向量运算**——实测余弦只占本地开销的 0.1%
+    （eval/RESULTS.md 探针十一）。这个区别不测出来说不清。
+
+    exact=True 时用 `SET LOCAL enable_indexscan = off` 强制走全表精确扫描，
+    作为 HNSW 的**对照组**——HNSW 是近似算法，不留对照就量不出它丢了多少召回。
+    """
+    where, params = _visibility_clause(user)
+    literal = _to_vector_literal(embed_query(query))
+
+    with vector_db() as cur:
+        if exact:
+            # 强制不走索引 → 精确最近邻。只在本事务内生效
+            cur.execute("SET LOCAL enable_indexscan = off")
+            cur.execute("SET LOCAL enable_bitmapscan = off")
+        else:
+            # ef_search：HNSW 查询时的候选集大小。大 → 召回高、慢。
+            cur.execute(f"SET LOCAL hnsw.ef_search = {get_config().hnsw_ef_search}")
+
+            # ★ 必须显式关掉全表扫描，否则优化器根本不会用 HNSW 索引，pgvector 等于白装。
+            #
+            # 实测（EXPLAIN，490 片段）：
+            #     全表扫描 cost 65   ← 优化器选这个
+            #     HNSW 索引 cost 2614
+            # 但实际跑：全表 2.73ms vs HNSW 0.86ms —— **成本模型估错了 40 倍**。
+            #
+            # 这是小数据量下的已知现象：seq scan 对小表本来就便宜，
+            # 而 pgvector 对 HNSW 的代价估算偏保守。数据量大了优化器会自己选对，
+            # 但在那之前不强制的话，建了索引也用不上，而且**不报错**——
+            # 只是悄悄慢，最难发现的那种。
+            #
+            # 代价：强制之后，如果哪天索引真的不适用（比如过滤条件极严导致
+            # 索引扫描要遍历大半个图），我们也失去了让优化器兜底的机会。
+            # 所以这是个**该随规模复查的决定**，不是一劳永逸的。
+            cur.execute("SET LOCAL enable_seqscan = off")
+
+        cur.execute(
+            f"""
+            SELECT c.id, c.content, c.ordinal, c.term_count,
+                   d.filename, s.name AS source_name,
+                   1 - (c.embedding <=> %s::vector) AS cosine
+            FROM chunks c
+            JOIN documents d ON d.id = c.document_id
+            JOIN sources s ON s.id = c.source_id
+            WHERE {where} AND d.status = 'ready'
+            ORDER BY c.embedding <=> %s::vector
+            LIMIT %s
+            """,
+            [literal] + params + [literal, top_k],
+        )
+        return cur.fetchall()
+
 
 def _visible_chunks(user: UserContext) -> list[dict]:
     where, params = _visibility_clause(user)
     with vector_db() as cur:
         cur.execute(
             f"""
-            SELECT c.id, c.content, c.ordinal, c.embedding, c.term_count,
+            -- ★ 不再 SELECT embedding。
+            -- 向量检索已经搬进数据库（_vector_search_in_db），这里只服务
+            -- BM25 的长度归一化（term_count）和候选集统计。
+            -- 少搬 900×1024 个浮点数，就是本次优化的全部收益。
+            SELECT c.id, c.content, c.ordinal, c.term_count,
                    d.filename, s.name AS source_name
             FROM chunks c
             JOIN documents d ON d.id = c.document_id
@@ -359,29 +435,6 @@ def _keyword_ranking_indexed(user: UserContext, query: str, rows: list[dict]) ->
     return [i for i, _ in ranked]
 
 
-def _vector_ranking(query: str, rows: list[dict]) -> tuple[list[int], np.ndarray]:
-    """返回 (按余弦降序的下标, 每个片段的余弦分)。
-
-    覆盖**全部**片段——余弦对任何一对文本都有值，哪怕毫不相关。
-    这和 BM25 不同，后者一个词都没命中就是 0，直接不进排名。
-    """
-    matrix = np.asarray([row["embedding"] for row in rows], dtype=np.float32)
-    vector = np.asarray(embed_query(query), dtype=np.float32)
-
-    if matrix.shape[1] != vector.shape[0]:
-        raise ModuleError(
-            f"库中向量为 {matrix.shape[1]} 维，当前模型输出 {vector.shape[0]} 维。"
-            f"换过 embedding 模型的话需要重新索引。",
-            code="embedding_dim_mismatch",
-            status=500,
-        )
-
-    matrix /= np.linalg.norm(matrix, axis=1, keepdims=True) + 1e-10
-    vector /= np.linalg.norm(vector) + 1e-10
-    cosine = matrix @ vector
-    return list(np.argsort(-cosine)), cosine
-
-
 def search(user: UserContext, query: str, top_k: int = 5,
            mode: SearchMode = "hybrid") -> SearchResult:
     """混合检索：向量召回 + BM25 关键词召回，RRF 融合。
@@ -414,33 +467,61 @@ def search(user: UserContext, query: str, top_k: int = 5,
 
     contents = [row["content"] for row in rows]
 
-    cosine = None
-    if mode == "vector":
-        ranking, cosine = _vector_ranking(query, rows)
-        top = ranking[:top_k]
-    elif mode == "keyword":
+    # ★ 混合模式下取多少候选：
+    # RRF 融合需要两条路各自的排名。向量路现在只返回 top-k（这正是 pgvector 的收益），
+    # 但如果只取 5 个，关键词路排第 1 的文档可能根本不在向量的 5 个里，融合就没得融。
+    # 所以向量路取 top_k * FUSION_POOL 作为候选池，融合后再截到 top_k。
+    #
+    # 这是 pgvector 带来的**新取舍**：原来向量排名覆盖全部片段（因为反正全搬进来了），
+    # 现在只有候选池那么大。池子小 → 快但可能漏；池子大 → 接近原来的效果。
+    # 实测数据见 eval/RESULTS.md 探针十二。
+    pool = top_k * FUSION_POOL if mode == "hybrid" else top_k
+
+    if mode == "keyword":
+        rows = _visible_chunks(user)
         top = _keyword_ranking_indexed(user, query, rows)[:top_k]
         if not top:
             return SearchResult(evidence=[], note="关键词检索没有命中任何内容。")
-    else:
-        vector_ranking, cosine = _vector_ranking(query, rows)
-        keyword_ranking = _keyword_ranking_indexed(user, query, rows)
-        # 平局时让关键词路说了算：它被标识符门槛限制成"只在查询含精确标识符时才发声"，
-        # 那种情况下首位命中几乎必对。默认的按下标破平没有任何检索学意义。
+        picked = [rows[i] for i in top]
+        scores = [None] * len(picked)
+
+    elif mode == "vector":
+        picked = _vector_search_in_db(user, query, top_k)
+        if not picked:
+            return SearchResult(evidence=[], note="没有可检索的内容：当前用户可见范围内还没有处理完成的文档。")
+        scores = [r["cosine"] for r in picked]
+
+    else:                                            # hybrid
+        vector_rows = _vector_search_in_db(user, query, pool)
+        all_rows = _visible_chunks(user)
+        if not all_rows:
+            return SearchResult(evidence=[], note="没有可检索的内容：当前用户可见范围内还没有处理完成的文档。")
+
+        # 两条路的排名都换算成「在 all_rows 里的下标」，才能喂给 RRF
+        position = {str(r["id"]): i for i, r in enumerate(all_rows)}
+        vector_ranking = [position[str(r["id"])] for r in vector_rows
+                          if str(r["id"]) in position]
+        keyword_ranking = _keyword_ranking_indexed(user, query, all_rows)
+
         fused = reciprocal_rank_fusion(
             [vector_ranking, keyword_ranking], tie_breaker=keyword_ranking)
-        top = [index for index, _fused in fused][:top_k]
+        top = [i for i, _ in fused][:top_k]
+        picked = [all_rows[i] for i in top]
+
+        cosine_of = {str(r["id"]): r["cosine"] for r in vector_rows}
+        scores = [cosine_of.get(str(r["id"])) for r in picked]
+
     evidence = [
         Evidence(
             module=MODULE_ID,
-            source_name=rows[i]["source_name"],
-            location=f"{rows[i]['filename']} #{rows[i]['ordinal']}",
-            snippet=rows[i]["content"],
-            # 报余弦相似度而不是融合分：RRF 分数（0.016 这种）对人没有意义，
-            # 而余弦是"这段话和问题有多像"，看得懂。keyword 模式没算过余弦，留空。
-            score=round(float(cosine[i]), 4) if cosine is not None else None,
+            source_name=row["source_name"],
+            location=f"{row['filename']} #{row['ordinal']}",
+            snippet=row["content"],
+            # 报余弦相似度：RRF 分数（0.016 这种）对人没有意义，
+            # 而余弦是"这段话和问题有多像"，看得懂。不在向量候选池里的留空。
+            score=round(float(sc), 4) if sc is not None else None,
         )
-        for i in top
+        for row, sc in zip(picked, scores)
     ]
     return SearchResult(evidence=evidence)
 

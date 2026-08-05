@@ -25,7 +25,10 @@ def _make_pool(name: str, schema: str, *, readonly: bool = False) -> ConnectionP
 
     def configure(conn: psycopg.Connection) -> None:
         with conn.cursor() as cur:
-            cur.execute(f"SET search_path TO {schema}")
+            # search_path 里加上 extensions：那里只有扩展提供的类型和运算符
+            # （vector、gen_random_uuid），没有任何数据表。
+            # 模块之间的隔离不受影响——mod_vector 的连接仍然看不见 mod_table。
+            cur.execute(f"SET search_path TO {schema}, extensions")
             if readonly:
                 # 只读事务 + 语句超时。不需要建 PG 角色，也就不需要超级用户权限，
                 # 但一样保证 LLM 生成的 SQL 写不了任何东西、也卡不死数据库。
