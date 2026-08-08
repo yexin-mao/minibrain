@@ -1,5 +1,11 @@
-{# 答案 + 证据链。证据面板不是装饰：回答里每个结论都要能指回其中一条。 #}
+{# 一轮问答：问题 + 答案 + 工具轨迹 + 证据链。
+   证据面板不是装饰：回答里每个结论都要能指回其中一条。
+   ★ 这个片段会被 htmx 以 beforeend 追加到 #answer 里，所以它必须是
+     **自包含的一轮**，不能假设自己是页面上唯一的一块。 #}
 <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:14px;">
+  <div style="color:var(--muted); font-size:13px; margin-bottom:8px;">
+    <b style="color:var(--fg);">问：</b>{{ question }}
+  </div>
   <div class="answer">{{ result.answer }}</div>
 
   {% if result.trace %}

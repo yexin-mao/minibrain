@@ -53,6 +53,7 @@ from __future__ import annotations
 from typing import Any
 from urllib.parse import urlparse
 
+from llama_index.core.indices.query.query_transform import HyDEQueryTransform
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.retrievers import QueryFusionRetriever, VectorIndexRetriever
 from llama_index.core.schema import Document
@@ -60,7 +61,7 @@ from llama_index.core.vector_stores import (
     FilterCondition, FilterOperator, MetadataFilter, MetadataFilters,
 )
 from llama_index.core import Settings, VectorStoreIndex
-from llama_index.llms.openai import OpenAI as LIOpenAI
+from llama_index.llms.openai_like import OpenAILike
 from llama_index.core.base.embeddings.base import BaseEmbedding
 from llama_index.retrievers.bm25 import BM25Retriever
 from llama_index.vector_stores.postgres import PGVectorStore
@@ -179,13 +180,35 @@ def _ensure_llm() -> None:
 
     手写版的 `fusion.reciprocal_rank_fusion` 是 104 行纯函数，不依赖任何模型。
     这就是「框架帮你做了什么、代价是什么」里的代价那一半。
+
+    ★★ 用 `OpenAILike` 而不是 `OpenAI`，这是踩出来的：
+
+      LlamaIndex 的 `llms.openai.OpenAI` **硬编码了一张 OpenAI 官方模型名单**。
+      我们的模型是 `deepseek/deepseek-v4-flash`（OpenRouter 转发），不在名单里，
+      取 `.metadata` 时 `openai_modelname_to_contextsize()` 直接抛：
+
+          ValueError: Unknown model 'deepseek/deepseek-v4-flash'.
+          Please provide a valid OpenAI model name in: o1, gpt-5, gpt-4o, ...
+
+      **而且它藏得很深**：`num_queries=1` 时框架不调 `predict()`，
+      碰不到 `.metadata`，所以一路都没事；一开查询改写（`num_queries>1` 或 HyDE）
+      才炸。
+
+      `OpenAILike` 就是官方给「OpenAI 兼容但不是 OpenAI」的端点准备的，
+      不做模型名校验，需要的元信息（上下文窗口、是不是 chat 模型）显式传。
+
+    > 教训：**框架对"OpenAI 兼容"的支持程度，要看它有没有假设你就是 OpenAI。**
+    > 这类假设通常不在文档里，只在某条冷路径上等着。
     """
     if Settings._llm is None:
         cfg = get_config()
-        Settings.llm = LIOpenAI(
+        Settings.llm = OpenAILike(
             model=cfg.agent_model, api_base=cfg.agent_base_url,
             api_key=cfg.agent_api_key, temperature=cfg.agent_temperature,
-            timeout=cfg.llm_timeout_seconds, max_retries=cfg.llm_max_retries)
+            timeout=cfg.llm_timeout_seconds, max_retries=cfg.llm_max_retries,
+            # 这两个在 OpenAI 类里是从模型名查表得来的，这里必须显式给。
+            # 64k 是 deepseek 系列的保守值；只用于框架内部裁剪判断，不影响请求。
+            context_window=65536, is_chat_model=True)
 
 
 def get_index() -> VectorStoreIndex:
@@ -274,8 +297,50 @@ def _visibility_filters(user: UserContext) -> MetadataFilters | None:
     )
 
 
+# ★★ 查询改写用的中文提示词。**必须自己写，不能用框架默认的。**
+#
+# LlamaIndex 的 QUERY_GEN_PROMPT 是英文的：
+#     "You are a helpful assistant that generates multiple search queries..."
+# 中文语料下拿它去改写，模型很可能吐出英文查询——然后拿英文去检索中文文档，
+# 召回直接塌掉。**这是"框架默认值是给英文语料调的"的典型例子**，
+# 和 BM25Retriever 默认按空白分词是同一类问题。
+_QUERY_GEN_PROMPT_ZH = (
+    "你在为一个中文知识库生成检索用的查询。\n"
+    "针对下面这个问题，生成 {num_queries} 条**中文**检索查询，每行一条。\n"
+    "要求：\n"
+    "- 换用不同的说法和关键词，覆盖同一个意图的不同表达\n"
+    "- 保留原问题里的专有名词、编号、人名（那些是精确命中的关键）\n"
+    "- 不要解释，不要编号，只输出查询本身\n\n"
+    "问题：{query}\n"
+    "查询：\n"
+)
+
+
+def _rewrite_with_hyde(query: str) -> str:
+    """HyDE：先让模型**编一个假答案**，拿假答案去检索。
+
+    直觉是这样的：问题和答案的用词往往不一样。
+    「住宿能报多少」和「差旅住宿标准：一线城市每晚不超过 600 元」
+    在向量空间里未必近，但一个**编造的答案**和真答案用词接近得多。
+
+    ★ 编出来的内容可能完全是错的——**这不重要**。
+      HyDE 用的是它的"词面形态"，不是它的事实性。检索完之后
+      假答案就被丢掉，进 prompt 的仍然是真实召回的片段。
+
+    ★ 代价：多一次 LLM 调用（实测约 2~5 秒），而且假答案可能把检索带偏
+      ——问题越冷门，模型编得越离谱，偏得越远。值不值要看消融数据。
+    """
+    _ensure_llm()
+    transform = HyDEQueryTransform(llm=Settings.llm, include_original=True)
+    bundle = transform.run(query)
+    # include_original=True 时 embedding_strs 是 [假答案, 原问题]，
+    # 拼在一起送进检索——保留原问题是为了不让编造内容完全主导语义。
+    return "\n".join(bundle.embedding_strs)
+
+
 def search(user: UserContext, query: str, top_k: int = 5,
-           mode: str = "hybrid") -> SearchResult:
+           mode: str = "hybrid", *,
+           num_queries: int = 1, hyde: bool = False) -> SearchResult:
     """和手写版同签名同返回，方便同一套评测脚本两版都能跑。
 
     ★★ 开头这两句校验是**重构时丢过一次的**，值得记：
@@ -296,12 +361,17 @@ def search(user: UserContext, query: str, top_k: int = 5,
     if mode not in ("hybrid", "vector", "keyword"):
         raise ModuleError(f"未知检索模式 {mode}", code="unknown_search_mode")
 
+    # ★ HyDE 在**检索前**改写查询；num_queries 是在**检索时**生成多条查询各查一遍。
+    #   两者可以叠加，但那样一次问答要调 1(HyDE) + (n-1)(改写) 次 LLM，
+    #   成本会翻好几倍——值不值要看消融数据，不要默认全开。
+    retrieval_query = _rewrite_with_hyde(query) if hyde else query
+
     filters = _visibility_filters(user)
     vector_retriever = VectorIndexRetriever(
         index=get_index(), similarity_top_k=top_k, filters=filters)
 
     if mode == "vector":
-        nodes = vector_retriever.retrieve(query)
+        nodes = vector_retriever.retrieve(retrieval_query)
     else:
         # ★ BM25Retriever 需要节点在内存里。手写版为此建了 Postgres 倒排索引
         #   （探针十一，快 87.6 倍）——框架的默认实现不解决这个问题。
@@ -309,7 +379,7 @@ def search(user: UserContext, query: str, top_k: int = 5,
         #   是对内存问题的妥协；语料大了要换别的方案。
         pool = VectorIndexRetriever(
             index=get_index(), similarity_top_k=top_k * 8, filters=filters
-        ).retrieve(query)
+        ).retrieve(retrieval_query)
         if not pool:
             return SearchResult(evidence=[], note="没有可检索的内容。")
         bm25 = BM25Retriever.from_defaults(
@@ -323,11 +393,15 @@ def search(user: UserContext, query: str, top_k: int = 5,
         fusion = QueryFusionRetriever(
             [vector_retriever, bm25],
             similarity_top_k=top_k,
-            num_queries=1,                 # 不做查询改写：手写版没有，要对齐
+            # num_queries=1 表示**不改写**，只用原问题。>1 时框架会让 LLM
+            # 生成 num_queries-1 条改写查询，每条各检索一遍，再 RRF 融合。
+            num_queries=num_queries,
+            # ★ 提示词必须换成中文的，框架默认那个是英文的，见 _QUERY_GEN_PROMPT_ZH
+            query_gen_prompt=_QUERY_GEN_PROMPT_ZH if num_queries > 1 else None,
             mode="reciprocal_rerank",      # = RRF，和 fusion.py 同一个算法
             use_async=False,
         )
-        nodes = fusion.retrieve(query)
+        nodes = fusion.retrieve(retrieval_query)
 
     if not nodes:
         return SearchResult(evidence=[], note="没有命中任何内容。")

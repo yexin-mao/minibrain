@@ -23,6 +23,7 @@ dependencies = [
   "llama-index-vector-stores-postgres>=0.8.1",
   "llama-index-retrievers-bm25>=0.7.1",
   "llama-index-llms-openai>=0.7.10",
+  "llama-index-llms-openai-like>=0.7.2",
 ]
 
 [project.scripts]

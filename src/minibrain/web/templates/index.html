@@ -13,20 +13,38 @@
 
 <main>
   <div class="card">
-    <h2>提问</h2>
+    <div style="display:flex; align-items:baseline; justify-content:space-between;">
+      <h2>对话</h2>
+      {# 开新对话 = 删掉会话 cookie。旧 checkpoint 留在库里不删。 #}
+      <form hx-post="/chat/new" hx-target="#answer" hx-swap="innerHTML"
+            style="display:inline;">
+        <button type="submit"
+                style="background:none; color:var(--muted); padding:4px 8px; font-size:13px;">
+          + 新对话
+        </button>
+      </form>
+    </div>
     <p class="hint">
       Agent 会根据问题类型自己选链路：问"怎么规定的"走语义检索，问"合计多少"走 SQL 精确计算。
+      <b>支持追问</b>——上下文由 LangGraph 的 checkpointer 存在 PostgreSQL 里，
+      刷新页面、重启服务都还在。
     </p>
-    <form hx-post="/ask" hx-target="#answer" hx-swap="innerHTML" hx-indicator="#ask-form">
+
+    {# ★ hx-swap="beforeend" 而不是 "innerHTML"：把新一轮**追加**到底部，
+       而不是替换掉上一轮。这样对话历史在页面上累积起来，
+       和后端 checkpointer 里累积的历史对得上。 #}
+    <div id="answer"></div>
+
+    <form hx-post="/ask" hx-target="#answer" hx-swap="beforeend"
+          hx-indicator="#ask-form" hx-on::after-request="this.reset()">
       <div id="ask-form">
-        <textarea name="question" placeholder="例：华东区的销售额合计是多少？&#10;例：报销制度里对差旅标准是怎么规定的？" required></textarea>
+        <textarea name="question" placeholder="例：华东区的销售额合计是多少？&#10;例：报销制度里对差旅标准是怎么规定的？&#10;追问：那二线城市呢？" required></textarea>
         <div style="margin-top:10px;">
           <button type="submit">提问</button>
           <span class="spinner">检索中，可能需要几十秒…</span>
         </div>
       </div>
     </form>
-    <div id="answer"></div>
   </div>
 
   <div class="card">
