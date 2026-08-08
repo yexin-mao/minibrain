@@ -1,2 +1,261 @@
 语料 130 篇 | 探针 58 题 | top-5
 
+  58 个查询向量已预热，用时 40s
+  ★ 下面的延迟不含原问题的 embedding；改写产生的新查询仍要实时算
+
+  理论上限（题目本身决定，改检索改不动）：
+    k=3   CompRecall 上限 0.793   Recall 上限 0.907
+    k=5   CompRecall 上限 0.931   Recall 上限 0.969
+    k=10  CompRecall 上限 0.983   Recall 上限 0.998
+
+  跑 baseline …
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+  跑 multi-query ×3 …
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+  跑 HyDE …
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+  跑 HyDE + ×3 …
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
+
+==============================================================================================
+查询改写消融：每一列都要和 baseline 比成本，不只比指标
+==============================================================================================
+  配置                CompRec@3  CompRec@5  Recall@5   NDCG@5     MRR    额外LLM         延迟     失败
+  baseline              0.603      0.690     0.858    0.841   0.940        0       19ms      0
+  multi-query ×3        0.603      0.672     0.843    0.825   0.902        1     4127ms      0
+  HyDE                  0.603      0.707     0.843    0.824   0.917        1    13325ms      0
+  HyDE + ×3             0.603      0.655     0.810    0.808   0.901        2    22134ms      0
+
+  ★ 判据：改写要在 CompRecall@5 上超过 baseline（0.690），
+    并且涨幅要对得起多花的 LLM 调用。只涨一两个点不值一次额外调用。
+  ★ 「失败」这一列不能忽略：多一次 LLM 调用就多一个失败点。
+
+明细已写入 eval/results/ablate_query_rewrite.json
