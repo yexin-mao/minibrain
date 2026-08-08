@@ -44,7 +44,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 from grounding import check                    # noqa: E402
 from minibrain import gateway, identity        # noqa: E402
-from minibrain.agent.loop import _system_prompt, answer   # noqa: E402
+from minibrain.agent.prompt import system_prompt as _system_prompt, answer   # noqa: E402
 from minibrain.config import get_config        # noqa: E402
 from minibrain.contracts import ModuleError    # noqa: E402
 from minibrain.db import close_all             # noqa: E402

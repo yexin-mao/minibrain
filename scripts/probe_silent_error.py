@@ -71,12 +71,12 @@ def main() -> int:
 
         hedged = any(w in answer for w in
                      ["不确定", "可能不完整", "仅包含", "未提及", "无法确定", "不完整", "只涵盖", "所提供"])
-        print(f"\n判定：")
+        print("\n判定：")
         print(f"  漏召回了 {len(missing)} 个部门")
         print(f"  模型是否声明信息不完整：{'是' if hedged else '否 —— 静默给出了答案'}")
         if not hedged and missing:
             print(f"\n  ⚠ 这就是最危险的情况：答案带来源、有理有据，但少算了 {len(missing)} 个部门，")
-            print(f"    用户无从察觉。检索的缺陷被生成层完美地掩盖了。")
+            print("    用户无从察觉。检索的缺陷被生成层完美地掩盖了。")
         return 0
 
     finally:

@@ -10,7 +10,7 @@ from __future__ import annotations
 import pytest
 
 from minibrain import gateway
-from minibrain.agent.loop import _system_prompt
+from minibrain.agent.prompt import system_prompt as _system_prompt
 
 from .conftest import needs_embedding
 

@@ -18,7 +18,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from .. import gateway, identity
-from ..agent.loop import answer as run_agent
+from ..agent.graph import answer as run_agent
 from ..config import get_config
 from ..contracts import ModuleError, UserContext
 from ..db import apply_schema
@@ -138,9 +138,11 @@ def upload(
     filename = file.filename or "untitled"
 
     if module == "vector-rag":
-        entity_id = gateway.call(
-            "vector-rag", "upload_document", user, None, filename, raw.decode("utf-8", "replace")
-        )
+        # ★ 传 raw 字节，不在这里 decode。
+        #   原来这里是 raw.decode("utf-8", "replace") —— 传 PDF 进来会被腐化成
+        #   一片替换字符，然后照常入库、状态标成 ready，用户永远检索不到。
+        #   类型识别和解析统一在 core.upload_bytes 里做，失败会落 failed 并说明原因。
+        entity_id = gateway.call("vector-rag", "upload_bytes", user, None, filename, raw)
     elif module == "table-rag":
         entity_id = gateway.call("table-rag", "upload_csv", user, None, filename, raw)
     else:

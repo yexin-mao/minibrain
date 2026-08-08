@@ -48,11 +48,11 @@ from minibrain import gateway, identity                              # noqa: E40
 from minibrain.db import close_all                                   # noqa: E402
 from minibrain.modules.vector_rag.core import _visible_chunks        # noqa: E402
 from minibrain.modules.vector_rag.embeddings import embed_query      # noqa: E402
-from minibrain.modules.vector_rag.fusion import reciprocal_rank_fusion  # noqa: E402
+from minibrain.handwritten.fusion import reciprocal_rank_fusion  # noqa: E402
 from minibrain.modules.vector_rag.core import (                       # noqa: E402
     _keyword_ranking_indexed, _vector_search_in_db,
 )
-from minibrain.modules.vector_rag.keyword import rank_by_bm25        # noqa: E402
+from minibrain.handwritten.keyword import rank_by_bm25        # noqa: E402
 from minibrain.scripts_purge import purge_user                       # noqa: E402
 
 

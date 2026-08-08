@@ -32,7 +32,10 @@
   <div class="card">
     <h2>上传知识</h2>
     <p class="hint">
-      两条链路吃的东西不一样：文档链路吃 .md / .txt，表格链路吃 .csv。
+      两条链路吃的东西不一样：文档链路吃 <b>.md / .txt / .pdf</b> 及其它纯文本，
+      表格链路吃 <b>.csv</b>。
+      文档链路按<b>文件内容</b>判断类型而不是扩展名——改了名字也认得出来，
+      认不出来的会明确拒收并说明原因，不会假装上传成功。
       上传后立刻返回，处理在后台跑，下面的状态会自己刷新。
     </p>
     <form hx-post="/upload" hx-target="#knowledge" hx-swap="innerHTML"
@@ -48,7 +51,11 @@
         </div>
         <div>
           <label for="file">文件</label>
-          <input id="file" type="file" name="file" accept=".md,.txt,.csv" required>
+          {# accept 只是文件选择框的过滤器，**不是校验**——真正的把关在
+             loaders.py 的 detect_kind()，它看的是文件头的魔数不是扩展名。
+             这里列全是为了让用户挑得到，拖进来一个 .png 照样会被后端拒收。 #}
+          <input id="file" type="file" name="file"
+                 accept=".md,.txt,.pdf,.csv,.markdown,.log,.json,.yaml,.yml" required>
         </div>
         <div style="flex:0 0 auto;">
           <button type="submit">上传</button>

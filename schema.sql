@@ -202,3 +202,12 @@ create table if not exists mod_table.datasets (
 );
 
 create index if not exists datasets_source_idx on mod_table.datasets (source_id);
+
+-- 文档是怎么被解析成文本的：text / text(gbk) / pdf。
+-- ★ 排查「这篇怎么检索不到」时，第一个要看的就是它当初怎么被解析的。
+--   传了 PDF 却显示 text，说明走了错误的分支。
+alter table mod_vector.documents add column if not exists parsed_as text not null default 'text';
+
+-- 切出来多少个片段。主路径（LlamaIndex）把节点存在自己的表里，
+-- 所以这里缓存一个计数，供文档列表显示；手写版走 chunks 表，两者不冲突。
+alter table mod_vector.documents add column if not exists chunk_count integer not null default 0;

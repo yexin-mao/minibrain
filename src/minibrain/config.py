@@ -49,6 +49,25 @@ class Config:
     agent_temperature: float
     agent_max_steps: int
 
+    # ★★ 出站 HTTP 超时。**踩过一次才加的，别删。**
+    #
+    # 三处构造 OpenAI 客户端（agent/loop、rerank、embeddings）原本都没设超时。
+    # OpenAI SDK 默认 600 秒 + 2 次重试，单次最坏 30 分钟；
+    # 一次 194 调用的消融实验因此**挂死了 13 小时**——
+    # 进程活着、CPU 只用了 14.7 秒，全程在等一个永远不返回的响应。
+    #
+    # 教训：`except Exception` 只挡得住「调用失败」，挡不住「调用不返回」。
+    # 这是两种完全不同的故障，超时是后者唯一的防线。
+    #
+    # 两个值分开，因为两类调用的正常耗时差一个量级：
+    #   对话类（agent / rerank）：单次问答，60 秒还不回基本就是挂了
+    #   embedding：一次要批量编码几百个片段，给宽一些
+    llm_timeout_seconds: float
+    embedding_timeout_seconds: float
+    # SDK 自带重试。设 1 而不是默认的 2：重试会把超时时间翻倍，
+    # 而本项目的调用都不是幂等关键路径，快速失败比慢慢重试更有用。
+    llm_max_retries: int
+
     chunk_size: int
     chunk_overlap: int
 
@@ -90,8 +109,12 @@ def get_config() -> Config:
         agent_model=_env("AGENT_MODEL"),
         agent_temperature=float(os.environ.get("AGENT_TEMPERATURE", "0")),
         agent_max_steps=_env_int("AGENT_MAX_STEPS", 6),
+        llm_timeout_seconds=float(os.environ.get("LLM_TIMEOUT_SECONDS", "60")),
+        embedding_timeout_seconds=float(
+            os.environ.get("EMBEDDING_TIMEOUT_SECONDS", "180")),
+        llm_max_retries=_env_int("LLM_MAX_RETRIES", 1),
         chunk_size=_env_int("CHUNK_SIZE", 800),
-        chunk_overlap=_env_int("CHUNK_OVERLAP", 120),
+        chunk_overlap=_env_int("CHUNK_OVERLAP", 0),
         hnsw_ef_search=_env_int("HNSW_EF_SEARCH", 40),
         table_query_timeout_ms=_env_int("TABLE_QUERY_TIMEOUT_MS", 5000),
         table_query_max_rows=_env_int("TABLE_QUERY_MAX_ROWS", 200),
@@ -100,6 +123,10 @@ def get_config() -> Config:
 
     if cfg.chunk_overlap >= cfg.chunk_size:
         raise RuntimeError("CHUNK_OVERLAP 必须小于 CHUNK_SIZE")
+    # ★ 超时设成 0 或负数等于「永不超时」，那正是挂死 13 小时的那个状态。
+    #   这里 fail-fast，不允许把防线关掉。
+    if cfg.llm_timeout_seconds <= 0 or cfg.embedding_timeout_seconds <= 0:
+        raise RuntimeError("LLM_TIMEOUT_SECONDS / EMBEDDING_TIMEOUT_SECONDS 必须为正数")
     if cfg.embedding_dimensions <= 0:
         raise RuntimeError("EMBEDDING_DIMENSIONS 必须为正整数")
 

@@ -36,7 +36,11 @@ def _get_client() -> OpenAI:
             raise ModuleError(
                 "EMBEDDING_API_KEY 未配置，请在 .env 中填入", code="embedding_not_configured", status=503
             )
-        _client = OpenAI(base_url=cfg.embedding_base_url, api_key=cfg.embedding_api_key)
+        # embedding 超时给得比对话宽：一次要批量编码几百个片段。
+        _client = OpenAI(base_url=cfg.embedding_base_url,
+                         api_key=cfg.embedding_api_key,
+                         timeout=cfg.embedding_timeout_seconds,
+                         max_retries=cfg.llm_max_retries)
     return _client
 
 

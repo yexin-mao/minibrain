@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from minibrain.modules.vector_rag.fusion import RRF_K, reciprocal_rank_fusion
+from minibrain.handwritten.fusion import RRF_K, reciprocal_rank_fusion
 
 
 def test_single_ranking_preserves_order():
