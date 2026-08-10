@@ -1,0 +1,59 @@
+{
+  "corpus_files": 20,
+  "probes_usable": 12,
+  "probes_total": 58,
+  "top_k": 5,
+  "vector_ingest_seconds": 28.597179499978665,
+  "graph_build": {
+    "documents": 20,
+    "chunks": 86,
+    "llm_calls_estimate": 86,
+    "build_seconds": 932.1919402499916,
+    "entities": 230,
+    "triplets": 364
+  },
+  "arms": {
+    "向量检索": {
+      "failures": 0,
+      "latency_median_ms": 7.362395990639925,
+      "queries": 12,
+      "mrr": 1.0,
+      "recall@3": 0.85,
+      "precision@3": 0.4444444444444444,
+      "hit@3": 1.0,
+      "complete_recall@3": 0.75,
+      "ndcg@3": 0.9192895880208827,
+      "recall@5": 0.8833333333333333,
+      "precision@5": 0.3,
+      "hit@5": 1.0,
+      "complete_recall@5": 0.75,
+      "ndcg@5": 0.8923626556586787,
+      "recall@10": 0.8833333333333333,
+      "precision@10": 0.15,
+      "hit@10": 1.0,
+      "complete_recall@10": 0.75,
+      "ndcg@10": 0.8923626556586787
+    },
+    "图检索": {
+      "failures": 0,
+      "latency_median_ms": 7.337374991038814,
+      "queries": 12,
+      "mrr": 0.7708333333333334,
+      "recall@3": 0.75,
+      "precision@3": 0.27777777777777773,
+      "hit@3": 0.75,
+      "complete_recall@3": 0.75,
+      "ndcg@3": 0.75,
+      "recall@5": 0.7666666666666666,
+      "precision@5": 0.18333333333333335,
+      "hit@5": 0.8333333333333334,
+      "complete_recall@5": 0.75,
+      "ndcg@5": 0.7621723624868922,
+      "recall@10": 0.7666666666666666,
+      "precision@10": 0.09166666666666667,
+      "hit@10": 0.8333333333333334,
+      "complete_recall@10": 0.75,
+      "ndcg@10": 0.7621723624868922
+    }
+  }
+}

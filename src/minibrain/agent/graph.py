@@ -46,11 +46,11 @@ from typing import Any
 from psycopg import Connection
 from psycopg.rows import dict_row
 
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
+from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.tools import StructuredTool
 from langchain_openai import ChatOpenAI
 from langgraph.checkpoint.postgres import PostgresSaver
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 
 from ..config import get_config
 from ..contracts import Evidence, ModuleError, UserContext
@@ -182,11 +182,25 @@ def answer(user: UserContext, question: str, *,
     )
 
     evidence: list[Evidence] = []
-    agent = create_react_agent(
-        model,
-        _build_tools(user, evidence),
-        # 系统提示词逐字复用手写版。它是消融实验的产物，不因换框架而重写。
-        prompt=SystemMessage(content=system_prompt(user)),
+    # ★★ 用 langchain.agents.create_agent，不是 langgraph.prebuilt.create_react_agent。
+    #
+    #   后者已经被官方弃用，它自己的 docstring 里写着：
+    #       "This function is deprecated in favor of create_agent from the
+    #        langchain package, which provides an equivalent agent factory
+    #        with a flexible middleware system."
+    #
+    #   除了「不用弃用 API」之外，换过来还有一个具体好处：
+    #   `create_agent` 有 `middleware` 参数，而**对标项目 companybrain 的
+    #   agent-gateway 用的正是它**（summarizerMiddleware + shortTermMemoryMiddleware，
+    #   而且那个装配顺序是它的硬约束）。将来要做长对话摘要、短期记忆，
+    #   middleware 是正路，不用自己在循环外面缝。
+    #
+    #   ★ 签名差异：prompt=SystemMessage(...) → system_prompt="..."（直接收字符串）。
+    #     系统提示词本身一个字没改——它是 43 题 × 4 版本消融的产物。
+    agent = create_agent(
+        model=model,
+        tools=_build_tools(user, evidence),
+        system_prompt=system_prompt(user),
         checkpointer=_get_checkpointer() if session_id else None,
     )
 

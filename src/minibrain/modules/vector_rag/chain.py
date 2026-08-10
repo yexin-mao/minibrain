@@ -103,6 +103,25 @@ class MinibrainEmbedding(BaseEmbedding):
         # 复用项目自己的批量 + 线程池实现，连并发行为都一致
         return embed_texts(texts)
 
+    async def _aget_text_embedding(self, text: str) -> list[float]:
+        return embed_texts([text])[0]
+
+    async def _aget_text_embeddings(self, texts: list[str]) -> list[list[float]]:
+        """★★ 这个必须实现，否则 LlamaIndex 会退化成**一条一条**串行调用。
+
+        `BaseEmbedding` 的异步批量默认实现会逐条 await `_aget_text_embedding`。
+        不覆盖它的话，155 个实体就是 155 次独立 API 调用，
+        而我们自己的 `embed_texts` 本来是 16 条一批、4 线程并发的——
+        **框架把我们的批量优化整个绕过去了**。
+
+        实测差别：建图时「Generating embeddings: 0/155」十分钟不动，
+        而同样 155 条走 embed_texts 只要几十秒。
+
+        ★ 排查这个花了很久，因为它**长得像网络挂起**：进程活着、CPU 接近 0、
+          连接数不变。真正的信号是「我们的批量入口根本没被调用」。
+        """
+        return embed_texts(texts)
+
 
 def _pg_params() -> dict[str, Any]:
     url = urlparse(get_config().database_url)
