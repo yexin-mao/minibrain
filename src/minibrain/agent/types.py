@@ -39,6 +39,19 @@ class ToolCallTrace:
     name: str
     arguments: str
     result_preview: str
+    # ★ 这次调用属于第几轮（从 1 开始）。**同一轮里并行发起的多个调用共享同一个 step。**
+    #
+    #   为什么必须有它：模型可以在**一步之内**同时发起多个工具调用
+    #   （parallel tool calling），LangGraph 会产出一条 AIMessage 带多个
+    #   tool_calls，后面跟多条 ToolMessage。
+    #
+    #   没有这个字段的话，`len(trace)` 会把「1 步并行调 2 个工具」算成 2 步，
+    #   **轮数分布这个指标就被高估了**——而那个指标正是用来判断
+    #   「agent 是不是在打转」的。
+    #
+    #   ⚠ 实测语料里模型一直是串行调用，所以这个偏差目前是 0。
+    #     加上它是为了「换语料或换模型之后不会悄悄失真」。
+    step: int = 1
 
 
 @dataclass

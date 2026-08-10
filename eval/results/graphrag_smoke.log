@@ -1,38 +1,0 @@
-语料 20 篇 | 探针 12/58 题可用 | top-5
-
-  12 个查询向量已预热
-
-  向量入库：29s，LLM 调用 0 次
-
-  建图中…（每个切片调一次 LLM，慢）
-Applying transformations:   0%|          | 0/2 [00:00<?, ?it/s]Applying transformations:  50%|█████     | 1/2 [08:36<08:36, 516.91s/it]Applying transformations: 100%|██████████| 2/2 [08:36<00:00, 258.46s/it]
-Generating embeddings:   0%|          | 0/9 [00:00<?, ?it/s]Generating embeddings:  11%|█         | 1/9 [00:19<02:32, 19.03s/it]Generating embeddings: 100%|██████████| 9/9 [00:19<00:00,  2.12s/it]
-Generating embeddings:   0%|          | 0/154 [00:00<?, ?it/s]Generating embeddings:   1%|          | 1/154 [06:35<16:47:42, 395.18s/it]Generating embeddings: 100%|██████████| 154/154 [06:35<00:00,  2.57s/it]  
-  建图：932s，LLM 调用约 86 次，实体 230，三元组 364
-
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-The tokenizer parameter is deprecated and will be removed in a future release. Use a stemmer from PyStemmer instead.
-
-==============================================================================
-GraphRAG vs 向量检索（同语料、同 embedding、同探针）
-==============================================================================
-  链路            CompRec@3  CompRec@5  Recall@5   NDCG@5     MRR         延迟     失败
-  向量检索              0.750      0.750     0.883    0.892   1.000        7ms      0
-  图检索               0.750      0.750     0.767    0.762   0.771        7ms      0
-
-  ★ 成本对比（假设书里要求必须报的）：
-    向量入库：     29s   LLM 调用 0 次
-    建图：        932s   LLM 调用约 86 次
-    → 建图比向量入库慢 32.6 倍，且多花 86 次 LLM 调用
-
-明细已写入 eval/results/ablate_graphrag_limit20.json

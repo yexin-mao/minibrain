@@ -144,19 +144,25 @@ def _to_trace(messages: list[Any]) -> list[ToolCallTrace]:
       同一套评测脚本才能同时量手写版和框架版。
     """
     trace: list[ToolCallTrace] = []
-    pending: dict[str, dict] = {}
+    # id → (调用信息, 它属于第几轮)
+    pending: dict[str, tuple[dict, int]] = {}
+    step = 0
 
     for msg in messages:
-        if isinstance(msg, AIMessage):
-            for call in msg.tool_calls or []:
-                pending[call["id"]] = call
+        if isinstance(msg, AIMessage) and msg.tool_calls:
+            # ★ 一条 AIMessage = 一轮。里面可能有多个 tool_calls（并行调用），
+            #   它们共享同一个 step —— 这样 max(step) 才是真实的轮数。
+            step += 1
+            for call in msg.tool_calls:
+                pending[call["id"]] = (call, step)
         elif isinstance(msg, ToolMessage):
-            call = pending.get(msg.tool_call_id, {})
+            call, call_step = pending.get(msg.tool_call_id, ({}, step))
             content = str(msg.content)
             trace.append(ToolCallTrace(
                 name=call.get("name", msg.name or "unknown"),
                 arguments=json.dumps(call.get("args", {}), ensure_ascii=False),
                 result_preview=content[:300] + ("…" if len(content) > 300 else ""),
+                step=call_step,
             ))
     return trace
 
