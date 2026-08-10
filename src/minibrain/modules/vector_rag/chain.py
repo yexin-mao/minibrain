@@ -50,8 +50,6 @@ metadata 的 JSONB 列上），所以**理论上**能满足。但"理论上能"�
 
 from __future__ import annotations
 
-from typing import Any
-from urllib.parse import urlparse
 
 from llama_index.core.indices.query.query_transform import HyDEQueryTransform
 from llama_index.core.node_parser import SentenceSplitter
@@ -61,14 +59,13 @@ from llama_index.core.vector_stores import (
     FilterCondition, FilterOperator, MetadataFilter, MetadataFilters,
 )
 from llama_index.core import Settings, VectorStoreIndex
-from llama_index.llms.openai_like import OpenAILike
-from llama_index.core.base.embeddings.base import BaseEmbedding
 from llama_index.retrievers.bm25 import BM25Retriever
-from llama_index.vector_stores.postgres import PGVectorStore
 
 from ...config import get_config
 from ...contracts import Evidence, ModuleError, SearchResult, UserContext
-from .embeddings import embed_query, embed_texts
+from ...llamaindex_setup import (
+    MinibrainEmbedding, drop_vector_table, ensure_llm, make_vector_store,
+)
 from .tokenizer import tokenize
 
 MODULE_ID = "vector-rag"
@@ -79,162 +76,14 @@ MODULE_ID = "vector-rag"
 SCHEMA = "mod_vector_li"
 TABLE = "nodes"
 
-_store: PGVectorStore | None = None
 _index: VectorStoreIndex | None = None
-
-
-class MinibrainEmbedding(BaseEmbedding):
-    """把项目自己的 embedding 包成 LlamaIndex 接口。
-
-    ★★ 这个类存在的唯一目的是**锁住变量**：两版必须用完全相同的向量，
-      否则比出来的差异说明不了任何问题。见模块 docstring。
-    """
-
-    def _get_query_embedding(self, query: str) -> list[float]:
-        return embed_query(query)
-
-    async def _aget_query_embedding(self, query: str) -> list[float]:
-        return self._get_query_embedding(query)
-
-    def _get_text_embedding(self, text: str) -> list[float]:
-        return embed_texts([text])[0]
-
-    def _get_text_embeddings(self, texts: list[str]) -> list[list[float]]:
-        # 复用项目自己的批量 + 线程池实现，连并发行为都一致
-        return embed_texts(texts)
-
-    async def _aget_text_embedding(self, text: str) -> list[float]:
-        return embed_texts([text])[0]
-
-    async def _aget_text_embeddings(self, texts: list[str]) -> list[list[float]]:
-        """★★ 这个必须实现，否则 LlamaIndex 会退化成**一条一条**串行调用。
-
-        `BaseEmbedding` 的异步批量默认实现会逐条 await `_aget_text_embedding`。
-        不覆盖它的话，155 个实体就是 155 次独立 API 调用，
-        而我们自己的 `embed_texts` 本来是 16 条一批、4 线程并发的——
-        **框架把我们的批量优化整个绕过去了**。
-
-        实测差别：建图时「Generating embeddings: 0/155」十分钟不动，
-        而同样 155 条走 embed_texts 只要几十秒。
-
-        ★ 排查这个花了很久，因为它**长得像网络挂起**：进程活着、CPU 接近 0、
-          连接数不变。真正的信号是「我们的批量入口根本没被调用」。
-        """
-        return embed_texts(texts)
-
-
-def _pg_params() -> dict[str, Any]:
-    url = urlparse(get_config().database_url)
-    return {
-        "host": url.hostname or "localhost",
-        "port": url.port or 5432,
-        "user": url.username or "",
-        "password": url.password or "",
-        "database": (url.path or "/").lstrip("/"),
-    }
-
-
-def _ensure_schema() -> None:
-    """PGVectorStore 会建表，但**不会建 schema**——不先建好就 UndefinedTable。
-
-    这类"框架替你做了一半"的地方，是换框架时最容易卡住的那种问题：
-    报错信息指向 INSERT，真正的原因却在更早的建库阶段。
-    """
-    import psycopg
-    with psycopg.connect(get_config().database_url, autocommit=True) as conn:
-        conn.execute(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
-
-
-def get_store() -> PGVectorStore:
-    """★★ 这个函数里有两处「框架撞上本项目架构」的适配，都不是可选的。
-
-    **一、schema 要自己建。** PGVectorStore 会建表，但不建 schema。
-    报错信息指向 INSERT（`relation ... does not exist`），
-    真正的原因在更早的建库阶段——这类错最费时间。
-
-    **二、`search_path` 要显式带上 `extensions`。** 这条更值得记：
-
-        建表时报 `type "vector" does not exist`
-
-    本项目**刻意**把 pgvector 扩展装在独立的 `extensions` schema，
-    而不是 `public`——因为 `public` 谁都能建表，用它会破坏
-    「模块够不着别人数据」这条边界（见 db.py 里连接池锁 search_path 那段）。
-
-    但 PGVectorStore 用的是数据库默认 `search_path`（`"$user", public`），
-    **看不到 `extensions`**，于是 `vector` 类型不存在。
-
-    > 框架假设「扩展在 search_path 里」，而我们的架构决定把它挪走了。
-    > **两个都没错，但它们不兼容——这就是换框架的真实摩擦。**
-
-    手写版没这个问题，因为 `db.py` 的连接池本来就把 search_path
-    锁成 `<schema>, extensions`。
-    """
-    global _store
-    if _store is None:
-        _ensure_schema()
-        _store = PGVectorStore.from_params(
-            **_pg_params(),
-            schema_name=SCHEMA,
-            table_name=TABLE,
-            embed_dim=get_config().embedding_dimensions,
-            # HNSW 参数和手写版 schema.sql 里保持一致，否则索引行为不可比
-            hnsw_kwargs={"hnsw_m": 16, "hnsw_ef_construction": 64,
-                         "hnsw_ef_search": get_config().hnsw_ef_search,
-                         "hnsw_dist_method": "vector_cosine_ops"},
-            create_engine_kwargs={
-                "connect_args": {
-                    "options": f"-c search_path={SCHEMA},extensions,public"},
-            },
-        )
-    return _store
-
-
-def _ensure_llm() -> None:
-    """★ QueryFusionRetriever 即使 num_queries=1 也**强制**要一个 LLM。
-
-    它在 __init__ 里就去解析 `Settings.llm`，没配就直接 ImportError。
-    可我们只想要它的 RRF 融合，完全不需要查询改写——
-    **框架把「查询改写」和「结果融合」耦合在同一个类里了**，
-    想只用后者就得连前者的依赖一起满足。
-
-    手写版的 `fusion.reciprocal_rank_fusion` 是 104 行纯函数，不依赖任何模型。
-    这就是「框架帮你做了什么、代价是什么」里的代价那一半。
-
-    ★★ 用 `OpenAILike` 而不是 `OpenAI`，这是踩出来的：
-
-      LlamaIndex 的 `llms.openai.OpenAI` **硬编码了一张 OpenAI 官方模型名单**。
-      我们的模型是 `deepseek/deepseek-v4-flash`（OpenRouter 转发），不在名单里，
-      取 `.metadata` 时 `openai_modelname_to_contextsize()` 直接抛：
-
-          ValueError: Unknown model 'deepseek/deepseek-v4-flash'.
-          Please provide a valid OpenAI model name in: o1, gpt-5, gpt-4o, ...
-
-      **而且它藏得很深**：`num_queries=1` 时框架不调 `predict()`，
-      碰不到 `.metadata`，所以一路都没事；一开查询改写（`num_queries>1` 或 HyDE）
-      才炸。
-
-      `OpenAILike` 就是官方给「OpenAI 兼容但不是 OpenAI」的端点准备的，
-      不做模型名校验，需要的元信息（上下文窗口、是不是 chat 模型）显式传。
-
-    > 教训：**框架对"OpenAI 兼容"的支持程度，要看它有没有假设你就是 OpenAI。**
-    > 这类假设通常不在文档里，只在某条冷路径上等着。
-    """
-    if Settings._llm is None:
-        cfg = get_config()
-        Settings.llm = OpenAILike(
-            model=cfg.agent_model, api_base=cfg.agent_base_url,
-            api_key=cfg.agent_api_key, temperature=cfg.agent_temperature,
-            timeout=cfg.llm_timeout_seconds, max_retries=cfg.llm_max_retries,
-            # 这两个在 OpenAI 类里是从模型名查表得来的，这里必须显式给。
-            # 64k 是 deepseek 系列的保守值；只用于框架内部裁剪判断，不影响请求。
-            context_window=65536, is_chat_model=True)
 
 
 def get_index() -> VectorStoreIndex:
     global _index
     if _index is None:
         _index = VectorStoreIndex.from_vector_store(
-            get_store(), embed_model=MinibrainEmbedding())
+            make_vector_store(SCHEMA, TABLE), embed_model=MinibrainEmbedding())
     return _index
 
 
@@ -349,7 +198,7 @@ def _rewrite_with_hyde(query: str) -> str:
     ★ 代价：多一次 LLM 调用（实测约 2~5 秒），而且假答案可能把检索带偏
       ——问题越冷门，模型编得越离谱，偏得越远。值不值要看消融数据。
     """
-    _ensure_llm()
+    ensure_llm()
     transform = HyDEQueryTransform(llm=Settings.llm, include_original=True)
     bundle = transform.run(query)
     # include_original=True 时 embedding_strs 是 [假答案, 原问题]，
@@ -408,7 +257,7 @@ def search(user: UserContext, query: str, top_k: int = 5,
             # 比的就成了分词质量而不是检索链路
             tokenizer=tokenize,
         )
-        _ensure_llm()
+        ensure_llm()
         fusion = QueryFusionRetriever(
             [vector_retriever, bm25],
             similarity_top_k=top_k,
@@ -440,9 +289,6 @@ def search(user: UserContext, query: str, top_k: int = 5,
 
 def drop_all() -> None:
     """清空这一版的存储。评测脚本每轮开始前调，保证起点干净。"""
-    global _store, _index
-    import psycopg
-
-    with psycopg.connect(get_config().database_url, autocommit=True) as conn:
-        conn.execute(f'DROP TABLE IF EXISTS {SCHEMA}.data_{TABLE} CASCADE')
-    _store, _index = None, None
+    global _index
+    drop_vector_table(SCHEMA, TABLE)
+    _index = None

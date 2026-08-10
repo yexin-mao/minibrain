@@ -70,11 +70,12 @@ from llama_index.core.indices.property_graph import (
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.prompts import PromptTemplate
 from llama_index.core.schema import Document
-from llama_index.vector_stores.postgres import PGVectorStore
 
 from ...config import get_config
 from ...contracts import Evidence, ModuleError, SearchResult, UserContext
-from ..vector_rag.chain import MinibrainEmbedding, _ensure_llm, _pg_params
+from ...llamaindex_setup import (
+    MinibrainEmbedding, drop_vector_table, ensure_llm, make_vector_store,
+)
 
 MODULE_ID = "graph-rag"
 
@@ -130,36 +131,6 @@ _TRIPLET_PROMPT_ZH = (
 VECTOR_SCHEMA = "mod_graph_li"
 
 
-def _entity_vector_store() -> PGVectorStore:
-    """实体向量的存放处。**必须显式指定，否则重启后图就废了。**
-
-    ★★ 这是踩出来的，而且很隐蔽：
-
-      `SimplePropertyGraphStore.supports_vector_queries` 是 **False**，
-      所以 PropertyGraphIndex 会另开一个 `SimpleVectorStore` 存实体向量。
-      而 `graph_store.persist()` **只存图，不存那个向量库**。
-
-      结果是：重启后图能加载回来（10 个实体、11 条三元组都在），
-      但每个实体的 embedding 都是 None，`VectorContextRetriever`
-      找不到任何入口节点，**检索恒定返回空，且不报错**。
-
-      「存了但读不回来」是持久化最典型的半成品状态——
-      本文件里已经栽了两次（上一次是 `_require_index` 忘了写加载路径）。
-
-    放 PostgreSQL 而不是文件，理由和向量链路一致：不引入第二个存储系统。
-    """
-    import psycopg
-    with psycopg.connect(get_config().database_url, autocommit=True) as conn:
-        conn.execute(f"CREATE SCHEMA IF NOT EXISTS {VECTOR_SCHEMA}")
-    return PGVectorStore.from_params(
-        **_pg_params(), schema_name=VECTOR_SCHEMA, table_name="entities",
-        embed_dim=get_config().embedding_dimensions,
-        # search_path 要带 extensions，否则 type "vector" does not exist
-        create_engine_kwargs={"connect_args": {
-            "options": f"-c search_path={VECTOR_SCHEMA},extensions,public"}},
-    )
-
-
 def _storage() -> StorageContext:
     STORE_DIR.mkdir(parents=True, exist_ok=True)
     graph_store = SimplePropertyGraphStore()
@@ -167,7 +138,7 @@ def _storage() -> StorageContext:
     if persist.is_file():
         graph_store = SimplePropertyGraphStore.from_persist_path(str(persist))
     return StorageContext.from_defaults(property_graph_store=graph_store,
-                                        vector_store=_entity_vector_store())
+                                        vector_store=make_vector_store(VECTOR_SCHEMA, "entities", hnsw=False))
 
 
 def build(texts: dict[str, str], *, show_progress: bool = True) -> dict[str, Any]:
@@ -182,7 +153,7 @@ def build(texts: dict[str, str], *, show_progress: bool = True) -> dict[str, Any
       标成估算而不是假装精确——数量级对了就够支撑结论。
     """
     global _index
-    _ensure_llm()
+    ensure_llm()
 
     cfg = get_config()
     splitter = SentenceSplitter(chunk_size=cfg.chunk_size,
@@ -208,7 +179,7 @@ def build(texts: dict[str, str], *, show_progress: bool = True) -> dict[str, Any
         ],
         storage_context=_storage(),
         # ★ 实体向量存 PG，见 _entity_vector_store 的说明
-        vector_store=_entity_vector_store(),
+        vector_store=make_vector_store(VECTOR_SCHEMA, "entities", hnsw=False),
         show_progress=show_progress,
     )
     elapsed = time.perf_counter() - started
@@ -249,10 +220,10 @@ def _require_index() -> PropertyGraphIndex:
     if not persist.is_file():
         raise ModuleError("图还没建，先跑 build()", code="graph_not_built", status=503)
 
-    _ensure_llm()
+    ensure_llm()
     _index = PropertyGraphIndex.from_existing(
         property_graph_store=SimplePropertyGraphStore.from_persist_path(str(persist)),
-        vector_store=_entity_vector_store(),   # ★ 少了这个，实体向量读不回来
+        vector_store=make_vector_store(VECTOR_SCHEMA, "entities", hnsw=False),   # ★ 少了这个，实体向量读不回来
         embed_model=MinibrainEmbedding(),
     )
     return _index
@@ -306,10 +277,8 @@ def drop_all() -> None:
       检索会命中已经不存在的实体——那种脏状态最难查。
     """
     global _index
-    import psycopg
     persist = STORE_DIR / "property_graph_store.json"
     if persist.is_file():
         persist.unlink()
-    with psycopg.connect(get_config().database_url, autocommit=True) as conn:
-        conn.execute(f"DROP TABLE IF EXISTS {VECTOR_SCHEMA}.data_entities CASCADE")
+    drop_vector_table(VECTOR_SCHEMA, "entities")
     _index = None

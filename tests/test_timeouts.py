@@ -126,9 +126,9 @@ def test_llamaindex_llm_has_a_finite_timeout():
     它是 QueryFusionRetriever 强制要求的（即使 num_queries=1），
     所以它一定会被构造出来，也一定要有超时。
     """
-    from minibrain.modules.vector_rag import chain
+    from minibrain import llamaindex_setup
 
-    chain._ensure_llm()
+    llamaindex_setup.ensure_llm()
     from llama_index.core import Settings
     assert Settings.llm.timeout is not None
     assert 0 < float(Settings.llm.timeout) < 600
