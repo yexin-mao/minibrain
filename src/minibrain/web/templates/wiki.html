@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}知识 Wiki · minibrain{% endblock %}
+{% block body %}
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="brand-symbol">m</span><span>minibrain</span></a>
+    <nav class="nav-links" aria-label="主导航">
+      <a class="nav-link" href="/">问答与知识库</a>
+      <a class="nav-link is-active" href="/wiki" aria-current="page">知识 Wiki</a>
+      <a class="nav-link" href="/retrieval-debug">检索实验室</a>
+      <a class="nav-link" href="/runs">运行记录</a>
+      <a class="nav-link" href="/metrics">监控指标</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="page-heading">
+    <div class="eyebrow">Compounding knowledge</div>
+    <h1>把原始资料编译成持续积累的 Wiki</h1>
+    <p>保留一文档一来源页，同时增量维护少量主题页；每个主题都能追溯原文件、知识域和文档版本。</p>
+  </div>
+
+  <section class="card card-primary" aria-labelledby="wiki-ask-title">
+    <div class="card-header">
+      <div><div class="section-kicker">Wiki retrieval</div><h2 id="wiki-ask-title">基于来源页和主题页提问</h2><p class="hint">先用本地 BM25 检索当前用户可见且版本最新的页面，取 Top 3 后交给回答模型综合；不会调用原文 Vector RAG。</p></div>
+    </div>
+    <form hx-post="/wiki/ask" hx-target="#wiki-answer" hx-swap="innerHTML" hx-indicator="#wiki-ask-form">
+      <div class="composer" id="wiki-ask-form">
+        <textarea name="question" required aria-label="Wiki 问题" placeholder="例如：北京出差住宿和报销分别有什么要求？"></textarea>
+        <div class="composer-actions">
+          <span class="hint">答案会使用 W 编号引用命中的 Wiki 页面</span>
+          <button type="submit">检索 Wiki</button>
+        </div>
+      </div>
+    </form>
+    <div id="wiki-answer" aria-live="polite"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-header">
+      <div><div class="section-kicker">Deterministic lint</div><h2>Wiki 健康状态</h2><p class="hint">只检查可确定验证的问题：过期来源、失败页面、无来源主题和孤立主题。</p></div>
+      <div>
+        <span class="status {% if health.issue_count %}st-failed{% else %}st-ready{% endif %}">{% if health.issue_count %}{{ health.issue_count }} 个问题{% else %}健康{% endif %}</span>
+        <form style="display:inline" method="post" action="/wiki/lint"><button class="button-secondary button-small" type="submit">运行检查</button></form>
+      </div>
+    </div>
+    <div class="wiki-stats">
+      <div class="wiki-stat"><strong>{{ health.source_page_count }}</strong><span>来源页</span></div>
+      <div class="wiki-stat"><strong>{{ health.topic_count }}</strong><span>主题页</span></div>
+      <div class="wiki-stat"><strong>{{ health.ready_topic_count }}</strong><span>可用于问答的主题</span></div>
+      <div class="wiki-stat"><strong>{{ health.issue_count }}</strong><span>待处理问题</span></div>
+    </div>
+    {% if health.issues %}
+      <div class="wiki-links">
+      {% for issue in health.issues %}<span class="status st-stale">{{ issue.title }} · {{ issue.kind }}</span>{% endfor %}
+      </div>
+    {% endif %}
+  </section>
+
+  <section class="card">
+    <div class="card-header">
+      <div><h2>从原文编译 Wiki</h2><p class="hint">每次生成一篇来源页，并最多新建或更新 3 个主题页；失败不会改变正式 RAG 的原文索引。</p></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>文档</th><th>source</th><th>版本</th><th>Wiki</th><th>操作</th></tr>
+        {% for d in documents if d.status == 'ready' %}
+          <tr>
+            <td>{{ d.filename }}</td><td>{{ d.source_name }}</td><td>v{{ d.version }}</td>
+            <td>{% if d.wiki_status %}<span class="status st-{{ d.wiki_status }}">{{ d.wiki_status }}</span>{% else %}尚未生成{% endif %}</td>
+            <td>
+              {% if d.wiki_page_id %}<a class="button-small" href="/wiki/{{ d.wiki_page_id }}">查看</a>{% endif %}
+              {% if d.can_manage %}
+                <form style="display:inline" method="post" action="/wiki/build">
+                  <input type="hidden" name="document_id" value="{{ d.id }}">
+                  <button class="button-secondary button-small" type="submit">{% if d.wiki_page_id %}重新生成{% else %}生成{% endif %}</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="5" class="empty-state">还没有 ready 文档，请先在首页上传并完成入库。</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-header"><div><div class="section-kicker">Topic index</div><h2>主题页面</h2><p class="hint">主题页可由多篇原文共同支持；新来源会增量更新已有主题。</p></div></div>
+    {% if topics %}
+      <div class="wiki-list">
+      {% for topic in topics %}
+        <a class="wiki-list-item" href="/wiki/topic/{{ topic.id }}">
+          <span><strong>{{ topic.title }}</strong><small>{{ topic.source_name }} · {{ topic.source_count }} 篇来源 · {{ topic.link_count }} 个关联</small></span>
+          <span class="status st-{{ topic.effective_status }}">{% if topic.effective_status == 'ready' %}可用{% elif topic.effective_status == 'stale' %}待更新{% else %}{{ topic.effective_status }}{% endif %}</span>
+        </a>
+      {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state"><strong>还没有主题页</strong>编译一篇 ready 文档后，系统会创建少量可复用主题。</div>
+    {% endif %}
+  </section>
+
+  <section class="card">
+    <div class="card-header"><div><div class="section-kicker">Source index</div><h2>来源页面</h2><p class="hint">“待更新”表示原文已有新版本，当前页面不会参与 Wiki 问答。</p></div></div>
+    {% if pages %}
+      <div class="wiki-list">
+      {% for p in pages %}
+        <a class="wiki-list-item" href="/wiki/{{ p.id }}">
+          <span><strong>{{ p.title }}</strong><small>{{ p.source_name }} · {{ p.filename }} · v{{ p.document_version }}</small></span>
+          <span class="status st-{{ p.status }}">{% if p.status == 'ready' %}可用{% elif p.status == 'stale' %}待更新{% else %}{{ p.status }}{% endif %}</span>
+        </a>
+      {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state"><strong>还没有 Wiki 页面</strong>从上方选择一篇文档生成即可。</div>
+    {% endif %}
+  </section>
+
+  <section class="card">
+    <div class="card-header"><div><div class="section-kicker">Maintenance log</div><h2>最近维护记录</h2><p class="hint">记录编译、查询和检查，不保存模型内部推理。</p></div></div>
+    {% for event in events %}
+      <div class="wiki-event"><span><strong>{{ event.action }}</strong> · {{ event.target_type }} · {{ event.source_name }}</span><span class="hint">{{ event.created_at }}</span></div>
+    {% else %}
+      <div class="empty-state"><strong>还没有维护记录</strong>第一次生成、查询或检查 Wiki 后会出现在这里。</div>
+    {% endfor %}
+  </section>
+</main>
+{% endblock %}

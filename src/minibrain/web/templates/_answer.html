@@ -1,6 +1,89 @@
-{# 答案 + 证据链。证据面板不是装饰：回答里每个结论都要能指回其中一条。 #}
+{# 一轮问答：问题 + 答案 + 工具轨迹 + 证据链。
+   证据面板不是装饰：回答里每个结论都要能指回其中一条。
+   ★ 这个片段会被 htmx 以 beforeend 追加到 #answer 里，所以它必须是
+     **自包含的一轮**，不能假设自己是页面上唯一的一块。 #}
 <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:14px;">
+  <div style="color:var(--muted); font-size:13px; margin-bottom:8px;">
+    <b style="color:var(--fg);">问：</b>{{ question }}
+  </div>
   <div class="answer">{{ result.answer }}</div>
+  {% if result.confidence_report %}
+    <div style="font-size:12px; margin-top:5px;"
+         class="{% if result.confidence_report.blocked %}st-failed{% else %}st-ready{% endif %}">
+      支持检查：{{ result.confidence_report.status }}
+      {% if result.confidence_report.blocked %} · 已阻止未经证据支持的回答{% endif %}
+    </div>
+  {% endif %}
+  {% if result.context_metrics %}
+    <div style="font-size:12px; color:var(--muted); margin-top:5px;">
+      上下文：候选 {{ result.context_metrics.candidate_count }} 条 →
+      采用 {{ result.context_metrics.selected_count }} 条 ·
+      {{ result.context_metrics.context_tokens }} / {{ result.context_metrics.token_budget }} tokens
+    </div>
+  {% endif %}
+  {% if result.claims and not (result.confidence_report and result.confidence_report.blocked) %}
+    <div style="margin-top:12px;">
+      <div style="font-size:13px; color:var(--muted); margin-bottom:6px;">
+        结论与引用
+        {% if result.citation_metrics.citation_coverage is not none %}
+          · 覆盖率 {{ (result.citation_metrics.citation_coverage * 100)|round|int }}%
+        {% endif %}
+        {% if result.citation_metrics.citation_validity is not none %}
+          · 有效率 {{ (result.citation_metrics.citation_validity * 100)|round|int }}%
+        {% endif %}
+      </div>
+      {% for claim in result.claims %}
+        <div class="evidence">
+          <div>{{ claim.text }}</div>
+          <div class="meta">
+            引用：
+            {% for evidence_id in claim.valid_evidence_ids %}
+              <a href="#evidence-{{ evidence_id }}">[{{ evidence_id }}]</a>
+            {% else %}无有效引用{% endfor %}
+            {% if claim.invalid_evidence_ids %}
+              · 无效编号 {{ claim.invalid_evidence_ids|join(', ') }}
+            {% endif %}
+            {% if claim.grounded is sameas false %}
+              · <span class="st-failed">数字/编号未完全落在引用证据中</span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% if result.run_id %}
+    <div style="font-size:12px; margin-top:5px;">
+      <a href="/runs/{{ result.run_id }}">查看本次运行详情</a>
+    </div>
+    <div style="margin-top:10px; padding:10px; background:var(--bg); border-radius:7px;">
+      <div style="font-size:13px; color:var(--muted); margin-bottom:7px;">这个回答有帮助吗？</div>
+      <div style="display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap;">
+        <form hx-post="/runs/{{ result.run_id }}/feedback"
+              hx-target="#feedback-{{ result.run_id }}" hx-swap="innerHTML">
+          <input type="hidden" name="rating" value="1">
+          <button type="submit" style="padding:6px 12px;">👍 有帮助</button>
+        </form>
+        <form hx-post="/runs/{{ result.run_id }}/feedback"
+              hx-target="#feedback-{{ result.run_id }}" hx-swap="innerHTML"
+              style="display:flex; gap:7px; flex-wrap:wrap; align-items:center;">
+          <input type="hidden" name="rating" value="-1">
+          <select name="reason" required style="width:auto; padding:6px 9px;">
+            <option value="">选择问题</option>
+            <option value="incorrect">答案错误</option>
+            <option value="missing_evidence">缺少证据</option>
+            <option value="bad_citation">引用错误</option>
+            <option value="irrelevant">答非所问</option>
+            <option value="too_verbose">过于冗长</option>
+            <option value="other">其他</option>
+          </select>
+          <input name="note" maxlength="1000" placeholder="可选说明"
+                 style="width:210px; padding:6px 9px;">
+          <button type="submit" style="padding:6px 12px; background:var(--danger);">👎 待改进</button>
+        </form>
+      </div>
+      <div id="feedback-{{ result.run_id }}" style="font-size:12px; margin-top:6px;"></div>
+    </div>
+  {% endif %}
 
   {% if result.trace %}
     <details style="margin-top:12px;">
@@ -20,9 +103,9 @@
         证据（{{ result.evidence|length }} 条）
       </div>
       {% for e in result.evidence %}
-        <div class="evidence">
+        <div class="evidence" id="evidence-{{ e.evidence_id or loop.index }}">
           <div class="meta">
-            [{{ loop.index }}] {{ e.module }} · source={{ e.source_name }} · {{ e.location }}
+            [{{ e.evidence_id or loop.index }}] {{ e.module }} · source={{ e.source_name }} · {{ e.location }}
             {% if e.score is not none %} · 相似度 {{ e.score }}{% endif %}
           </div>
           <div class="snippet">{{ e.snippet }}</div>

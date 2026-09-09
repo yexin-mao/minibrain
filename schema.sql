@@ -36,7 +36,9 @@ set search_path to public, extensions;
 
 create schema if not exists identity;
 create schema if not exists mod_vector;
+create schema if not exists mod_vector_li;
 create schema if not exists mod_table;
+create schema if not exists observability;
 
 
 -- ============================================================
@@ -91,6 +93,77 @@ create table if not exists mod_vector.documents (
 );
 
 create index if not exists documents_source_idx on mod_vector.documents (source_id);
+
+-- LLM Wiki MVP：一个文档对应一个可追溯的整理页。它是原文的派生视图，
+-- 不参与检索索引；原文删除时自动删除，原文升级时由应用标记 stale。
+create table if not exists mod_vector.wiki_pages (
+  id               uuid primary key default gen_random_uuid(),
+  document_id      uuid not null unique references mod_vector.documents(id) on delete cascade,
+  document_version integer not null,
+  title            text not null,
+  content          text not null default '',
+  status           text not null default 'building'
+                   check (status in ('building', 'ready', 'failed', 'stale')),
+  error             text,
+  model             text,
+  created_at        timestamptz not null default now(),
+  updated_at        timestamptz not null default now()
+);
+
+create index if not exists wiki_pages_status_idx on mod_vector.wiki_pages (status, updated_at desc);
+
+-- Karpathy-style LLM Wiki 的最小增量层。来源摘要页继续由 wiki_pages 管理；
+-- 主题页可以由多篇原文共同支持，因此不能复用“一文档一页”的唯一关系。
+create table if not exists mod_vector.wiki_topics (
+  id         uuid primary key default gen_random_uuid(),
+  source_id  uuid not null references mod_vector.sources(id) on delete cascade,
+  slug       text not null,
+  title      text not null,
+  content    text not null default '',
+  status     text not null default 'ready'
+             check (status in ('ready', 'failed', 'stale')),
+  error      text,
+  model      text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (source_id, slug)
+);
+
+create index if not exists wiki_topics_status_idx
+  on mod_vector.wiki_topics (source_id, status, updated_at desc);
+
+create table if not exists mod_vector.wiki_topic_documents (
+  topic_id         uuid not null references mod_vector.wiki_topics(id) on delete cascade,
+  document_id      uuid not null references mod_vector.documents(id) on delete cascade,
+  document_version integer not null,
+  created_at       timestamptz not null default now(),
+  updated_at       timestamptz not null default now(),
+  primary key (topic_id, document_id)
+);
+
+create index if not exists wiki_topic_documents_document_idx
+  on mod_vector.wiki_topic_documents (document_id);
+
+create table if not exists mod_vector.wiki_topic_links (
+  from_topic_id uuid not null references mod_vector.wiki_topics(id) on delete cascade,
+  to_topic_id   uuid not null references mod_vector.wiki_topics(id) on delete cascade,
+  created_at    timestamptz not null default now(),
+  primary key (from_topic_id, to_topic_id),
+  check (from_topic_id <> to_topic_id)
+);
+
+create table if not exists mod_vector.wiki_events (
+  id          uuid primary key default gen_random_uuid(),
+  source_id   uuid not null references mod_vector.sources(id) on delete cascade,
+  action      text not null,
+  target_type text not null check (target_type in ('source_page', 'topic', 'query', 'lint')),
+  target_id   uuid,
+  detail      jsonb not null default '{}'::jsonb,
+  created_at  timestamptz not null default now()
+);
+
+create index if not exists wiki_events_source_idx
+  on mod_vector.wiki_events (source_id, created_at desc);
 
 create table if not exists mod_vector.chunks (
   id              uuid primary key default gen_random_uuid(),
@@ -169,6 +242,82 @@ create index if not exists chunk_terms_source_idx on mod_vector.chunk_terms (sou
 
 
 -- ============================================================
+-- mod_vector_li：LlamaIndex 主路径的持久化 sparse 索引。
+--
+-- PGVectorStore 自己维护 data_nodes；下面两张表只维护 BM25 所需统计，
+-- 让关键词路能从全库独立召回，而不是先被向量候选池截断。
+-- node_id 不建到 data_nodes 的 FK：框架表的列约束不由本项目控制，
+-- 删除一致性由 chain.delete_source_nodes 显式维护并有清理测试兜底。
+-- ============================================================
+
+-- small-to-big 的父块只用于生成上下文，不参与 dense/sparse 召回。
+-- 子节点通过 metadata.parent_context_id 指向这里；不设跨框架表外键，删除由生命周期层负责。
+create table if not exists mod_vector_li.parent_contexts (
+  id            text primary key,
+  document_id   text,
+  source_name   text not null,
+  owner_id      text not null,
+  visibility    text not null check (visibility in ('private', 'public')),
+  filename      text not null,
+  ordinal       integer not null,
+  heading_path  text not null default '',
+  content       text not null,
+  content_hash  text not null,
+  created_at    timestamptz not null default now()
+);
+create index if not exists parent_contexts_document_idx
+  on mod_vector_li.parent_contexts (document_id);
+create index if not exists parent_contexts_source_idx
+  on mod_vector_li.parent_contexts (owner_id, source_name);
+
+-- PGVectorStore 只约束维度，无法阻止“同为 1024 维但来自不同模型”的向量混用。
+-- 主链路首次读写前校验这份生成签名；不兼容时 fail-fast，要求全量重建。
+create table if not exists mod_vector_li.index_manifest (
+  index_name           text primary key,
+  embedding_endpoint   text not null,
+  embedding_model      text not null,
+  embedding_dimensions integer not null,
+  transform_version    text not null,
+  provenance           text not null check (
+    provenance in ('initialized_empty', 'operator_adopted')
+  ),
+  created_at           timestamptz not null default now(),
+  updated_at           timestamptz not null default now()
+);
+
+create table if not exists mod_vector_li.node_lexical_stats (
+  node_id      text primary key,
+  document_id  text,
+  source_name  text not null,
+  owner_id     text not null,
+  visibility   text not null check (visibility in ('private', 'public')),
+  term_count   integer not null,
+  metadata_    jsonb not null default '{}'::jsonb
+);
+
+-- 旧库兼容：历史节点没有稳定 document_id，只能按 source 清理；新入库节点
+-- 从这里开始支持文档级删除/重建。nullable 是为了不伪造历史关联。
+alter table mod_vector_li.node_lexical_stats
+  add column if not exists document_id text;
+
+create index if not exists node_lexical_owner_idx
+  on mod_vector_li.node_lexical_stats (owner_id);
+create index if not exists node_lexical_source_idx
+  on mod_vector_li.node_lexical_stats (source_name);
+create index if not exists node_lexical_document_idx
+  on mod_vector_li.node_lexical_stats (document_id);
+
+create table if not exists mod_vector_li.node_terms (
+  node_id text not null references mod_vector_li.node_lexical_stats(node_id) on delete cascade,
+  term    text not null,
+  freq    integer not null check (freq > 0),
+  primary key (node_id, term)
+);
+
+create index if not exists node_terms_term_idx on mod_vector_li.node_terms (term);
+
+
+-- ============================================================
 -- mod_table：结构化表格链路。CSV → 物理表 → 受限只读 SQL。
 --
 -- 为什么不是"切分 + embedding"：一张报表切碎再向量召回回来，
@@ -184,7 +333,17 @@ create table if not exists mod_table.sources (
   unique (owner_id, name)
 );
 
--- 每份 CSV 在 mod_table schema 里落成一张真实物理表，
+-- XLSX 原文只存一份；每个可见 Sheet 仍各自对应一条 dataset 和一张物理表。
+-- 这样生命周期保持“一 dataset 一表”，又不会按 Sheet 重复存整份工作簿。
+create table if not exists mod_table.workbooks (
+  id         uuid primary key default gen_random_uuid(),
+  source_id  uuid not null references mod_table.sources(id) on delete cascade,
+  filename   text not null,
+  content    bytea not null,
+  created_at timestamptz not null default now()
+);
+
+-- 每份 CSV / XLSX Sheet 在 mod_table schema 里落成一张真实物理表，
 -- 这张登记表记录元信息和权限归属。LLM 生成的 SQL 只允许碰登记在册且当前用户可见的表。
 create table if not exists mod_table.datasets (
   id         uuid primary key default gen_random_uuid(),
@@ -202,3 +361,151 @@ create table if not exists mod_table.datasets (
 );
 
 create index if not exists datasets_source_idx on mod_table.datasets (source_id);
+
+alter table mod_table.datasets add column if not exists workbook_id uuid
+  references mod_table.workbooks(id) on delete cascade;
+alter table mod_table.datasets add column if not exists sheet_name text;
+alter table mod_table.datasets add column if not exists parsed_as text not null default 'csv';
+create index if not exists datasets_workbook_idx on mod_table.datasets (workbook_id);
+
+-- 文档是怎么被解析成文本的：text / text(gbk) / pdf。
+-- ★ 排查「这篇怎么检索不到」时，第一个要看的就是它当初怎么被解析的。
+--   传了 PDF 却显示 text，说明走了错误的分支。
+alter table mod_vector.documents add column if not exists parsed_as text not null default 'text';
+
+-- 注册表级内容指纹与版本。相同 source/filename 重复上传时用它跳过 embedding；
+-- 内容变化则复用 document_id、version + 1，并在重新入库前删除旧节点。
+alter table mod_vector.documents add column if not exists content_hash text not null default '';
+alter table mod_vector.documents add column if not exists version integer not null default 1;
+
+-- 原始资料的不可变版本层。documents 指向当前版本；这里保留每次用于检索和
+-- Wiki 编译的解析文本，使旧 Wiki 的来源仍可审计。
+create table if not exists mod_vector.document_revisions (
+  document_id uuid not null references mod_vector.documents(id) on delete cascade,
+  version integer not null check (version > 0),
+  content text not null,
+  content_hash text not null,
+  parsed_as text not null,
+  char_count integer not null,
+  created_at timestamptz not null default now(),
+  primary key (document_id, version)
+);
+
+insert into mod_vector.document_revisions
+  (document_id, version, content, content_hash, parsed_as, char_count, created_at)
+select id, version, content, content_hash, parsed_as, char_count, updated_at
+from mod_vector.documents
+on conflict (document_id, version) do nothing;
+
+-- 旧数据库中的约束不会被 create table if not exists 更新，显式迁移一次。
+alter table mod_vector.wiki_events drop constraint if exists wiki_events_target_type_check;
+alter table mod_vector.wiki_events add constraint wiki_events_target_type_check
+  check (target_type in ('source_page', 'topic', 'query', 'lint'));
+
+-- 切出来多少个片段。主路径（LlamaIndex）把节点存在自己的表里，
+-- 所以这里缓存一个计数，供文档列表显示；手写版走 chunks 表，两者不冲突。
+alter table mod_vector.documents add column if not exists chunk_count integer not null default 0;
+
+-- documents / datasets 自身就是持久化任务记录：上传事务提交时任务已经存在，
+-- 不会出现「文档登记成功但另一个队列表写失败」的双写窗口。
+alter table mod_vector.documents add column if not exists attempt_count integer not null default 0;
+alter table mod_vector.documents add column if not exists available_at timestamptz not null default now();
+alter table mod_vector.documents add column if not exists lease_until timestamptz;
+alter table mod_vector.documents add column if not exists processing_started_at timestamptz;
+alter table mod_vector.documents add column if not exists finished_at timestamptz;
+create index if not exists documents_queue_idx
+  on mod_vector.documents (status, available_at, created_at);
+
+alter table mod_table.datasets add column if not exists attempt_count integer not null default 0;
+alter table mod_table.datasets add column if not exists available_at timestamptz not null default now();
+alter table mod_table.datasets add column if not exists lease_until timestamptz;
+alter table mod_table.datasets add column if not exists processing_started_at timestamptz;
+alter table mod_table.datasets add column if not exists finished_at timestamptz;
+create index if not exists datasets_queue_idx
+  on mod_table.datasets (status, available_at, created_at);
+
+-- retryable 异常耗尽重试后进入 dead_letter；格式/权限等永久错误仍是 failed。
+-- 旧库的匿名 check constraint 名由 PostgreSQL 按列名生成，幂等升级时显式替换。
+alter table mod_vector.documents drop constraint if exists documents_status_check;
+alter table mod_vector.documents add constraint documents_status_check
+  check (status in ('uploaded', 'processing', 'ready', 'failed', 'dead_letter'));
+alter table mod_table.datasets drop constraint if exists datasets_status_check;
+alter table mod_table.datasets add constraint datasets_status_check
+  check (status in ('uploaded', 'processing', 'ready', 'failed', 'dead_letter'));
+
+
+-- ============================================================
+-- observability：平台级问答运行记录。只记录跨模块轨迹，不读取模块内部表。
+-- ============================================================
+
+create table if not exists observability.runs (
+  id            uuid primary key default gen_random_uuid(),
+  user_id       uuid not null,
+  session_id    text,
+  request_id    text,
+  question      text not null,
+  answer        text,
+  status        text not null check (status in ('running', 'succeeded', 'failed')),
+  model         text not null,
+  started_at    timestamptz not null default now(),
+  finished_at   timestamptz,
+  latency_ms    bigint,
+  input_tokens  integer not null default 0,
+  output_tokens integer not null default 0,
+  total_tokens  integer not null default 0,
+  tool_calls    jsonb not null default '[]'::jsonb,
+  evidence      jsonb not null default '[]'::jsonb,
+  claims        jsonb not null default '[]'::jsonb,
+  citation_metrics jsonb not null default '{}'::jsonb,
+  context_decisions jsonb not null default '[]'::jsonb,
+  context_metrics jsonb not null default '{}'::jsonb,
+  error         jsonb
+);
+
+-- 旧数据库幂等升级：create table if not exists 不会给现有表补列。
+alter table observability.runs
+  add column if not exists claims jsonb not null default '[]'::jsonb;
+alter table observability.runs
+  add column if not exists citation_metrics jsonb not null default '{}'::jsonb;
+alter table observability.runs
+  add column if not exists context_decisions jsonb not null default '[]'::jsonb;
+alter table observability.runs
+  add column if not exists context_metrics jsonb not null default '{}'::jsonb;
+alter table observability.runs
+  add column if not exists raw_answer text;
+alter table observability.runs
+  add column if not exists confidence_report jsonb not null default '{}'::jsonb;
+alter table observability.runs
+  add column if not exists request_id text;
+
+-- 相同会话内的客户端请求键只允许执行一次。NULL 表示 CLI/旧调用，不参与唯一约束。
+create unique index if not exists runs_session_request_uidx
+  on observability.runs (user_id, session_id, request_id)
+  where request_id is not null;
+
+create index if not exists runs_user_started_idx
+  on observability.runs (user_id, started_at desc);
+create index if not exists runs_status_started_idx
+  on observability.runs (status, started_at desc);
+
+-- 用户反馈只关联 run，不复制问题/答案/证据。一个用户对一次运行只有一条当前反馈，
+-- 重复点击采用 upsert；这样可以纠正误点，也不会把一次回答重复计入回归集。
+create table if not exists observability.run_feedback (
+  id          uuid primary key default gen_random_uuid(),
+  run_id      uuid not null references observability.runs(id) on delete cascade,
+  user_id     uuid not null,
+  rating      smallint not null check (rating in (-1, 1)),
+  reason      text check (reason is null or reason in (
+                'incorrect', 'missing_evidence', 'bad_citation',
+                'irrelevant', 'too_verbose', 'other'
+              )),
+  note        text not null default '',
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now(),
+  unique (run_id, user_id)
+);
+
+create index if not exists run_feedback_user_updated_idx
+  on observability.run_feedback (user_id, updated_at desc);
+create index if not exists run_feedback_rating_updated_idx
+  on observability.run_feedback (rating, updated_at desc);

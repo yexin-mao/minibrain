@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}运行记录 · minibrain{% endblock %}
+{% block body %}
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="brand-symbol">m</span><span>minibrain</span></a>
+    <div class="header-actions">
+      <nav class="nav-links" aria-label="主导航">
+        <a class="nav-link" href="/">问答与知识库</a><a class="nav-link" href="/wiki">知识 Wiki</a>
+        <a class="nav-link" href="/retrieval-debug">检索实验室</a><a class="nav-link is-active" href="/runs" aria-current="page">运行记录</a>
+        <a class="nav-link" href="/metrics">监控指标</a>
+      </nav>
+      <span class="who">{{ user.username }}</span>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="page-heading"><div class="eyebrow">Run observability</div><h1>每次问答都有可复盘的运行记录</h1><p>查看工具调用、证据、Claims、延迟与 Token；系统不保存模型内部推理。</p></div>
+  <div class="card table-card">
+    <h2>最近运行</h2>
+    <p class="hint">
+      {% if user.is_admin %}管理员可查看全部用户；{% else %}这里只显示你自己的记录；{% endif %}
+      这里记录工具调用、检索证据、结构化 Claims、耗时和 Token。
+      <a href="/feedback/regression.json">导出差评回归候选 JSON</a>；导出后仍需人工补充期望答案并审核，不能直接进入正式评测集。
+    </p>
+    {% if runs %}
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr>
+            <th>时间</th><th>状态</th><th>问题</th><th>模型</th>
+            <th>耗时</th><th>生成 token</th><th>工具 / 证据</th><th>上下文</th><th>支持检查</th><th>引用覆盖</th>
+          </tr></thead>
+          <tbody>
+          {% for item in runs %}
+            <tr>
+              <td style="white-space:nowrap;">{{ item.started_at.strftime('%m-%d %H:%M:%S') }}</td>
+              <td class="st-{{ item.status }}">{{ item.status }}</td>
+              <td><a href="/runs/{{ item.id }}">{{ item.question }}</a></td>
+              <td>{{ item.model }}</td>
+              <td>{% if item.latency_ms is not none %}{{ item.latency_ms }} ms{% else %}—{% endif %}</td>
+              <td>{{ item.total_tokens }}</td>
+              <td>{{ item.tool_count }} / {{ item.evidence_count }}</td>
+              <td>
+                {% if item.context_metrics and item.context_metrics.token_budget %}
+                  {{ item.context_metrics.context_tokens }} / {{ item.context_metrics.token_budget }}
+                {% else %}—{% endif %}
+              </td>
+              <td>
+                {% if item.confidence_report and item.confidence_report.status %}
+                  <span class="{% if item.confidence_report.blocked %}st-failed{% else %}st-ready{% endif %}">{{ item.confidence_report.status }}</span>
+                {% else %}—{% endif %}
+              </td>
+              <td>
+                {% if item.citation_metrics and item.citation_metrics.citation_coverage is not none %}
+                  {{ (item.citation_metrics.citation_coverage * 100)|round|int }}%
+                {% else %}—{% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="hint">还没有运行记录。回到问答页提一个问题后，这里会出现对应记录。</p>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,1637 @@
+{
+  "rows": [
+    {
+      "id": "ctrl-1",
+      "question": "后端组有多少人？",
+      "answerable": true,
+      "kind": "对照组·单点事实",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.707302,
+        "dense_margin": 0.042408,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "team-backend.md",
+        "long-report-q2-张敏.md",
+        "long-report-q3-张敏.md",
+        "long-report-q4-张敏.md"
+      ]
+    },
+    {
+      "id": "ctrl-2",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "answerable": true,
+      "kind": "对照组·单点事实",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.682067,
+        "dense_margin": 0.218255,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-travel.md",
+        "policy-trip-approval.md",
+        "policy-team-building.md",
+        "metric-cac.md",
+        "meeting-mtg-20260617-02.md"
+      ]
+    },
+    {
+      "id": "ctrl-3",
+      "question": "入职满三年有几天年假？",
+      "answerable": true,
+      "kind": "对照组·单点事实",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.703681,
+        "dense_margin": 0.24284,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-leave.md",
+        "long-handbook-考勤.md",
+        "policy-overtime.md",
+        "policy-training.md"
+      ]
+    },
+    {
+      "id": "hop-1",
+      "question": "张敏的上级的上级是谁？",
+      "answerable": true,
+      "kind": "多跳推理",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.511645,
+        "dense_margin": 0.047564,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "team-backend.md",
+        "external-启明云.md",
+        "dept-product.md",
+        "external-恒信咨询.md",
+        "dept-market.md"
+      ]
+    },
+    {
+      "id": "hop-2",
+      "question": "Alpha 项目的产品侧对接人向谁汇报？",
+      "answerable": true,
+      "kind": "多跳推理",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.766145,
+        "dense_margin": 0.178998,
+        "keyword_top_score": 4.17676,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-alpha.md",
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0204.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0191.md"
+      ]
+    },
+    {
+      "id": "hop-3",
+      "question": "陈刚和刘洋是同一个部门的吗？",
+      "answerable": true,
+      "kind": "多跳推理",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.432359,
+        "dense_margin": 0.006274,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "dept-tech.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-finance.md",
+        "dept-hr.md"
+      ]
+    },
+    {
+      "id": "global-1",
+      "question": "公司一共有几个部门，分别是什么？",
+      "answerable": true,
+      "kind": "全局聚合",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.570234,
+        "dense_margin": 0.022974,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "dept-tech.md",
+        "dept-product.md",
+        "dept-hr.md",
+        "dept-market.md",
+        "dept-finance.md"
+      ]
+    },
+    {
+      "id": "global-2",
+      "question": "哪个部门的人最多？",
+      "answerable": true,
+      "kind": "全局聚合",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.541444,
+        "dense_margin": 0.049002,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "dept-tech.md",
+        "dept-hr.md",
+        "dept-product.md",
+        "dept-market.md",
+        "dept-finance.md"
+      ]
+    },
+    {
+      "id": "global-3",
+      "question": "公司总共大约多少人？",
+      "answerable": true,
+      "kind": "全局聚合",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.497973,
+        "dense_margin": 0.010594,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "dept-hr.md",
+        "dept-tech.md",
+        "policy-recruit.md",
+        "external-启明云.md",
+        "external-泰盛物流.md"
+      ]
+    },
+    {
+      "id": "ambig-1",
+      "question": "李伟负责什么工作？",
+      "answerable": true,
+      "kind": "实体消歧",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.613624,
+        "dense_margin": 0.119878,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "intern-liwei.md",
+        "dept-tech.md",
+        "external-启明云.md",
+        "product-k2-ground.md",
+        "external-恒信咨询.md"
+      ]
+    },
+    {
+      "id": "bs-01",
+      "question": "PRJ-2026-0142 是哪个项目？由谁负责？",
+      "answerable": true,
+      "kind": "专有名词·项目编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.745688,
+        "dense_margin": 0.048466,
+        "keyword_top_score": 0.254376,
+        "dense_keyword_overlap_at_5": 0.4,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0142.md",
+        "long-design-prj-2026-0142.md"
+      ]
+    },
+    {
+      "id": "bs-02",
+      "question": "PRJ-2026-0155 是哪个项目？由谁负责？",
+      "answerable": true,
+      "kind": "专有名词·项目编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.695261,
+        "dense_margin": 0.045538,
+        "keyword_top_score": 0.254337,
+        "dense_keyword_overlap_at_5": 0.4,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0155.md",
+        "long-design-prj-2026-0155.md"
+      ]
+    },
+    {
+      "id": "bs-03",
+      "question": "PRJ-2026-0163 是哪个项目？由谁负责？",
+      "answerable": true,
+      "kind": "专有名词·项目编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.68501,
+        "dense_margin": 0.021554,
+        "keyword_top_score": 0.25454,
+        "dense_keyword_overlap_at_5": 0.4,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0163.md",
+        "long-design-prj-2026-0163.md"
+      ]
+    },
+    {
+      "id": "bs-04",
+      "question": "PRJ-2026-0178 是哪个项目？由谁负责？",
+      "answerable": true,
+      "kind": "专有名词·项目编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.677921,
+        "dense_margin": 0.036804,
+        "keyword_top_score": 0.253689,
+        "dense_keyword_overlap_at_5": 0.4,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0178.md",
+        "long-design-prj-2026-0178.md"
+      ]
+    },
+    {
+      "id": "bs-05",
+      "question": "PRJ-2026-0191 是哪个项目？由谁负责？",
+      "answerable": true,
+      "kind": "专有名词·项目编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.706767,
+        "dense_margin": 0.026753,
+        "keyword_top_score": 0.254448,
+        "dense_keyword_overlap_at_5": 0.4,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0191.md",
+        "long-design-prj-2026-0191.md"
+      ]
+    },
+    {
+      "id": "bs-06",
+      "question": "PRJ-2026-0204 是哪个项目？由谁负责？",
+      "answerable": true,
+      "kind": "专有名词·项目编号",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.678722,
+        "dense_margin": 0.012129,
+        "keyword_top_score": 0.254333,
+        "dense_keyword_overlap_at_5": 0.8,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0204.md",
+        "long-design-prj-2026-0204.md"
+      ]
+    },
+    {
+      "id": "bs-07",
+      "question": "PRJ-2026-0217 是哪个项目？由谁负责？",
+      "answerable": true,
+      "kind": "专有名词·项目编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.659417,
+        "dense_margin": 0.012606,
+        "keyword_top_score": 0.253971,
+        "dense_keyword_overlap_at_5": 0.4,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0217.md",
+        "long-design-prj-2026-0217.md"
+      ]
+    },
+    {
+      "id": "bs-08",
+      "question": "PRJ-2026-0223 是哪个项目？由谁负责？",
+      "answerable": true,
+      "kind": "专有名词·项目编号",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.697316,
+        "dense_margin": 0.019109,
+        "keyword_top_score": 0.254341,
+        "dense_keyword_overlap_at_5": 0.4,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0223.md",
+        "long-design-prj-2026-0223.md"
+      ]
+    },
+    {
+      "id": "bs-09",
+      "question": "工单 TICKET-88231 是什么问题？",
+      "answerable": true,
+      "kind": "专有名词·工单编号",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.641154,
+        "dense_margin": 0.028511,
+        "keyword_top_score": 0.188624,
+        "dense_keyword_overlap_at_5": 0.4,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "ticket-ticket-88231.md",
+        "long-postmortem-ticket-88231.md"
+      ]
+    },
+    {
+      "id": "bs-10",
+      "question": "工单 TICKET-88407 是什么问题？",
+      "answerable": true,
+      "kind": "专有名词·工单编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.678894,
+        "dense_margin": 0.031773,
+        "keyword_top_score": 0.176001,
+        "dense_keyword_overlap_at_5": 0.2,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "ticket-ticket-88407.md",
+        "long-postmortem-ticket-88407.md",
+        "meeting-mtg-20260519-04.md"
+      ]
+    },
+    {
+      "id": "bs-11",
+      "question": "工单 TICKET-88512 是什么问题？",
+      "answerable": true,
+      "kind": "专有名词·工单编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.734641,
+        "dense_margin": 0.11241,
+        "keyword_top_score": 0.188567,
+        "dense_keyword_overlap_at_5": 0.2,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "ticket-ticket-88512.md",
+        "long-postmortem-ticket-88512.md"
+      ]
+    },
+    {
+      "id": "bs-12",
+      "question": "工单 TICKET-88690 是什么问题？",
+      "answerable": true,
+      "kind": "专有名词·工单编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.658052,
+        "dense_margin": 0.046221,
+        "keyword_top_score": 0.187764,
+        "dense_keyword_overlap_at_5": 0.2,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "ticket-ticket-88690.md",
+        "long-postmortem-ticket-88690.md"
+      ]
+    },
+    {
+      "id": "bs-13",
+      "question": "工单 TICKET-88745 是什么问题？",
+      "answerable": true,
+      "kind": "专有名词·工单编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.657968,
+        "dense_margin": 0.058031,
+        "keyword_top_score": 0.187928,
+        "dense_keyword_overlap_at_5": 0.2,
+        "fused_top_score": 0.032522,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "ticket-ticket-88745.md",
+        "long-postmortem-ticket-88745.md"
+      ]
+    },
+    {
+      "id": "bs-14",
+      "question": "工单 TICKET-88823 是什么问题？",
+      "answerable": true,
+      "kind": "专有名词·工单编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.631635,
+        "dense_margin": 0.030715,
+        "keyword_top_score": 0.188509,
+        "dense_keyword_overlap_at_5": 0.2,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "ticket-ticket-88823.md",
+        "long-postmortem-ticket-88823.md"
+      ]
+    },
+    {
+      "id": "bs-15",
+      "question": "MTG-20260415-03 这次会议的决议是什么？",
+      "answerable": true,
+      "kind": "专有名词·会议编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.620943,
+        "dense_margin": null,
+        "keyword_top_score": 1.643898,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 1,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "meeting-mtg-20260415-03.md"
+      ]
+    },
+    {
+      "id": "bs-16",
+      "question": "MTG-20260422-01 这次会议的决议是什么？",
+      "answerable": true,
+      "kind": "专有名词·会议编号",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.598732,
+        "dense_margin": null,
+        "keyword_top_score": 1.643898,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 1,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "meeting-mtg-20260422-01.md"
+      ]
+    },
+    {
+      "id": "bs-17",
+      "question": "MTG-20260508-02 这次会议的决议是什么？",
+      "answerable": true,
+      "kind": "专有名词·会议编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.659824,
+        "dense_margin": null,
+        "keyword_top_score": 1.643898,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 1,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "meeting-mtg-20260508-02.md"
+      ]
+    },
+    {
+      "id": "bs-18",
+      "question": "MTG-20260519-04 这次会议的决议是什么？",
+      "answerable": true,
+      "kind": "专有名词·会议编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.6011,
+        "dense_margin": null,
+        "keyword_top_score": 1.643898,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 1,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "meeting-mtg-20260519-04.md"
+      ]
+    },
+    {
+      "id": "bs-19",
+      "question": "MTG-20260603-01 这次会议的决议是什么？",
+      "answerable": true,
+      "kind": "专有名词·会议编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.642134,
+        "dense_margin": null,
+        "keyword_top_score": 1.643898,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 1,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "meeting-mtg-20260603-01.md"
+      ]
+    },
+    {
+      "id": "bs-20",
+      "question": "MTG-20260617-02 这次会议的决议是什么？",
+      "answerable": true,
+      "kind": "专有名词·会议编号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.566395,
+        "dense_margin": null,
+        "keyword_top_score": 1.643898,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 1,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "meeting-mtg-20260617-02.md"
+      ]
+    },
+    {
+      "id": "bs-21",
+      "question": "MTG-20260701-05 这次会议的决议是什么？",
+      "answerable": true,
+      "kind": "专有名词·会议编号",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.636262,
+        "dense_margin": null,
+        "keyword_top_score": 1.643898,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 1,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "meeting-mtg-20260701-05.md"
+      ]
+    },
+    {
+      "id": "bs-22",
+      "question": "MTG-20260715-01 这次会议的决议是什么？",
+      "answerable": true,
+      "kind": "专有名词·会议编号",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.597353,
+        "dense_margin": null,
+        "keyword_top_score": 1.643898,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 1,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "meeting-mtg-20260715-01.md"
+      ]
+    },
+    {
+      "id": "bs-23",
+      "question": "X7-Pro 是什么产品？当前版本是多少？",
+      "answerable": true,
+      "kind": "专有名词·产品型号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.779987,
+        "dense_margin": 0.131823,
+        "keyword_top_score": 8.082209,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-x7-pro.md",
+        "product-x7-lite.md",
+        "product-k2-air.md",
+        "product-k2-ground.md",
+        "product-s3-mini.md"
+      ]
+    },
+    {
+      "id": "bs-24",
+      "question": "X7-Lite 是什么产品？当前版本是多少？",
+      "answerable": true,
+      "kind": "专有名词·产品型号",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.795606,
+        "dense_margin": 0.116675,
+        "keyword_top_score": 8.082209,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-x7-lite.md",
+        "product-x7-pro.md",
+        "product-k2-air.md",
+        "product-k2-ground.md",
+        "product-s3-mini.md"
+      ]
+    },
+    {
+      "id": "bs-25",
+      "question": "S3-Max 是什么产品？当前版本是多少？",
+      "answerable": true,
+      "kind": "专有名词·产品型号",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.796198,
+        "dense_margin": 0.084166,
+        "keyword_top_score": 8.053587,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-s3-max.md",
+        "product-s3-mini.md",
+        "product-k2-air.md",
+        "product-k2-ground.md",
+        "product-x7-pro.md"
+      ]
+    },
+    {
+      "id": "bs-26",
+      "question": "S3-Mini 是什么产品？当前版本是多少？",
+      "answerable": true,
+      "kind": "专有名词·产品型号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.795195,
+        "dense_margin": 0.112912,
+        "keyword_top_score": 8.082209,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-s3-mini.md",
+        "product-s3-max.md",
+        "product-k2-ground.md",
+        "product-k2-air.md",
+        "product-x7-pro.md"
+      ]
+    },
+    {
+      "id": "bs-27",
+      "question": "K2-Air 是什么产品？当前版本是多少？",
+      "answerable": true,
+      "kind": "专有名词·产品型号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.819772,
+        "dense_margin": 0.106453,
+        "keyword_top_score": 8.16931,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-k2-air.md",
+        "product-k2-ground.md",
+        "product-x7-pro.md",
+        "product-s3-mini.md",
+        "product-r5-quasar.md"
+      ]
+    },
+    {
+      "id": "bs-28",
+      "question": "K2-Ground 是什么产品？当前版本是多少？",
+      "answerable": true,
+      "kind": "专有名词·产品型号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.809626,
+        "dense_margin": 0.124503,
+        "keyword_top_score": 8.16931,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-k2-ground.md",
+        "product-k2-air.md",
+        "product-x7-pro.md",
+        "product-s3-mini.md",
+        "product-s3-max.md"
+      ]
+    },
+    {
+      "id": "bs-29",
+      "question": "R5-Nova 是什么产品？当前版本是多少？",
+      "answerable": true,
+      "kind": "专有名词·产品型号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.806387,
+        "dense_margin": 0.147391,
+        "keyword_top_score": 8.111036,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-r5-nova.md",
+        "product-r5-quasar.md",
+        "product-s3-mini.md",
+        "product-x7-pro.md",
+        "product-k2-air.md"
+      ]
+    },
+    {
+      "id": "bs-30",
+      "question": "R5-Quasar 是什么产品？当前版本是多少？",
+      "answerable": true,
+      "kind": "专有名词·产品型号",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.796434,
+        "dense_margin": 0.137264,
+        "keyword_top_score": 8.111036,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-r5-quasar.md",
+        "product-r5-nova.md",
+        "product-x7-pro.md",
+        "product-k2-ground.md",
+        "product-k2-air.md"
+      ]
+    },
+    {
+      "id": "bs-31",
+      "question": "SLA 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.309204,
+        "dense_margin": 0.007063,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "uncertain",
+        "decision_reason": "Dense top1=0.3092 低于校准阈值 0.3393，且 BM25 无命中",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-device.md",
+        "policy-recruit.md",
+        "policy-data.md",
+        "policy-supplier.md",
+        "policy-team-building.md"
+      ]
+    },
+    {
+      "id": "bs-32",
+      "question": "RTO 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.320333,
+        "dense_margin": 0.026021,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "uncertain",
+        "decision_reason": "Dense top1=0.3203 低于校准阈值 0.3393，且 BM25 无命中",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-recruit.md",
+        "policy-supplier.md",
+        "policy-device.md",
+        "policy-team-building.md",
+        "policy-trip-approval.md"
+      ]
+    },
+    {
+      "id": "bs-33",
+      "question": "RPO 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.3939,
+        "dense_margin": 0.06345,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-recruit.md",
+        "policy-supplier.md",
+        "policy-device.md",
+        "policy-team-building.md",
+        "policy-trip-approval.md"
+      ]
+    },
+    {
+      "id": "bs-34",
+      "question": "QPS 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.364261,
+        "dense_margin": 0.034595,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-team-building.md",
+        "policy-device.md",
+        "policy-confidential.md",
+        "policy-performance.md",
+        "policy-supplier.md"
+      ]
+    },
+    {
+      "id": "bs-35",
+      "question": "OKR 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.374797,
+        "dense_margin": 0.02385,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-recruit.md",
+        "policy-team-building.md",
+        "policy-performance.md",
+        "policy-device.md",
+        "policy-confidential.md"
+      ]
+    },
+    {
+      "id": "bs-36",
+      "question": "P0 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.285922,
+        "dense_margin": 0.004921,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "uncertain",
+        "decision_reason": "Dense top1=0.2859 低于校准阈值 0.3393，且 BM25 无命中",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-data.md",
+        "policy-device.md",
+        "policy-recruit.md",
+        "policy-confidential.md",
+        "policy-supplier.md"
+      ]
+    },
+    {
+      "id": "bs-37",
+      "question": "P1 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.301614,
+        "dense_margin": 0.015827,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "uncertain",
+        "decision_reason": "Dense top1=0.3016 低于校准阈值 0.3393，且 BM25 无命中",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-data.md",
+        "policy-device.md",
+        "policy-recruit.md",
+        "policy-team-building.md",
+        "policy-confidential.md"
+      ]
+    },
+    {
+      "id": "bs-38",
+      "question": "CAC 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.340425,
+        "dense_margin": 0.011173,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-confidential.md",
+        "policy-device.md",
+        "policy-team-building.md",
+        "policy-trip-approval.md",
+        "policy-supplier.md"
+      ]
+    },
+    {
+      "id": "bs-39",
+      "question": "MRR 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.360299,
+        "dense_margin": 0.032972,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-team-building.md",
+        "policy-trip-approval.md",
+        "policy-recruit.md",
+        "policy-confidential.md",
+        "policy-data.md"
+      ]
+    },
+    {
+      "id": "bs-40",
+      "question": "DAU 的口径是怎么规定的？",
+      "answerable": true,
+      "kind": "专有名词·英文缩写",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.346231,
+        "dense_margin": 0.029176,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-data.md",
+        "policy-trip-approval.md",
+        "policy-recruit.md",
+        "policy-team-building.md",
+        "policy-device.md"
+      ]
+    },
+    {
+      "id": "bs-41",
+      "question": "郗昭是谁？",
+      "answerable": true,
+      "kind": "专有名词·罕见人名",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.546997,
+        "dense_margin": 0.17009,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "external-云启数据.md",
+        "external-泰盛物流.md",
+        "external-启明云.md",
+        "product-x7-pro.md",
+        "external-天元法务.md"
+      ]
+    },
+    {
+      "id": "bs-42",
+      "question": "乜文渊是谁？",
+      "answerable": true,
+      "kind": "专有名词·罕见人名",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.615033,
+        "dense_margin": 0.178177,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "external-恒信咨询.md",
+        "external-启明云.md",
+        "external-泰盛物流.md",
+        "external-博远设计.md",
+        "external-天元法务.md"
+      ]
+    },
+    {
+      "id": "bs-43",
+      "question": "邝允中是谁？",
+      "answerable": true,
+      "kind": "专有名词·罕见人名",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.589047,
+        "dense_margin": 0.174993,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "external-锐锋科技.md",
+        "product-k2-air.md",
+        "external-启明云.md",
+        "product-k2-ground.md",
+        "team-frontend.md"
+      ]
+    },
+    {
+      "id": "bs-44",
+      "question": "笪立诚是谁？",
+      "answerable": true,
+      "kind": "专有名词·罕见人名",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.600402,
+        "dense_margin": 0.191151,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "external-中衡审计.md",
+        "external-启明云.md",
+        "external-恒信咨询.md",
+        "team-algo.md",
+        "external-泰盛物流.md"
+      ]
+    },
+    {
+      "id": "bs-45",
+      "question": "逯明修是谁？",
+      "answerable": true,
+      "kind": "专有名词·罕见人名",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.596811,
+        "dense_margin": 0.112972,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "external-博远设计.md",
+        "external-启明云.md",
+        "external-恒信咨询.md",
+        "team-frontend.md",
+        "team-backend.md"
+      ]
+    },
+    {
+      "id": "bs-46",
+      "question": "岑柏舟是谁？",
+      "answerable": true,
+      "kind": "专有名词·罕见人名",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.555538,
+        "dense_margin": 0.133309,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "external-天元法务.md",
+        "external-泰盛物流.md",
+        "external-恒信咨询.md",
+        "external-博远设计.md",
+        "external-云启数据.md"
+      ]
+    },
+    {
+      "id": "bs-47",
+      "question": "蔺孝廉是谁？",
+      "answerable": true,
+      "kind": "专有名词·罕见人名",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.592693,
+        "dense_margin": 0.206811,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "external-启明云.md",
+        "external-恒信咨询.md",
+        "external-泰盛物流.md",
+        "external-博远设计.md",
+        "external-天元法务.md"
+      ]
+    },
+    {
+      "id": "bs-48",
+      "question": "阚彦博是谁？",
+      "answerable": true,
+      "kind": "专有名词·罕见人名",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.578878,
+        "dense_margin": 0.14729,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "external-泰盛物流.md",
+        "external-博远设计.md",
+        "external-恒信咨询.md",
+        "external-启明云.md",
+        "external-天元法务.md"
+      ]
+    },
+    {
+      "id": "hal-01",
+      "question": "Beta 项目的预算是多少万元？",
+      "answerable": false,
+      "kind": "属性不存在",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.642379,
+        "dense_margin": 0.085781,
+        "keyword_top_score": 1.85795,
+        "dense_keyword_overlap_at_5": 1.0,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "project-prj-2026-0142.md",
+        "project-prj-2026-0204.md",
+        "project-prj-2026-0155.md",
+        "project-prj-2026-0191.md",
+        "project-prj-2026-0217.md"
+      ]
+    },
+    {
+      "id": "hal-02",
+      "question": "技术部去年的离职率是多少？",
+      "answerable": false,
+      "kind": "属性不存在",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.531046,
+        "dense_margin": 0.032813,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "dept-tech.md",
+        "long-report-q1-刘洋.md",
+        "long-report-q4-刘洋.md",
+        "long-report-q2-张敏.md",
+        "long-report-q3-张敏.md"
+      ]
+    },
+    {
+      "id": "hal-04",
+      "question": "PRJ-2026-0999 这个项目的负责人是谁？",
+      "answerable": false,
+      "kind": "实体不存在",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.646454,
+        "dense_margin": 0.006539,
+        "keyword_top_score": 7.104906,
+        "dense_keyword_overlap_at_5": 0.6,
+        "fused_top_score": 0.032018,
+        "final_evidence_count": 5,
+        "calibration_status": "deterministic",
+        "decision": "no_evidence",
+        "decision_reason": "查询中的精确业务编号在 metadata 索引中不存在",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": []
+    },
+    {
+      "id": "hal-05",
+      "question": "运维部有多少人？部门负责人是谁？",
+      "answerable": false,
+      "kind": "实体不存在",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.642348,
+        "dense_margin": 0.035671,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "dept-tech.md",
+        "dept-market.md",
+        "dept-product.md",
+        "dept-hr.md",
+        "dept-finance.md"
+      ]
+    },
+    {
+      "id": "hal-06",
+      "question": "X7-Pro 在 v2.4.0 里修复了哪些问题？",
+      "answerable": false,
+      "kind": "诱导性前提",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.709752,
+        "dense_margin": 0.081987,
+        "keyword_top_score": 31.853714,
+        "dense_keyword_overlap_at_5": 0.6,
+        "fused_top_score": 0.032787,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "product-x7-pro.md",
+        "long-manual-x7-pro.md",
+        "product-x7-lite.md"
+      ]
+    },
+    {
+      "id": "hal-07",
+      "question": "郗昭在公司工作了几年？他属于哪个部门？",
+      "answerable": false,
+      "kind": "诱导性前提",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.486176,
+        "dense_margin": 0.012694,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "dept-tech.md",
+        "dept-product.md",
+        "dept-market.md",
+        "dept-finance.md",
+        "dept-hr.md"
+      ]
+    },
+    {
+      "id": "hal-08",
+      "question": "根据销售数据，明年华东区的销售额预计是多少？",
+      "answerable": false,
+      "kind": "跨界推断",
+      "split": "validation",
+      "signals": {
+        "dense_top_score": 0.466425,
+        "dense_margin": 0.012762,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "long-report-q1-刘洋.md",
+        "meeting-mtg-20260508-02.md",
+        "long-report-q4-吴倩.md",
+        "long-report-q2-吴倩.md",
+        "long-report-q3-胡静.md"
+      ]
+    },
+    {
+      "id": "hal-09",
+      "question": "报销最多的那个员工，他的月薪大概是多少？",
+      "answerable": false,
+      "kind": "跨界推断",
+      "split": "calibration",
+      "signals": {
+        "dense_top_score": 0.489444,
+        "dense_margin": 0.009205,
+        "keyword_top_score": null,
+        "dense_keyword_overlap_at_5": 0.0,
+        "fused_top_score": 0.016393,
+        "final_evidence_count": 5,
+        "calibration_status": "report_only",
+        "decision": "evidence_found",
+        "decision_reason": "检索信号未触发 no-evidence 规则；答案仍需引用安全门校验",
+        "policy_version": "v1-dense-bm25-heldout"
+      },
+      "returned_files": [
+        "policy-referral.md",
+        "policy-team-building.md",
+        "policy-trip-approval.md",
+        "metric-qps.md",
+        "ticket-ticket-88512.md"
+      ]
+    }
+  ]
+}

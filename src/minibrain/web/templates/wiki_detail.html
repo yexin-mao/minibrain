@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} · minibrain Wiki{% endblock %}
+{% block body %}
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/">minibrain</a>
+    <nav class="nav-links"><a class="nav-link" href="/wiki">← 返回知识 Wiki</a></nav>
+  </div>
+</header>
+<main class="wiki-main">
+  <article class="card wiki-article">
+    <div class="eyebrow">{{ page.source_name }} · {{ page.filename }}</div>
+    <div class="card-header">
+      <div><h1>{{ page.title }}</h1></div>
+      <span class="status st-{{ page.status }}">{{ page.status }}</span>
+    </div>
+    <p class="wiki-meta">来源版本 v{{ page.document_version }} · 模型 {{ page.model or '—' }} · 更新于 {{ page.updated_at }}</p>
+    {% if page.status == 'stale' %}<div class="wiki-warning">原文已有新版本，这一页可能过期，请重新生成。</div>{% endif %}
+    {% if page.error %}<div class="error">{{ page.error }}</div>{% endif %}
+    <div class="wiki-content">{{ page.content }}</div>
+    <div class="wiki-references">
+      <strong>编译时原文</strong>
+      {% if page.source_revision_available %}
+        <div class="wiki-links"><a href="/wiki/source/{{ page.document_id }}/{{ page.document_version }}">查看 {{ page.filename }} · v{{ page.document_version }}</a></div>
+      {% else %}
+        <div class="hint">该历史版本生成于不可变版本功能启用前，未保留原文快照。</div>
+      {% endif %}
+    </div>
+    {% if page.topics %}
+      <div class="wiki-references">
+        <strong>由这篇原文支持的主题</strong>
+        <div class="wiki-links">
+          {% for topic in page.topics %}<a href="/wiki/topic/{{ topic.id }}">{{ topic.title }}</a>{% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </article>
+</main>
+{% endblock %}

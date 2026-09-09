@@ -304,7 +304,7 @@ def main() -> int:
     import sys
     sys.path.insert(0, str(ROOT / "src"))
     from minibrain.config import get_config
-    from minibrain.modules.vector_rag.chunking import split_text
+    from minibrain.handwritten.chunking import split_text
 
     cfg = get_config()
     all_docs = sorted(CORPUS.glob("*.md"))

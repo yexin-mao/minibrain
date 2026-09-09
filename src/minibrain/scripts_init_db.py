@@ -55,7 +55,10 @@ def main() -> int:
         apply_schema(schema_path.read_text(encoding="utf-8"))
     finally:
         close_all()
-    print(f"已应用 {schema_path.name}：identity / mod_vector / mod_table")
+    print(
+        f"已应用 {schema_path.name}：identity / mod_vector / mod_vector_li / "
+        "mod_table / observability"
+    )
     return 0
 
 

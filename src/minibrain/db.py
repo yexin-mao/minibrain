@@ -66,6 +66,17 @@ def vector_db() -> Iterator[psycopg.Cursor]:
 
 
 @contextmanager
+def vector_index_db() -> Iterator[psycopg.Cursor]:
+    """LlamaIndex 节点及其全局 sparse 索引的连接。
+
+    `mod_vector_li` 仍属于 vector-rag 模块，只是和手写基线的 `mod_vector`
+    物理隔开，避免两套实现互相污染。
+    """
+    with _get("vector_li", "mod_vector_li").connection() as conn, conn.cursor() as cur:
+        yield cur
+
+
+@contextmanager
 def table_db() -> Iterator[psycopg.Cursor]:
     """表格模块的读写池：建表、写行、维护登记表。"""
     with _get("table", "mod_table").connection() as conn, conn.cursor() as cur:
@@ -76,6 +87,13 @@ def table_db() -> Iterator[psycopg.Cursor]:
 def table_readonly_db() -> Iterator[psycopg.Cursor]:
     """表格模块的只读池：专门跑 LLM 生成的 SQL。"""
     with _get("table_ro", "mod_table", readonly=True).connection() as conn, conn.cursor() as cur:
+        yield cur
+
+
+@contextmanager
+def observability_db() -> Iterator[psycopg.Cursor]:
+    """平台问答轨迹；与业务模块数据隔离。"""
+    with _get("observability", "observability").connection() as conn, conn.cursor() as cur:
         yield cur
 
 

@@ -1,0 +1,537 @@
+{
+  "status": "completed",
+  "created_at": "2026-08-17T21:01:17.829212+00:00",
+  "suite": "smoke",
+  "answer_model": "deepseek/deepseek-v4-flash",
+  "judge_model": "qwen/qwen3-235b-a22b-2507",
+  "judge_is_same_model": false,
+  "judge_independence": {
+    "is_independent": true,
+    "method": "normalized_exact_model_name",
+    "answer_model": "deepseek/deepseek-v4-flash",
+    "judge_model": "qwen/qwen3-235b-a22b-2507",
+    "limitation": "不同别名或同系列模型仍需人工确认供应商与模型谱系"
+  },
+  "rejudged_from": "eval/results/answer-quality-targeted-after-routing-fix.json",
+  "calibration": [],
+  "summary": {
+    "cases": 3,
+    "succeeded": 3,
+    "answer_correctness": 1.0,
+    "faithfulness": 1.0,
+    "citation_correctness": 1.0,
+    "answer_relevance": 1.0,
+    "refusal_accuracy": 1.0,
+    "generation_latency_p50_ms": 6285,
+    "generation_latency_p95_ms": 52844,
+    "generation_tokens": 26959,
+    "judge_tokens_billed": 7961,
+    "judge_cache_hits": 0
+  },
+  "rows": [
+    {
+      "id": "hal-10",
+      "group": "幻觉·对照·应当答出",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "reference": {
+        "expected_answer_terms": [
+          "400"
+        ],
+        "answer_match": "all",
+        "expected_refusal": false
+      },
+      "answer": "根据差旅住宿标准，二线城市住宿每晚最多报销 **400 元**。",
+      "deterministic_answer_ok": true,
+      "evidence": [
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "policy-travel.md #0",
+          "snippet": "标题路径：差旅住宿标准\n\n一线城市每晚不超过 600 元，二线城市每晚不超过 400 元，其他城市每晚不超过 300 元。",
+          "score": 0.0164,
+          "evidence_id": "E1.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "policy-trip-approval.md #0",
+          "snippet": "标题路径：出差审批\n\n省内出差由部门负责人审批，跨省出差需再经分管副总审批。单次出差预算超过 8000 元的，须提前提交行程与预算说明。出差期间的住宿标准见差旅住宿标准。",
+          "score": 0.0161,
+          "evidence_id": "E1.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "long-handbook-报销.md #3",
+          "snippet": "标题路径：差旅与报销手册 > 第二章 基本规定\n\n发票需在消费后 30 天内提交。该规定为报销类事项的基础要求，各部门不得自行放宽。\n\n涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本条款的解释权归对应归口部门，如有歧义以中文表述为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。",
+          "score": 0.0159,
+          "evidence_id": "E1.3"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "二线城市住宿每晚不超过 400 元。",
+          "evidence_ids": [
+            "E1.1"
+          ],
+          "valid_evidence_ids": [
+            "E1.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 1,
+        "cited_claim_count": 1,
+        "valid_reference_count": 1,
+        "reference_count": 1,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 1.0
+      },
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案中提到二线城市住宿每晚最多报销400元，与evidence E1.1中'二线城市每晚不超过400元'完全一致，且命中reference中的expected_answer_terms ['400']，内容完整无误。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题，明确给出二线城市住宿报销上限，无无关内容。",
+        "is_refusal": false,
+        "refusal_reason": "答案提供了具体信息，未表示无法确定。",
+        "factual_claims": [
+          {
+            "claim": "二线城市住宿每晚最多报销400元。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "evidence E1.1明确指出'二线城市每晚不超过400元'，与该事实完全一致。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "claim 0 '二线城市住宿每晚不超过400元' 被evidence E1.1直接支持，且引用了正确的evidence_id。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 1.0,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": true
+      },
+      "generation": {
+        "run_id": "c3d1e809-70d9-4965-b3c5-8f78a4f1220e",
+        "latency_ms": 3490,
+        "usage": {
+          "input_tokens": 5177,
+          "output_tokens": 155,
+          "total_tokens": 5332
+        },
+        "forced_final": false
+      },
+      "trace": [
+        {
+          "name": "vector_search",
+          "arguments": "{\"query\": \"二线城市住宿报销标准 限额 一晚\"}",
+          "result_preview": "<untrusted_evidence>\n[E1.1] source=benchmark/answer-quality/18fa8c1e 位置=policy-travel.md #0 相似度=0.0164\n标题路径：差旅住宿标准\n\n一线城市每晚不超过 600 元，二线城市每晚不超过 400 元，其他城市每晚不超过 300 元。\n</untrusted_evidence>\n\n<untrusted_evidence>\n[E1.2] source=benchmark/answer-quality/18fa8c1e 位置=policy-trip-approval.md #0 相似度=0.0161\n标题…",
+          "step": 1
+        }
+      ],
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 1857,
+          "output_tokens": 281,
+          "total_tokens": 2138
+        },
+        "attempt": 1,
+        "latency_ms": 4994
+      },
+      "error": null
+    },
+    {
+      "id": "hal-11",
+      "group": "幻觉·对照·应当答出",
+      "question": "华东区上半年销售额合计是多少？",
+      "reference": {
+        "expected_answer_terms": [
+          "3053000",
+          "305.3万"
+        ],
+        "answer_match": "any",
+        "expected_refusal": false
+      },
+      "answer": "华东区上半年销售额合计为 **3,053,000**。",
+      "deterministic_answer_ok": true,
+      "evidence": [
+        {
+          "module": "table-rag",
+          "source_name": "表格查询",
+          "location": "SELECT sum(\"销售额\") FROM t_53cbab48 WHERE \"区域\" = '华东'",
+          "snippet": "{\"columns\": [\"sum\"], \"rows\": [{\"sum\": \"3053000\"}], \"row_count\": 1}",
+          "score": null,
+          "evidence_id": "E1.1"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "华东区上半年销售额合计为 3,053,000。",
+          "evidence_ids": [
+            "E1.1"
+          ],
+          "valid_evidence_ids": [
+            "E1.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 1,
+        "cited_claim_count": 1,
+        "valid_reference_count": 1,
+        "reference_count": 1,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 1.0
+      },
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案中的数值 3,053,000 与 reference 中 expected_answer_terms ['3053000', '305.3万'] 完全匹配，且问题要求的华东区上半年销售额合计在 evidence 中有明确支持。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题，提供了华东区上半年销售额的具体数值，无无关内容。",
+        "is_refusal": false,
+        "refusal_reason": "答案未拒答，而是提供了明确且正确的信息。",
+        "factual_claims": [
+          {
+            "claim": "华东区上半年销售额合计为 3,053,000。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "evidence E1.1 中的查询结果明确显示 sum('销售额') 为 3053000，与 claim 完全一致。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "claim 引用的 evidence E1.1 中的查询结果包含 'sum': '3053000'，语义上完全支持该 claim。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 1.0,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": true
+      },
+      "generation": {
+        "run_id": "7293090d-fbb7-4d67-a2c2-037160ec0708",
+        "latency_ms": 6285,
+        "usage": {
+          "input_tokens": 4539,
+          "output_tokens": 165,
+          "total_tokens": 4704
+        },
+        "forced_final": false
+      },
+      "trace": [
+        {
+          "name": "table_query",
+          "arguments": "{\"sql\": \"SELECT sum(\\\"销售额\\\") FROM t_53cbab48 WHERE \\\"区域\\\" = '华东'\"}",
+          "result_preview": "<untrusted_evidence>\n[E1.1] source=表格查询 位置=SELECT sum(\"销售额\") FROM t_53cbab48 WHERE \"区域\" = '华东'\n{\"columns\": [\"sum\"], \"rows\": [{\"sum\": \"3053000\"}], \"row_count\": 1}\n</untrusted_evidence>",
+          "step": 1
+        }
+      ],
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 1201,
+          "output_tokens": 306,
+          "total_tokens": 1507
+        },
+        "attempt": 1,
+        "latency_ms": 11646
+      },
+      "error": null
+    },
+    {
+      "id": "mh-08",
+      "group": "正常·多跳",
+      "question": "郗昭对接的是哪家公司？和这类公司签合同前要做什么？",
+      "reference": {
+        "expected_answer_terms": [
+          "比价"
+        ],
+        "answer_match": "all",
+        "expected_refusal": null
+      },
+      "answer": "郗昭对接的是**云启数据**公司。\n\n根据《供应商管理》规定，和供应商（包括云启数据这类公司）签合同前，需要做以下事项：\n1. **采购比价**：新增供应商需经采购比价。\n2. **三家比价**：单笔金额超过5万元的，须三家比价。\n3. **合同审核**：所有合同须经**天元法务**审核。",
+      "deterministic_answer_ok": true,
+      "evidence": [
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "external-云启数据.md #0",
+          "snippet": "标题路径：外部联系人：郗昭（云启数据）\n\n郗昭是云启数据的供应商对接人，负责合同履约与交付验收对接。\n\n郗昭不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0164,
+          "evidence_id": "E1.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "external-天元法务.md #0",
+          "snippet": "标题路径：外部联系人：岑柏舟（天元法务）\n\n岑柏舟是天元法务的物流服务对接人，样机与物料寄送协调。\n\n岑柏舟不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0161,
+          "evidence_id": "E1.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "external-泰盛物流.md #0",
+          "snippet": "标题路径：外部联系人：阚彦博（泰盛物流）\n\n阚彦博是泰盛物流的背景调查服务对接人，候选人背景调查流程对接。\n\n阚彦博不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0159,
+          "evidence_id": "E1.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "external-启明云.md #0",
+          "snippet": "标题路径：外部联系人：蔺孝廉（启明云）\n\n蔺孝廉是启明云的云服务客户经理，资源采购与技术支持协调。\n\n蔺孝廉不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0161,
+          "evidence_id": "E2.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "long-report-q3-张敏.md #3",
+          "snippet": "标题路径：后端组季度工作报告 > 二、本季度进展\n\n以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本条款的解释权归对应归口部门，如有歧义以中文表述为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。",
+          "score": 0.0159,
+          "evidence_id": "E2.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "long-manual-k2-air.md #2",
+          "snippet": "标题路径：K2-Air 产品手册 > 2. 部署要求\n\n最低配置为 4 核 8G，推荐 8 核 16G。依赖的中间件版本需与发布说明保持一致。\n\n所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。",
+          "score": 0.0156,
+          "evidence_id": "E2.4"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "policy-supplier.md #0",
+          "snippet": "标题路径：供应商管理\n\n新增供应商需经采购比价，单笔金额超过 5 万元的须三家比价。供应商资质每年复审一次，复审不通过的暂停合作。所有合同须经天元法务审核。",
+          "score": 0.0164,
+          "evidence_id": "E3.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "long-handbook-采购.md #7",
+          "snippet": "标题路径：供应商合作手册 > 第三章 申请流程\n\n需提前 10 个工作日提交申请，经直属上级审批后生效。紧急情况可事后补办，但须说明原因。\n\n本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。",
+          "score": 0.0161,
+          "evidence_id": "E3.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/18fa8c1e",
+          "location": "policy-recruit.md #0",
+          "snippet": "标题路径：招聘流程\n\n招聘需求由用人部门提交，经部门负责人与人力资源部双签后生效。技术岗位固定四轮面试：初筛、技术一面、技术二面、总监面。offer 审批由孙红最终签发。",
+          "score": 0.0147,
+          "evidence_id": "E3.6"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "郗昭是云启数据的供应商对接人。",
+          "evidence_ids": [
+            "E1.1"
+          ],
+          "valid_evidence_ids": [
+            "E1.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "新增供应商需经采购比价。",
+          "evidence_ids": [
+            "E3.1"
+          ],
+          "valid_evidence_ids": [
+            "E3.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "单笔金额超过5万元的须三家比价。",
+          "evidence_ids": [
+            "E3.1"
+          ],
+          "valid_evidence_ids": [
+            "E3.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        },
+        {
+          "text": "所有合同须经天元法务审核。",
+          "evidence_ids": [
+            "E3.1"
+          ],
+          "valid_evidence_ids": [
+            "E3.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 4,
+        "cited_claim_count": 4,
+        "valid_reference_count": 4,
+        "reference_count": 4,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 1.0
+      },
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案正确指出郗昭对接的是云启数据公司，并完整列出了签合同前需要进行采购比价、三家比价（针对金额超5万元）以及合同须经天元法务审核。这些内容均与 evidence E1.1 和 E3.1 中的信息一致，且覆盖了 reference 中的 expected_answer_terms ['比价']。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题的两个部分：郗昭对接的公司名称，以及与这类公司签合同前的具体要求，没有无关内容。",
+        "is_refusal": false,
+        "refusal_reason": "答案提供了明确的事实性回应，未表示信息无法确定或拒绝回答。",
+        "factual_claims": [
+          {
+            "claim": "郗昭对接的是云启数据公司。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "E1.1 明确指出‘郗昭是云启数据的供应商对接人’，支持该陈述。"
+          },
+          {
+            "claim": "新增供应商需经采购比价。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E3.1"
+            ],
+            "reason": "E3.1 明确说明‘新增供应商需经采购比价’，完全支持该事实。"
+          },
+          {
+            "claim": "单笔金额超过5万元的须三家比价。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E3.1"
+            ],
+            "reason": "E3.1 中提到‘单笔金额超过 5 万元的须三家比价’，语义一致。"
+          },
+          {
+            "claim": "所有合同须经天元法务审核。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E3.1"
+            ],
+            "reason": "E3.1 明确规定‘所有合同须经天元法务审核’，可直接支持该声明。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "E1.1 明确指出‘郗昭是云启数据的供应商对接人’，与 claim 内容一致。"
+          },
+          {
+            "claim_index": 1,
+            "verdict": "supported",
+            "reason": "E3.1 明确说明‘新增供应商需经采购比价’，与 claim 完全匹配。"
+          },
+          {
+            "claim_index": 2,
+            "verdict": "supported",
+            "reason": "E3.1 提到‘单笔金额超过 5 万元的须三家比价’，与 claim 一致。"
+          },
+          {
+            "claim_index": 3,
+            "verdict": "supported",
+            "reason": "E3.1 规定‘所有合同须经天元法务审核’，与 claim 内容相符。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 1.0,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": null
+      },
+      "generation": {
+        "run_id": "93d9f213-9513-489e-b31d-f0603e39ff57",
+        "latency_ms": 52844,
+        "usage": {
+          "input_tokens": 16435,
+          "output_tokens": 488,
+          "total_tokens": 16923
+        },
+        "forced_final": true
+      },
+      "trace": [
+        {
+          "name": "vector_search",
+          "arguments": "{\"query\": \"郗昭 对接 公司\"}",
+          "result_preview": "<untrusted_evidence>\n[E1.1] source=benchmark/answer-quality/18fa8c1e 位置=external-云启数据.md #0 相似度=0.0164\n标题路径：外部联系人：郗昭（云启数据）\n\n郗昭是云启数据的供应商对接人，负责合同履约与交付验收对接。\n\n郗昭不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。\n</untrusted_evidence>\n\n<untrusted_evidence>\n[E1.2] source=benchmark/answer-quality/18fa8c1e 位置=ex…",
+          "step": 1
+        },
+        {
+          "name": "vector_search",
+          "arguments": "{\"query\": \"和云启数据签合同前 需要做什么 流程 步骤\"}",
+          "result_preview": "<untrusted_evidence>\n[E2.2] source=benchmark/answer-quality/18fa8c1e 位置=external-启明云.md #0 相似度=0.0161\n标题路径：外部联系人：蔺孝廉（启明云）\n\n蔺孝廉是启明云的云服务客户经理，资源采购与技术支持协调。\n\n蔺孝廉不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。\n</untrusted_evidence>\n\n<untrusted_evidence>\n[E2.3] source=benchmark/answer-quality/18fa8c1e 位置=lon…",
+          "step": 2
+        },
+        {
+          "name": "vector_search",
+          "arguments": "{\"query\": \"供应商 签合同前 需要做什么 流程 审批\"}",
+          "result_preview": "<untrusted_evidence>\n[E3.1] source=benchmark/answer-quality/18fa8c1e 位置=policy-supplier.md #0 相似度=0.0164\n标题路径：供应商管理\n\n新增供应商需经采购比价，单笔金额超过 5 万元的须三家比价。供应商资质每年复审一次，复审不通过的暂停合作。所有合同须经天元法务审核。\n</untrusted_evidence>\n\n<untrusted_evidence>\n[E3.2] source=benchmark/answer-quality/18fa8c1e 位置=long-handbook-采购.md #…",
+          "step": 3
+        },
+        {
+          "name": "vector_search",
+          "arguments": "{\"filename\": \"policy-supplier.md\", \"query\": \"供应商 签合同前 需要做什么 流程 步骤\"}",
+          "result_preview": "候选内容均因重复或上下文预算限制未进入本轮证据。",
+          "step": 4
+        }
+      ],
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 3636,
+          "output_tokens": 680,
+          "total_tokens": 4316
+        },
+        "attempt": 1,
+        "latency_ms": 9831
+      },
+      "error": null
+    }
+  ]
+}

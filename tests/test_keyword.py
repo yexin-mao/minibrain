@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from minibrain.modules.vector_rag.keyword import (
+from minibrain.handwritten.keyword import (
     bm25_scores, identifier_tokens, rank_by_bm25, tokenize,
 )
 
@@ -168,7 +168,7 @@ def test_identifier_query_still_works_with_chinese_around_it():
 # ★ 这一组是本次优化的验收标准：倒排索引版必须和内存版算出**完全相同**的分数。
 #   这是纯性能优化，分数变了就说明实现有 bug。
 
-from minibrain.modules.vector_rag.keyword import (      # noqa: E402
+from minibrain.handwritten.keyword import (      # noqa: E402
     bm25_from_postings, index_terms, total_term_count,
 )
 

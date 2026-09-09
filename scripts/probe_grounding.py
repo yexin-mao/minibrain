@@ -17,13 +17,16 @@
   ★ 对照组不是凑数：**把系统改成什么都不答，拒答率就是 100%**。
   没有对照组，一个哑巴系统会显得防幻觉做得最好。
 
-## 为什么不用 LLM 当裁判
+## 为什么这个确定性探针不用 LLM 当裁判
 
 RAGAS 的 Faithfulness 要另一个模型来判：不确定性叠加、分数没法调试、进不了 CI。
 这里做的是确定性字符串溯源——**不是打一个分，是指出具体哪个数字没出处**。
 
 它抓得住编造的数字和编号，抓不住编造的中文描述。
 **是下限不是全貌：报出来的一定可疑，没报的不一定干净。**
+
+语义层的补充评测在 `scripts/eval_answer_quality.py`：它离线调用结构化 Judge，
+不替换这里可进 CI 的确定性下限。
 
 跑法：uv run --no-sync python scripts/probe_grounding.py --rounds 3
 """
@@ -44,7 +47,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 from grounding import check                    # noqa: E402
 from minibrain import gateway, identity        # noqa: E402
-from minibrain.agent.loop import _system_prompt, answer   # noqa: E402
+from minibrain.agent.prompt import system_prompt as _system_prompt, answer   # noqa: E402
 from minibrain.config import get_config        # noqa: E402
 from minibrain.contracts import ModuleError    # noqa: E402
 from minibrain.db import close_all             # noqa: E402

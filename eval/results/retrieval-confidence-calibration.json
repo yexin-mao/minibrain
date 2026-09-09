@@ -1,0 +1,29 @@
+{
+  "version": "v1-dense-bm25-heldout",
+  "score_gate_enabled": false,
+  "dense_no_evidence_below": 0.340424,
+  "rule": "dense_top < threshold AND bm25 has no positive hit",
+  "split": "sha256(case_id) mod 4 == 0 is held-out validation",
+  "calibration": {
+    "answerable": 43,
+    "no_answer": 5,
+    "false_rejects": [],
+    "false_reject_rate": 0.0,
+    "no_answer_caught": [],
+    "no_answer_recall": 0.0
+  },
+  "validation": {
+    "answerable": 15,
+    "no_answer": 3,
+    "false_rejects": [
+      "bs-31",
+      "bs-32",
+      "bs-36",
+      "bs-37"
+    ],
+    "false_reject_rate": 0.26666666666666666,
+    "no_answer_caught": [],
+    "no_answer_recall": 0.0
+  },
+  "interpretation": "score separation is insufficient; keep score rule report-only"
+}

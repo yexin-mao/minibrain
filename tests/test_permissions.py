@@ -37,7 +37,14 @@ def test_stranger_schema_description_excludes_private_table(bob, sales_table):
     assert sales_table not in gateway.call("table-rag", "describe_schema", bob)
 
 
-def test_stranger_cannot_delete_others_source(bob, alice, sales_table):
+def test_stranger_cannot_delete_others_table_source(bob, alice, sales_table):
+    """★ 这个函数原来和下面向量链路那条**同名**，被后者静默覆盖，从没跑过。
+
+    ruff 的 F811 一直在报（Redefinition of unused ...），但它混在
+    十几条既有 lint 里没人管。**而它是一条权限测试**——
+    本项目在 CI 里已经栽过一次「三个测试空转通过，其中一个是权限测试」，
+    这是同一类问题的第二次：**测试存在 ≠ 测试在跑**。
+    """
     source_id = str(gateway.call("table-rag", "ensure_default_source", alice)["id"])
     with pytest.raises(PermissionDenied):
         gateway.call("table-rag", "delete_source", bob, source_id)
@@ -53,7 +60,7 @@ def test_stranger_cannot_see_others_documents(alice, bob):
     assert doc_id not in seen
 
 
-def test_stranger_cannot_delete_others_source(alice, bob):
+def test_stranger_cannot_delete_others_vector_source(alice, bob):
     source_id = str(gateway.call("vector-rag", "ensure_default_source", alice)["id"])
     with pytest.raises(PermissionDenied):
         gateway.call("vector-rag", "delete_source", bob, source_id)

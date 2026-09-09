@@ -30,7 +30,7 @@ from psycopg import sql as pgsql                                  # noqa: E402
 
 from minibrain.config import get_config                           # noqa: E402
 from minibrain.db import close_all, table_db                      # noqa: E402
-from minibrain.modules.vector_rag.chunking import split_text      # noqa: E402
+from minibrain.handwritten.chunking import split_text      # noqa: E402
 
 DOC = """# 差旅住宿标准
 
@@ -118,7 +118,7 @@ def explain_vector_chain() -> None:
         print(f"    {score:.4f}  片段{i}: {c[:34].replace(chr(10), ' / ')}...")
 
     top_idx = scored[0][1]
-    print(f"\n  → 取前 N 名的原文交给模型去组织回答。")
+    print("\n  → 取前 N 名的原文交给模型去组织回答。")
     if top_idx != 0:
         print(f"  ⚠ 注意：排第一的是片段{top_idx}，但它是被切残的——完整答案在片段0 里。")
         print("    这就是为什么实际取前 5 名而不是第 1 名：单靠第一名很可能拿到半截答案。")
@@ -194,7 +194,7 @@ def _generate_sql(schema_text: str) -> str:
     cfg = get_config()
     if not cfg.agent_configured:
         fallback = f'SELECT sum("销售额") FROM {schema_text.split("，")[0][2:]} WHERE "区域" = \'华东\''
-        print(f"  （未配 AGENT_API_KEY，用预置 SQL 代替模型生成）")
+        print("  （未配 AGENT_API_KEY，用预置 SQL 代替模型生成）")
         print(f"  SQL：{fallback}\n")
         return fallback
 
@@ -229,11 +229,11 @@ def explain_wrong_chain() -> None:
     for i, c in enumerate(csv_chunks):
         print(f"    片段{i}: {c[:45]!r}")
 
-    print(f"\n  看片段1 的开头——有半行数据被从中间切断了，只剩一个孤零零的数字。")
-    print(f"  检索时只会取回最像的一两个片段，模型只看到部分行，加出来的合计必然是错的。")
-    print(f"  而且它会算得很认真、答得很像样，你看不出错。")
-    print(f"\n  这就是 eval/RESULTS.md 里那个『答 73 人，真值 84 人』的失效模式。")
-    print(f"  ★ 一张报表切碎再向量召回回来，算不出正确的合计——这是两条链路不能合并的理由。")
+    print("\n  看片段1 的开头——有半行数据被从中间切断了，只剩一个孤零零的数字。")
+    print("  检索时只会取回最像的一两个片段，模型只看到部分行，加出来的合计必然是错的。")
+    print("  而且它会算得很认真、答得很像样，你看不出错。")
+    print("\n  这就是 eval/RESULTS.md 里那个『答 73 人，真值 84 人』的失效模式。")
+    print("  ★ 一张报表切碎再向量召回回来，算不出正确的合计——这是两条链路不能合并的理由。")
 
 
 def main() -> int:

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}监控指标 · minibrain{% endblock %}
+{% block body %}
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="brand-symbol">m</span><span>minibrain</span></a>
+    <div class="header-actions">
+      <nav class="nav-links" aria-label="主导航">
+        <a class="nav-link" href="/">问答与知识库</a><a class="nav-link" href="/wiki">知识 Wiki</a>
+        <a class="nav-link" href="/retrieval-debug">检索实验室</a><a class="nav-link" href="/runs">运行记录</a>
+        <a class="nav-link is-active" href="/metrics" aria-current="page">监控指标</a>
+      </nav>
+      <span class="who">{{ user.username }}</span>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="page-heading"><div class="eyebrow">Operational signals</div><h1>从质量、延迟和失败类型观察系统</h1><p>所有指标来自真实问答运行，并按当前用户权限聚合；不包含模型内部推理。</p></div>
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; gap:16px; align-items:flex-start;">
+      <div>
+        <h2>最近 {{ metrics.hours }} 小时</h2>
+        <p class="hint">{% if user.is_admin %}全平台{% else %}当前用户{% endif %}的真实问答运行；不包含模型内部推理。</p>
+      </div>
+      <form method="get" action="/metrics" style="display:flex; gap:7px; align-items:center;">
+        <select name="hours" style="width:auto;">
+          {% for value, label in [(1, '1 小时'), (24, '24 小时'), (168, '7 天'), (720, '30 天')] %}
+            <option value="{{ value }}" {% if metrics.hours == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">刷新</button>
+      </form>
+    </div>
+    <div class="grid" style="margin-top:14px;">
+      <div class="card" style="margin:0;"><div class="hint">运行 / 成功率</div><div style="font-size:24px;">{{ metrics.total_runs }} / {% if metrics.success_rate is not none %}{{ (metrics.success_rate * 100)|round(1) }}%{% else %}—{% endif %}</div></div>
+      <div class="card" style="margin:0;"><div class="hint">p50 / p95 延迟</div><div style="font-size:24px;">{{ metrics.latency_p50_ms or '—' }} / {{ metrics.latency_p95_ms or '—' }} ms</div></div>
+      <div class="card" style="margin:0;"><div class="hint">无证据率</div><div style="font-size:24px;">{% if metrics.no_evidence_rate is not none %}{{ (metrics.no_evidence_rate * 100)|round(1) }}%{% else %}—{% endif %}</div></div>
+      <div class="card" style="margin:0;"><div class="hint">总 token / 平均证据</div><div style="font-size:24px;">{{ metrics.total_tokens }} / {% if metrics.avg_evidence_count is not none %}{{ metrics.avg_evidence_count|round(1) }}{% else %}—{% endif %}</div></div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h2>质量信号</h2>
+      <table>
+        <tr><th>失败</th><td>{{ metrics.failed_runs }}{% if metrics.failure_rate is not none %}（{{ (metrics.failure_rate * 100)|round(1) }}%）{% endif %}</td></tr>
+        <tr><th>仍在运行</th><td>{{ metrics.running_runs }}</td></tr>
+        <tr><th>无证据回答</th><td>{{ metrics.no_evidence_runs }}</td></tr>
+        <tr><th>确定性安全门拦截</th><td>{{ metrics.confidence_blocked_runs }}{% if metrics.confidence_blocked_rate is not none %}（{{ (metrics.confidence_blocked_rate * 100)|round(1) }}%）{% endif %}</td></tr>
+        <tr><th>差评</th><td>{{ metrics.negative_feedback_runs }}</td></tr>
+        <tr><th>平均引用覆盖</th><td>{% if metrics.avg_citation_coverage is not none %}{{ (metrics.avg_citation_coverage * 100)|round(1) }}%{% else %}—{% endif %}</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h2>失败类型</h2>
+      {% if metrics.failure_codes %}
+        <table><thead><tr><th>错误码</th><th>次数</th></tr></thead><tbody>
+        {% for item in metrics.failure_codes %}<tr><td><code>{{ item.code }}</code></td><td>{{ item.count }}</td></tr>{% endfor %}
+        </tbody></table>
+      {% else %}<p class="hint">当前时间窗没有失败运行。</p>{% endif %}
+    </div>
+  </div>
+</main>
+{% endblock %}

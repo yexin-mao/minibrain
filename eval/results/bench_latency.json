@@ -1,57 +1,338 @@
 {
-  "corpus_files": 130,
-  "chunks": 900,
-  "repeat": 15,
-  "stages": {
-    "SQL 拉取全部片段": {
-      "median": 101.26666599535383,
-      "p95": 109.24812499433756,
-      "min": 99.49600000982173,
-      "max": 109.24812499433756
-    },
-    "embedding（外部 API）": {
-      "median": 1247.0555000036256,
-      "p95": 4939.456208012416,
-      "min": 682.8540410060668,
-      "max": 4939.456208012416
-    },
-    "余弦计算（5 条查询）": {
-      "median": 0.4809579986613244,
-      "p95": 0.8137499971780926,
-      "min": 0.35637499240692705,
-      "max": 0.8137499971780926
-    },
-    "BM25 内存版（5 条）": {
-      "median": 196.99604099150747,
-      "p95": 201.1022079968825,
-      "min": 194.4747079978697,
-      "max": 201.1022079968825
-    },
-    "BM25 倒排索引版（5 条）": {
-      "median": 2.2497080062748864,
-      "p95": 3.449291005381383,
-      "min": 2.07237500580959,
-      "max": 3.449291005381383
-    },
-    "RRF 融合（5 条查询）": {
-      "median": 0.8347499970113859,
-      "p95": 0.8897090010577813,
-      "min": 0.7782910106470808,
-      "max": 0.8897090010577813
-    },
-    "端到端 search()": {
-      "median": 7163.5541660070885,
-      "p95": 16948.4628749924,
-      "min": 763.0073750042357,
-      "max": 16948.4628749924
+  "status": "completed",
+  "provenance": {
+    "generated_at": "2026-09-01T20:38:04.172627+00:00",
+    "scope": "retrieval_latency",
+    "source_fingerprint_sha256": "c221fca55bcc444f312facf474e5df02661c504d2a83cce62d6fa5841e4b863a",
+    "git_commit": null,
+    "working_tree_dirty": null,
+    "python": "3.13.11",
+    "config": {
+      "embedding_model": "qwen/qwen3-embedding-8b",
+      "embedding_dimensions": 1024,
+      "hnsw_ef_search": 40,
+      "chunk_size": 800,
+      "chunk_overlap": 0
     }
   },
-  "per_query_ms": {
-    "SQL 拉取": 101.26666599535383,
-    "余弦": 0.09619159973226488,
-    "BM25": 0.4499416012549773,
-    "RRF": 0.16694999940227717
-  },
-  "local_total_ms": 101.97974919574335,
-  "network_ms": 1247.0555000036256
+  "queries": [
+    "二线城市住宿一晚最多报多少钱？",
+    "MTG-20260617-02 这次会议的决议是什么？",
+    "公司一共有几个部门，分别是什么？",
+    "张敏的上级的上级是谁？",
+    "X7-Pro 是什么产品？当前版本是多少？"
+  ],
+  "repeat_per_query": 3,
+  "rows": [
+    {
+      "corpus_files": 30,
+      "new_chunks": 231,
+      "ingest_seconds": 59.865585692983586,
+      "cold_query_ms": 558.9593340118881,
+      "cold_error": null,
+      "warm_end_to_end_ms": {
+        "count": 15,
+        "median": 1528.9711669902317,
+        "p95": 6120.731335977325,
+        "min": 403.27687497483566,
+        "max": 6120.731335977325
+      },
+      "warm_errors": {
+        "attempts": 15,
+        "failed": 0,
+        "error_rate": 0.0,
+        "by_code": {}
+      },
+      "stage_ms": {
+        "01:Dense 召回": {
+          "count": 15,
+          "median": 1027.96,
+          "p95": 6120.38,
+          "min": 319.16,
+          "max": 6120.38
+        },
+        "02:BM25 召回": {
+          "count": 15,
+          "median": 0.03,
+          "p95": 1.82,
+          "min": 0.01,
+          "max": 1.82
+        },
+        "03:RRF 融合": {
+          "count": 15,
+          "median": 0.03,
+          "p95": 0.07,
+          "min": 0.0,
+          "max": 0.07
+        },
+        "04:Dense 召回（移除业务 metadata 后回退）": {
+          "count": 6,
+          "median": 728.6,
+          "p95": 2003.31,
+          "min": 362.32,
+          "max": 2003.31
+        },
+        "04:确定性去重": {
+          "count": 9,
+          "median": 0.04,
+          "p95": 0.07,
+          "min": 0.01,
+          "max": 0.07
+        },
+        "05:BM25 召回（移除业务 metadata 后回退）": {
+          "count": 6,
+          "median": 11.200000000000001,
+          "p95": 25.04,
+          "min": 1.3,
+          "max": 25.04
+        },
+        "05:Parent 展开与最终截断": {
+          "count": 9,
+          "median": 0.04,
+          "p95": 0.05,
+          "min": 0.02,
+          "max": 0.05
+        },
+        "06:RRF 融合（移除业务 metadata 后回退）": {
+          "count": 6,
+          "median": 0.055,
+          "p95": 0.1,
+          "min": 0.04,
+          "max": 0.1
+        },
+        "07:确定性去重": {
+          "count": 6,
+          "median": 0.035,
+          "p95": 0.05,
+          "min": 0.02,
+          "max": 0.05
+        },
+        "08:Parent 展开与最终截断": {
+          "count": 6,
+          "median": 0.03,
+          "p95": 0.04,
+          "min": 0.02,
+          "max": 0.04
+        }
+      },
+      "concurrency": {
+        "workers": 20,
+        "rounds": 3,
+        "request_latency_ms": {
+          "count": 60,
+          "median": 2266.3427509978646,
+          "p95": 8573.315046000062,
+          "min": 529.2015000013635,
+          "max": 9728.2443800068
+        },
+        "batch_wall_ms": {
+          "count": 3,
+          "median": 7823.453587014228,
+          "p95": 9731.760255002882,
+          "min": 7167.768461018568,
+          "max": 9731.760255002882
+        },
+        "attempted_queries_per_second": 2.5564157539321295,
+        "successful_queries_per_second": 2.5564157539321295,
+        "failed": 0,
+        "error_rate": 0.0,
+        "errors_by_code": {}
+      }
+    },
+    {
+      "corpus_files": 84,
+      "new_chunks": 379,
+      "ingest_seconds": 123.18390151497442,
+      "cold_query_ms": 3973.896960989805,
+      "cold_error": null,
+      "warm_end_to_end_ms": {
+        "count": 15,
+        "median": 1638.645375991473,
+        "p95": 7965.890668972861,
+        "min": 335.34379198681563,
+        "max": 7965.890668972861
+      },
+      "warm_errors": {
+        "attempts": 15,
+        "failed": 0,
+        "error_rate": 0.0,
+        "by_code": {}
+      },
+      "stage_ms": {
+        "01:Dense 召回": {
+          "count": 15,
+          "median": 1343.85,
+          "p95": 7965.62,
+          "min": 334.98,
+          "max": 7965.62
+        },
+        "02:BM25 召回": {
+          "count": 15,
+          "median": 0.03,
+          "p95": 6.21,
+          "min": 0.02,
+          "max": 6.21
+        },
+        "03:RRF 融合": {
+          "count": 15,
+          "median": 0.03,
+          "p95": 0.05,
+          "min": 0.01,
+          "max": 0.05
+        },
+        "04:Dense 召回（移除业务 metadata 后回退）": {
+          "count": 3,
+          "median": 2251.28,
+          "p95": 3687.69,
+          "min": 1256.14,
+          "max": 3687.69
+        },
+        "04:确定性去重": {
+          "count": 12,
+          "median": 0.025,
+          "p95": 0.06,
+          "min": 0.0,
+          "max": 0.06
+        },
+        "05:BM25 召回（移除业务 metadata 后回退）": {
+          "count": 3,
+          "median": 6.1,
+          "p95": 7.58,
+          "min": 5.72,
+          "max": 7.58
+        },
+        "05:Parent 展开与最终截断": {
+          "count": 12,
+          "median": 0.03,
+          "p95": 0.04,
+          "min": 0.01,
+          "max": 0.04
+        },
+        "06:RRF 融合（移除业务 metadata 后回退）": {
+          "count": 3,
+          "median": 0.05,
+          "p95": 0.05,
+          "min": 0.04,
+          "max": 0.05
+        },
+        "07:确定性去重": {
+          "count": 3,
+          "median": 0.03,
+          "p95": 0.03,
+          "min": 0.02,
+          "max": 0.03
+        },
+        "08:Parent 展开与最终截断": {
+          "count": 3,
+          "median": 0.03,
+          "p95": 0.03,
+          "min": 0.02,
+          "max": 0.03
+        }
+      },
+      "concurrency": {
+        "workers": 20,
+        "rounds": 3,
+        "request_latency_ms": {
+          "count": 60,
+          "median": 2235.482021496864,
+          "p95": 4785.329918988282,
+          "min": 407.8429579967633,
+          "max": 6246.881419006968
+        },
+        "batch_wall_ms": {
+          "count": 3,
+          "median": 4793.312919005984,
+          "p95": 6251.775128010195,
+          "min": 4193.555542995455,
+          "max": 6251.775128010195
+        },
+        "attempted_queries_per_second": 4.172479522606988,
+        "successful_queries_per_second": 4.172479522606988,
+        "failed": 0,
+        "error_rate": 0.0,
+        "errors_by_code": {}
+      }
+    },
+    {
+      "corpus_files": 130,
+      "new_chunks": 46,
+      "ingest_seconds": 8.588310296006966,
+      "cold_query_ms": 2259.4166669878177,
+      "cold_error": null,
+      "warm_end_to_end_ms": {
+        "count": 15,
+        "median": 902.4464170215651,
+        "p95": 2282.159001013497,
+        "min": 325.4256260115653,
+        "max": 2282.159001013497
+      },
+      "warm_errors": {
+        "attempts": 15,
+        "failed": 0,
+        "error_rate": 0.0,
+        "by_code": {}
+      },
+      "stage_ms": {
+        "01:Dense 召回": {
+          "count": 15,
+          "median": 902.15,
+          "p95": 2281.87,
+          "min": 325.26,
+          "max": 2281.87
+        },
+        "02:BM25 召回": {
+          "count": 15,
+          "median": 0.03,
+          "p95": 5.61,
+          "min": 0.01,
+          "max": 5.61
+        },
+        "03:RRF 融合": {
+          "count": 15,
+          "median": 0.04,
+          "p95": 0.05,
+          "min": 0.01,
+          "max": 0.05
+        },
+        "04:确定性去重": {
+          "count": 15,
+          "median": 0.03,
+          "p95": 0.03,
+          "min": 0.0,
+          "max": 0.03
+        },
+        "05:Parent 展开与最终截断": {
+          "count": 15,
+          "median": 0.02,
+          "p95": 0.04,
+          "min": 0.01,
+          "max": 0.04
+        }
+      },
+      "concurrency": {
+        "workers": 20,
+        "rounds": 3,
+        "request_latency_ms": {
+          "count": 60,
+          "median": 828.7740840023616,
+          "p95": 10129.023087996757,
+          "min": 385.9106669842731,
+          "max": 10148.982421000255
+        },
+        "batch_wall_ms": {
+          "count": 3,
+          "median": 3856.974252004875,
+          "p95": 10151.510380004765,
+          "min": 3199.543918017298,
+          "max": 10151.510380004765
+        },
+        "attempted_queries_per_second": 5.185411852206142,
+        "successful_queries_per_second": 5.185411852206142,
+        "failed": 0,
+        "error_rate": 0.0,
+        "errors_by_code": {}
+      }
+    }
+  ]
 }

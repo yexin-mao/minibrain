@@ -1,0 +1,22 @@
+{
+  "arms": [
+    {
+      "name": "qwen3-embedding-8b-mrl1024",
+      "model": "qwen/qwen3-embedding-8b",
+      "dimensions": 1024,
+      "transform": "truncate_l2"
+    },
+    {
+      "name": "openai-text-embedding-3-small-native1536",
+      "model": "openai/text-embedding-3-small",
+      "dimensions": 1536,
+      "transform": "native_l2"
+    },
+    {
+      "name": "bge-m3-native1024",
+      "model": "baai/bge-m3",
+      "dimensions": 1024,
+      "transform": "native_l2"
+    }
+  ]
+}

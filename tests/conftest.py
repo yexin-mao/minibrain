@@ -10,11 +10,13 @@ mock 掉数据库等于把被测对象本身删了。
 from __future__ import annotations
 
 import uuid
+import time
 
 import pytest
 
 from minibrain import gateway, identity
 from minibrain.config import get_config
+from minibrain.contracts import ModuleError
 from minibrain.db import close_all
 from minibrain.scripts_purge import purge_user
 
@@ -45,7 +47,18 @@ def users(tag: str):
     yield {"alice": alice, "bob": bob, "admin": admin, "tag": tag}
 
     for user in (alice, bob, admin):
-        purge_user(user)
+        # 开发机可能同时跑着真实 minibrain-worker。它会合法地领取测试刚登记
+        # 的任务，teardown 若恰好撞上 processing，产品层会以 source_busy 拒删。
+        # 这里只等待正在执行的任务自然收口；不绕过产品保护，也不吞其他错误。
+        deadline = time.monotonic() + 60
+        while True:
+            try:
+                purge_user(user)
+                break
+            except ModuleError as exc:
+                if exc.code != "source_busy" or time.monotonic() >= deadline:
+                    raise
+                time.sleep(0.2)
     close_all()
 
 

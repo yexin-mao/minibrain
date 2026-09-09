@@ -65,14 +65,30 @@ def call(module_id: str, method: str, user: UserContext, /, *args, **kwargs) -> 
     return fn(user, *args, **kwargs)
 
 
-def search(module_id: str, user: UserContext, query: str, top_k: int = 5) -> SearchResult:
-    return call(module_id, "search", user, query, top_k=top_k)
+def search(module_id: str, user: UserContext, query: str, top_k: int = 5,
+           **kwargs: Any) -> SearchResult:
+    return call(module_id, "search", user, query, top_k=top_k, **kwargs)
 
 
-def process(module_id: str, entity_id: str) -> None:
+def claim_next(module_id: str) -> str | None:
+    """领取一个模块任务。任务权限已在上传登记时判过，不接收 UserContext。"""
+    module = get_module(module_id)
+    fn: Callable | None = getattr(module.core, "claim_next", None)
+    if fn is None:
+        return None
+    return fn()
+
+
+def process(module_id: str, entity_id: str, *, claimed: bool = False) -> None:
     """后台处理入口。不带 UserContext：权限在登记阶段已经判过，
     这里跑的是模块自己的异步任务，不代表任何用户发起新的访问。"""
-    get_module(module_id).core.process(entity_id)
+    get_module(module_id).core.process(entity_id, claimed=claimed)
+
+
+def renew_lease(module_id: str, entity_id: str) -> bool:
+    """续租模块任务；不认识心跳的模块明确返回 False。"""
+    fn: Callable | None = getattr(get_module(module_id).core, "renew_lease", None)
+    return bool(fn(entity_id)) if fn is not None else False
 
 
 def health() -> list[dict]:

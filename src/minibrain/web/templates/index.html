@@ -2,64 +2,216 @@
 {% block title %}minibrain{% endblock %}
 {% block body %}
 <header>
-  <span class="brand">minibrain</span>
-  <span>
-    <span class="who">{{ user.username }}{% if user.is_admin %} · 管理员{% endif %}</span>
-    <form method="post" action="/logout" style="display:inline; margin-left:12px;">
-      <button type="submit" style="background:none; color:var(--muted); padding:4px 8px;">退出</button>
-    </form>
-  </span>
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="brand-symbol">m</span><span>minibrain</span></a>
+    <div class="header-actions">
+      <nav class="nav-links" aria-label="主导航">
+        <a class="nav-link is-active" href="/" aria-current="page">问答与知识库</a>
+        <a class="nav-link" href="/wiki">知识 Wiki</a>
+        <a class="nav-link" href="/retrieval-debug">检索实验室</a>
+        <a class="nav-link" href="/runs">运行记录</a>
+        <a class="nav-link" href="/metrics">监控指标</a>
+        <form method="post" action="/logout" style="display:inline;">
+          <button class="button-ghost button-small" type="submit">退出</button>
+        </form>
+      </nav>
+      <span class="who">{{ user.username }}{% if user.is_admin %} · 管理员{% endif %}</span>
+    </div>
+  </div>
 </header>
 
 <main>
-  <div class="card">
-    <h2>提问</h2>
-    <p class="hint">
-      Agent 会根据问题类型自己选链路：问"怎么规定的"走语义检索，问"合计多少"走 SQL 精确计算。
-    </p>
-    <form hx-post="/ask" hx-target="#answer" hx-swap="innerHTML" hx-indicator="#ask-form">
-      <div id="ask-form">
-        <textarea name="question" placeholder="例：华东区的销售额合计是多少？&#10;例：报销制度里对差旅标准是怎么规定的？" required></textarea>
-        <div style="margin-top:10px;">
-          <button type="submit">提问</button>
-          <span class="spinner">检索中，可能需要几十秒…</span>
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">让不同的数据，走正确的检索链路</h1>
+    <p class="hero-summary">文档走混合检索，表格走受限只读 SQL；Agent 按问题连续调用工具，并只返回经过引用与确定性校验的答案。</p>
+  </section>
+
+  <section class="card card-primary question-card" aria-labelledby="chat-title">
+    <div class="card-header">
+      <div>
+        <h2 id="chat-title">向知识库提问</h2>
+        <p class="hint">输入制度、报表或跨数据源问题。系统会自动选择文档检索、表格计算，或串联两条链路。</p>
+      </div>
+      {# 开新对话 = 删掉会话 cookie。旧 checkpoint 留在库里不删。 #}
+      <form hx-post="/chat/new" hx-target="#answer" hx-swap="innerHTML"
+            style="display:inline;">
+        <button class="button-ghost button-small" type="submit">
+          + 新对话
+        </button>
+      </form>
+    </div>
+
+    <form id="stream-ask-form" action="/ask/stream" method="post">
+      <input type="hidden" name="request_id" value="{{ request_id }}">
+      <div id="ask-form" class="composer">
+        <textarea name="question" aria-label="问题"
+                  placeholder="输入问题，系统会选择文档检索、表格查询，或连续调用两类工具。" required></textarea>
+        <div class="composer-actions">
+          <span id="stream-status" class="hint" role="status" aria-live="polite">校验通过后返回答案与证据</span>
+          <button type="submit">开始检索</button>
         </div>
       </div>
     </form>
+
+    {# ★ hx-swap="beforeend" 而不是 "innerHTML"：把新一轮**追加**到底部，
+       而不是替换掉上一轮。这样对话历史在页面上累积起来，
+       和后端 checkpointer 里累积的历史对得上。 #}
     <div id="answer"></div>
+  </section>
+
+  <section class="retrieval-paths" id="system-paths" aria-label="系统核心能力">
+    <div class="path-row">
+      <span class="path-icon" aria-hidden="true"><i class="ri-file-search-line"></i></span>
+      <div class="path-copy"><strong>文档检索</strong><span>Dense + BM25 → RRF → 去重</span></div>
+      <span class="path-state">混合召回</span>
+    </div>
+    <div class="path-row">
+      <span class="path-icon" aria-hidden="true"><i class="ri-table-2"></i></span>
+      <div class="path-copy"><strong>表格计算</strong><span>白名单约束的受限只读 SQL</span></div>
+      <span class="path-state">精确计算</span>
+    </div>
+    <div class="path-row">
+      <span class="path-icon" aria-hidden="true"><i class="ri-shield-check-line"></i></span>
+      <div class="path-copy"><strong>回答安全</strong><span>结论绑定引用，数字与业务编号做确定性校验</span></div>
+      <span class="path-state">证据约束</span>
+    </div>
+  </section>
+
+  <section class="prompt-section" aria-labelledby="prompt-title">
+    <div class="prompt-heading" id="prompt-title">快速提问</div>
+    <div class="quick-prompts" aria-label="示例问题">
+      <button class="quick-prompt" type="button" data-question="P0 故障要求多长时间响应，恢复后什么时候完成复盘？">P0 响应与复盘要求</button>
+      <button class="quick-prompt" type="button" data-question="二线城市住宿一晚最多能报多少钱？超标后怎么办？">二线城市住宿标准</button>
+      <button class="quick-prompt" type="button" data-question="华东区的销售额合计是多少？">华东区销售额合计</button>
+    </div>
+  </section>
+
+  <div class="knowledge-section">
+    <div class="section-heading">
+      <div>
+        <div class="section-kicker">Knowledge operations</div>
+        <h2>知识入库与数据源</h2>
+        <p>上传文件、查看异步处理状态，并管理两条链路各自独立的可见范围。</p>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>上传知识</h2>
-    <p class="hint">
-      两条链路吃的东西不一样：文档链路吃 .md / .txt，表格链路吃 .csv。
-      上传后立刻返回，处理在后台跑，下面的状态会自己刷新。
-    </p>
+  <section class="card" aria-labelledby="upload-title">
+    <div class="card-header">
+      <div>
+        <h2 id="upload-title">上传并异步入库</h2>
+        <p class="hint">系统按真实文件内容识别格式。文档进入检索索引；CSV/XLSX 建立物理表，由后台 Worker 完成处理。</p>
+      </div>
+    </div>
     <form hx-post="/upload" hx-target="#knowledge" hx-swap="innerHTML"
           hx-encoding="multipart/form-data" hx-indicator="#upload-form">
-      <div class="row" id="upload-form">
-        <div style="flex:0 0 220px;">
-          <label for="module">链路</label>
-          <select id="module" name="module">
+      <div class="upload-grid" id="upload-form">
+        <div>
+          <label for="module">处理链路</label>
+          <select id="module" name="module"
+                  onchange="document.querySelectorAll('[data-source-select]').forEach(s => { const on = s.dataset.sourceSelect === this.value; s.disabled = !on; s.style.display = on ? '' : 'none'; })">
             {% for m in modules %}
               <option value="{{ m.id }}">{{ m.label }}（{{ m.paradigm }}）</option>
             {% endfor %}
           </select>
         </div>
         <div>
-          <label for="file">文件</label>
-          <input id="file" type="file" name="file" accept=".md,.txt,.csv" required>
+          <label>知识域（source）</label>
+          <select name="source_id" data-source-select="vector-rag">
+            <option value="">默认私有 source</option>
+            {% for s in vector_sources if s.can_manage %}
+              <option value="{{ s.id }}">{{ s.name }} · {{ s.visibility }}</option>
+            {% endfor %}
+          </select>
+          <select name="source_id" data-source-select="table-rag" disabled style="display:none;">
+            <option value="">默认私有 source</option>
+            {% for s in table_sources if s.can_manage %}
+              <option value="{{ s.id }}">{{ s.name }} · {{ s.visibility }}</option>
+            {% endfor %}
+          </select>
         </div>
-        <div style="flex:0 0 auto;">
-          <button type="submit">上传</button>
+        <div class="file-field">
+          <label for="file">选择文件</label>
+          {# accept 只是文件选择框的过滤器，**不是校验**——真正的把关在
+             loaders.py 的 detect_kind()，它看的是文件头的魔数不是扩展名。
+             这里列全是为了让用户挑得到，拖进来一个 .png 照样会被后端拒收。 #}
+          <input id="file" type="file" name="file"
+                 accept=".md,.txt,.html,.htm,.docx,.pdf,.pptx,.csv,.xlsx,.markdown,.log,.json,.yaml,.yml" required>
+        </div>
+        <div>
+          <button type="submit">上传文件</button>
         </div>
       </div>
       <span class="spinner">上传中…</span>
+      <div class="support-copy">文档支持 MD、TXT、HTML、DOCX、PDF、PPTX；表格支持 CSV、XLSX。扫描 PDF、图片型幻灯片等无法提取文字的文件会明确失败。</div>
     </form>
-  </div>
+  </section>
 
-  <div id="knowledge" hx-get="/fragments/knowledge" hx-trigger="every 3s" hx-swap="innerHTML">
+  <div id="knowledge" hx-get="/fragments/knowledge"
+       hx-trigger="{% if request.query_params.get('tour') %}none{% else %}every 3s [!document.querySelector('#knowledge :focus')]{% endif %}"
+       hx-swap="innerHTML">
     {% include "_knowledge.html" %}
   </div>
 </main>
+<script>
+  // fetch + ReadableStream is used because EventSource only supports GET, while a
+  // question contains form data and must be a POST. The wire format is still SSE.
+  document.getElementById("stream-ask-form").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const form = this;
+    const button = form.querySelector('button[type="submit"]');
+    const status = document.getElementById("stream-status");
+    button.disabled = true;
+    status.classList.remove("st-failed");
+    status.textContent = "正在连接…";
+
+    try {
+      const response = await fetch(form.action, {method: "POST", body: new FormData(form)});
+      if (!response.ok || !response.body) {
+        let message = "请求失败，请稍后重试。";
+        try { message = (await response.json()).message || message; } catch (_) {}
+        throw new Error(message);
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      while (true) {
+        const {value, done} = await reader.read();
+        buffer += decoder.decode(value || new Uint8Array(), {stream: !done});
+        const frames = buffer.split("\n\n");
+        buffer = frames.pop() || "";
+        for (const frame of frames) {
+          const eventLine = frame.split("\n").find(line => line.startsWith("event:"));
+          const dataLines = frame.split("\n").filter(line => line.startsWith("data:"));
+          if (!eventLine || !dataLines.length) continue;
+          const type = eventLine.slice(6).trim();
+          const payload = JSON.parse(dataLines.map(line => line.slice(5).trimStart()).join("\n"));
+          if (type === "started" || type === "heartbeat") status.textContent = payload.message;
+          if (type === "completed") {
+            document.getElementById("answer").insertAdjacentHTML("beforeend", payload.html);
+            if (window.htmx) window.htmx.process(document.getElementById("answer"));
+            form.reset();
+            form.elements.request_id.value = crypto.randomUUID();
+            status.textContent = "校验通过后返回答案与证据";
+          }
+          if (type === "failed") throw new Error(payload.message || "问答失败。");
+        }
+        if (done) break;
+      }
+    } catch (error) {
+      status.textContent = error.message;
+      status.classList.add("st-failed");
+    } finally {
+      button.disabled = false;
+    }
+  });
+  document.querySelectorAll("[data-question]").forEach(button => {
+    button.addEventListener("click", () => {
+      const textarea = document.querySelector('#stream-ask-form textarea[name="question"]');
+      textarea.value = button.dataset.question;
+      textarea.focus();
+    });
+  });
+</script>
 {% endblock %}

@@ -70,7 +70,7 @@ def main() -> int:
         print("方式二：先查实体，读到桥接事实后再发起第二次检索")
         print("─" * 68)
 
-        print(f'  第 1 步  查「张敏」')
+        print('  第 1 步  查「张敏」')
         step1 = files_of(user, "张敏", K)
         for i, f in enumerate(step1, 1):
             print(f"           {i}. {f}")

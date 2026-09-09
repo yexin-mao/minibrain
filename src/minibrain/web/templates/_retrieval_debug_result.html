@@ -1,0 +1,74 @@
+{% if result %}
+  {% set trace = result.retrieval_trace %}
+  <div class="card">
+    <h2>执行配置</h2>
+    {% if trace %}
+      <div style="font-size:13px; color:var(--muted);">
+        模式 <b style="color:var(--fg);">{{ trace.mode }}</b> ·
+        实际候选池 <b style="color:var(--fg);">{{ trace.fetch_k }}</b> ·
+        业务 metadata <code>{{ trace.business_filters or '未命中规则' }}</code> ·
+        rerank <b style="color:var(--fg);">{{ trace.reranker or '关闭' }}</b> ·
+        MMR <b style="color:var(--fg);">{% if trace.mmr_lambda is not none %}λ={{ trace.mmr_lambda }}{% else %}关闭{% endif %}</b>
+      </div>
+      {% if trace.retrieval_query != trace.query %}
+        <div class="hint" style="margin-top:8px;">改写后查询：{{ trace.retrieval_query }}</div>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  {% if result.retrieval_signals %}
+    {% set signals = result.retrieval_signals %}
+    <div class="card">
+      <h2>检索置信决策</h2>
+      <div style="font-size:13px; margin-bottom:8px;">
+        决策 <code>{{ signals.decision }}</code> ·
+        策略 <code>{{ signals.policy_version or '—' }}</code> ·
+        状态 <code>{{ signals.calibration_status }}</code>
+      </div>
+      <div style="font-size:13px; color:var(--muted);">
+        Dense 顶分 <code>{{ signals.dense_top_score if signals.dense_top_score is not none else '—' }}</code> ·
+        Top1/Top2 分差 <code>{{ signals.dense_margin if signals.dense_margin is not none else '—' }}</code> ·
+        BM25 顶分 <code>{{ signals.keyword_top_score if signals.keyword_top_score is not none else '—' }}</code> ·
+        Dense/BM25 Top-5 重合 <code>{{ signals.dense_keyword_overlap_at_5 if signals.dense_keyword_overlap_at_5 is not none else '—' }}</code> ·
+        RRF 顶分 <code>{{ signals.fused_top_score if signals.fused_top_score is not none else '—' }}</code> ·
+        最终证据 {{ signals.final_evidence_count }} 条
+      </div>
+      <p class="hint">{{ signals.decision_reason }}</p>
+      <p class="hint">分数不是答案正确概率。held-out 校准未通过，因此分数规则只观察；
+        空结果和精确业务编号不存在属于确定性 no-evidence，可触发提前拒答。</p>
+    </div>
+  {% endif %}
+
+  {% if result.note %}<div class="card"><div class="hint">{{ result.note }}</div></div>{% endif %}
+
+  {% if trace %}
+    {% for stage in trace.stages %}
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; gap:12px;">
+          <h2>{{ loop.index }}. {{ stage.name }}</h2>
+          <span class="tag">{{ stage.candidates|length }} 条 · {{ stage.latency_ms }} ms</span>
+        </div>
+        <p class="hint">分数：{{ stage.score_kind }}{% if stage.note %} · {{ stage.note }}{% endif %}</p>
+        {% if stage.candidates %}
+          <div style="overflow-x:auto;">
+            <table>
+              <thead><tr><th>#</th><th>分数</th><th>来源 / 位置</th><th>候选内容</th></tr></thead>
+              <tbody>
+              {% for item in stage.candidates %}
+                <tr>
+                  <td>{{ item.rank }}</td>
+                  <td>{% if item.score is not none %}<code>{{ item.score }}</code>{% else %}—{% endif %}</td>
+                  <td style="min-width:190px;">{{ item.source_name }}<br><span class="hint">{{ item.location }}</span></td>
+                  <td style="white-space:pre-wrap; min-width:360px; max-width:560px;">{{ item.snippet }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <div class="hint">这一阶段没有候选。</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endif %}

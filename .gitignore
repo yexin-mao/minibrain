@@ -6,5 +6,44 @@ __pycache__/
 *.pyc
 .DS_Store
 
+# 本地演示媒体与生成中间文件（体积大、含机器相关路径，不进入公开仓库）
+output/
+tmp/
+design-qa.md
+scripts/build_cua_demo_*.mjs
+scripts/build_demo_video.mjs
+scripts/build_interview_*.py
+scripts/build_interview_sample_*.mjs
+scripts/build_product_tour_*.py
+scripts/generate_interview_narration_*.mjs
+scripts/export_video_*.py
+scripts/prepare_video_*.py
+scripts/qa_interview_*.py
+
 # uv.lock 刻意不忽略：应用项目要锁死依赖版本，
 # 否则"在我机器上能跑"就没法复现。库项目才该忽略它。
+
+# ---------- 评测产物 ----------
+#
+# 分三类，只有第一类进仓库：
+#   *.txt / *.md  结论摘要 —— 要留档，eval/RESULTS.md 会引用它们
+#   *.json        明细     —— 留档，体积可控
+#   *.log         运行日志 —— 排查用的临时产物，不留
+eval/results/*.log
+eval/cache/
+
+# 回答质量调试过程中的重复运行；公开仓库只保留最终报告与可复现实验摘要。
+eval/results/answer-quality-grounding-current*.json
+eval/results/answer-quality-*retry*.json
+eval/results/answer-quality-longdoc-*.json
+eval/results/answer-quality-multihop-*.json
+eval/results/answer-quality-mh08-*.json
+eval/results/answer-quality-after-stop-fix.json
+eval/results/answer-quality-rejudged.json
+eval/results/answer-quality-targeted-after-routing-fix.json
+eval/results/answer-quality-latest-independent-qwen3-235b.json
+eval/results/answer-quality.json
+
+# GraphRAG 建图的持久化产物。是可再生的中间态不是结论：
+# drop_all() 会删掉、build() 会重建。2.3MB 不该进仓库。
+eval/results/graph_store/

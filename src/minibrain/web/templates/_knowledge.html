@@ -1,49 +1,163 @@
 {# 两条链路的知识列表刻意分开渲染：它们的内部模型本来就不一样，
    强行合成一张表只会让契约层变厚。 #}
+{% set status_labels = {
+  'uploaded': '等待处理', 'processing': '处理中', 'ready': '可用',
+  'failed': '失败', 'dead_letter': '已停止重试'
+} %}
+{% set visibility_labels = {'private': '仅自己可见', 'public': '所有用户可见'} %}
+<section class="card" aria-labelledby="sources-title">
+  <div class="card-header">
+    <div>
+      <div class="section-kicker">Access boundary</div>
+      <h2 id="sources-title">知识域与可见范围</h2>
+      <p class="hint">文档与表格分别管理知识域；可见范围会直接参与检索和查询时的权限过滤。</p>
+    </div>
+    <form hx-post="/knowledge/demo/load" hx-target="#knowledge" hx-swap="innerHTML">
+      <button class="button-secondary button-small" type="submit">准备演示数据</button>
+    </form>
+  </div>
+  <form hx-post="/knowledge/source/create" hx-target="#knowledge" hx-swap="innerHTML">
+    <div class="source-grid">
+      <div><label>所属链路</label><select name="module">
+        <option value="vector-rag">文档</option><option value="table-rag">表格</option>
+      </select></div>
+      <div class="name-field"><label>知识域名称</label><input name="name" required placeholder="例如：研发制度"></div>
+      <div><label>可见性</label><select name="visibility">
+        <option value="private">仅自己可见</option>
+        {% if user.is_admin %}<option value="public">所有用户可见</option>{% endif %}
+      </select></div>
+      <div><button type="submit">创建 source（知识域）</button></div>
+    </div>
+  </form>
+  <div class="source-list">
+    {% for module, label, sources in [('vector-rag', '文档', vector_sources), ('table-rag', '表格', table_sources)] %}
+      <div class="source-group">
+        <div class="source-group-title">{{ label }}知识域</div>
+        {% for s in sources %}
+          <div class="source-row">
+            <span><span class="tag tag-{{ s.visibility }}">{{ visibility_labels.get(s.visibility, s.visibility) }}</span> {{ s.name }}</span>
+            {% if s.can_manage %}
+              <form hx-post="/knowledge/source/delete" hx-target="#knowledge" hx-swap="innerHTML"
+                    hx-confirm="确认删除 source 及其中全部数据？">
+                <input type="hidden" name="module" value="{{ module }}">
+                <input type="hidden" name="source_id" value="{{ s.id }}">
+                <button class="button-danger button-small" type="submit">删除</button>
+              </form>
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="source-empty">尚未创建{{ label }}知识域</div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
 <div class="grid">
-  <div class="card" style="margin:0;">
-    <h2>文档语义检索</h2>
-    <p class="hint">切分 + 向量召回</p>
+  <div class="card table-card" style="margin:0;">
+    <div class="card-header">
+      <div><div class="section-kicker">Vector RAG</div><h2>文档检索索引</h2><p class="hint">结构感知切分 · Dense/BM25 · RRF · parent-aware 去重</p></div>
+    </div>
     {% if documents %}
+      <div class="table-wrap">
       <table>
-        <tr><th>文件</th><th>source</th><th>状态</th><th>片段</th></tr>
+        <tr><th>文件</th><th>版本</th><th>解析方式</th><th>知识域</th><th>状态</th><th>召回片段</th><th>操作</th></tr>
         {% for d in documents %}
           <tr>
             <td>{{ d.filename }}</td>
+            <td>v{{ d.version }}</td>
+            <td><span class="tag">{{ d.parsed_as }}</span></td>
             <td><span class="tag">{{ d.source_name }}</span></td>
-            <td class="st-{{ d.status }}">
-              {{ d.status }}
+            <td>
+              <span class="status st-{{ d.status }}">{{ status_labels.get(d.status, d.status) }}</span>
               {% if d.error %}<br><span style="font-size:11px;">{{ d.error.message }}</span>{% endif %}
             </td>
             <td>{{ d.chunk_count }}</td>
+            <td>
+              {% if d.can_manage %}
+                {% if d.status in ['failed', 'dead_letter'] and d.char_count > 0 %}
+                  <form style="display:inline" hx-post="/knowledge/entity/action" hx-target="#knowledge" hx-swap="innerHTML">
+                    <input type="hidden" name="module" value="vector-rag"><input type="hidden" name="entity_id" value="{{ d.id }}"><input type="hidden" name="action" value="retry">
+                    <button class="button-secondary button-small" type="submit">重试</button>
+                  </form>
+                {% elif d.status == 'ready' %}
+                  <form style="display:inline" method="post" action="/wiki/build">
+                    <input type="hidden" name="document_id" value="{{ d.id }}">
+                    <button class="button-secondary button-small" type="submit">
+                      {% if d.wiki_page_id %}更新 Wiki{% else %}生成 Wiki{% endif %}
+                    </button>
+                  </form>
+                  <form style="display:inline" hx-post="/knowledge/entity/action" hx-target="#knowledge" hx-swap="innerHTML" hx-confirm="重新索引期间该文档暂不可检索，继续？">
+                    <input type="hidden" name="module" value="vector-rag"><input type="hidden" name="entity_id" value="{{ d.id }}"><input type="hidden" name="action" value="reindex">
+                    <button class="button-secondary button-small" type="submit">重建索引</button>
+                  </form>
+                {% endif %}
+                {% if d.status != 'processing' %}
+                  <form style="display:inline" hx-post="/knowledge/entity/action" hx-target="#knowledge" hx-swap="innerHTML" hx-confirm="确认删除该文档及全部索引？">
+                    <input type="hidden" name="module" value="vector-rag"><input type="hidden" name="entity_id" value="{{ d.id }}"><input type="hidden" name="action" value="delete">
+                    <button class="button-danger button-small" type="submit">删除</button>
+                  </form>
+                {% endif %}
+              {% endif %}
+              {% if d.wiki_page_id %}
+                <a class="button-small" href="/wiki/{{ d.wiki_page_id }}">查看</a>
+                {% if d.wiki_status == 'stale' %}<span class="status st-stale">待更新</span>{% endif %}
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </table>
+      </div>
     {% else %}
-      <p class="hint" style="margin:0;">还没有文档。上传一个 .md 试试。</p>
+      <div class="empty-state"><strong>还没有文档</strong>上传 MD、DOCX 或带文字层的 PDF 后，索引状态会显示在这里。</div>
     {% endif %}
   </div>
 
-  <div class="card" style="margin:0;">
-    <h2>表格结构化查询</h2>
-    <p class="hint">物理表 + 只读 SQL</p>
+  <div class="card table-card" style="margin:0;">
+    <div class="card-header">
+      <div><div class="section-kicker">Table RAG</div><h2>结构化数据表</h2><p class="hint">CSV/XLSX → 隔离物理表 · 白名单内的受限只读 SQL</p></div>
+    </div>
     {% if datasets %}
+      <div class="table-wrap">
       <table>
-        <tr><th>文件</th><th>表名</th><th>状态</th><th>行数</th></tr>
+        <tr><th>文件 / Sheet</th><th>物理表</th><th>解析方式</th><th>状态</th><th>数据行</th><th>操作</th></tr>
         {% for d in datasets %}
           <tr>
-            <td>{{ d.filename }}</td>
+            <td>{{ d.filename }}{% if d.sheet_name %}<br><span class="hint">{{ d.sheet_name }}</span>{% endif %}</td>
             <td><code>{{ d.table_name }}</code></td>
-            <td class="st-{{ d.status }}">
-              {{ d.status }}
+            <td>{{ d.parsed_as }}</td>
+            <td>
+              <span class="status st-{{ d.status }}">{{ status_labels.get(d.status, d.status) }}</span>
               {% if d.error %}<br><span style="font-size:11px;">{{ d.error.message }}</span>{% endif %}
             </td>
             <td>{{ d.row_count }}</td>
+            <td>
+              {% if d.can_manage %}
+                {% if d.status in ['failed', 'dead_letter'] %}
+                  <form style="display:inline" hx-post="/knowledge/entity/action" hx-target="#knowledge" hx-swap="innerHTML">
+                    <input type="hidden" name="module" value="table-rag"><input type="hidden" name="entity_id" value="{{ d.id }}"><input type="hidden" name="action" value="retry">
+                    <button class="button-secondary button-small" type="submit">重试</button>
+                  </form>
+                {% elif d.status == 'ready' %}
+                  <form style="display:inline" hx-post="/knowledge/entity/action" hx-target="#knowledge" hx-swap="innerHTML">
+                    <input type="hidden" name="module" value="table-rag"><input type="hidden" name="entity_id" value="{{ d.id }}"><input type="hidden" name="action" value="reindex">
+                    <button class="button-secondary button-small" type="submit">重建数据表</button>
+                  </form>
+                {% endif %}
+                {% if d.status != 'processing' %}
+                  <form style="display:inline" hx-post="/knowledge/entity/action" hx-target="#knowledge" hx-swap="innerHTML" hx-confirm="确认删除该数据集和物理表？">
+                    <input type="hidden" name="module" value="table-rag"><input type="hidden" name="entity_id" value="{{ d.id }}"><input type="hidden" name="action" value="delete">
+                    <button class="button-danger button-small" type="submit">删除</button>
+                  </form>
+                {% endif %}
+              {% endif %}
+            </td>
           </tr>
         {% endfor %}
       </table>
+      </div>
     {% else %}
-      <p class="hint" style="margin:0;">还没有数据表。上传一个 .csv 试试。</p>
+      <div class="empty-state"><strong>还没有数据表</strong>上传 CSV 或 XLSX 后，表结构与处理状态会显示在这里。</div>
     {% endif %}
   </div>
 </div>

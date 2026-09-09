@@ -40,12 +40,70 @@ class Evidence:
     location: str          # 向量链路是文件名+段序；表格链路是表名
     snippet: str
     score: float | None = None
+    # Agent 一次运行内的稳定编号，例如 E1.1（第 1 次工具调用的第 1 条证据）。
+    # 模块本身不负责编号；编号由 Agent 工具适配层在证据离开模块后补上。
+    evidence_id: str | None = None
+
+
+@dataclass(frozen=True)
+class RetrievalCandidate:
+    """检索调试页里某一阶段的一条候选快照。"""
+
+    rank: int
+    node_id: str
+    source_name: str
+    location: str
+    snippet: str
+    score: float | None = None
+
+
+@dataclass(frozen=True)
+class RetrievalStage:
+    """一次检索阶段；只在显式 explain 模式下构造。"""
+
+    name: str
+    score_kind: str
+    candidates: list[RetrievalCandidate]
+    latency_ms: float
+    note: str = ""
+
+
+@dataclass(frozen=True)
+class RetrievalTrace:
+    """不进入 LLM 上下文的检索执行轨迹。"""
+
+    query: str
+    retrieval_query: str
+    mode: str
+    fetch_k: int
+    business_filters: dict[str, object]
+    reranker: str | None
+    mmr_lambda: float | None
+    stages: list[RetrievalStage]
+
+
+@dataclass(frozen=True)
+class RetrievalSignals:
+    """从 explain trace 提取的可校准信号，不等同于 answerability 概率。"""
+
+    dense_top_score: float | None = None
+    dense_margin: float | None = None
+    keyword_top_score: float | None = None
+    dense_keyword_overlap_at_5: float | None = None
+    fused_top_score: float | None = None
+    final_evidence_count: int = 0
+    calibration_status: str = "uncalibrated"
+    decision: str = "uncertain"
+    decision_reason: str = "尚未应用检索置信策略"
+    policy_version: str | None = None
 
 
 @dataclass
 class SearchResult:
     evidence: list[Evidence] = field(default_factory=list)
     note: str | None = None
+    retrieval_trace: RetrievalTrace | None = None
+    retrieval_signals: RetrievalSignals | None = None
 
 
 class ModuleError(Exception):

@@ -49,7 +49,7 @@ from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, "src")
 
 from minibrain import gateway, identity          # noqa: E402
-from minibrain.agent.loop import answer          # noqa: E402
+from minibrain.handwritten.agent_loop import answer          # noqa: E402
 from minibrain.config import get_config          # noqa: E402
 from minibrain.contracts import ModuleError      # noqa: E402
 from minibrain.db import close_all               # noqa: E402

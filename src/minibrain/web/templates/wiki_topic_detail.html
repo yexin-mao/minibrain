@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ topic.title }} · minibrain Wiki{% endblock %}
+{% block body %}
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="brand-symbol">m</span><span>minibrain</span></a>
+    <nav class="nav-links"><a class="nav-link" href="/wiki">← 返回知识 Wiki</a></nav>
+  </div>
+</header>
+<main class="wiki-main">
+  <article class="card wiki-article">
+    <div class="eyebrow">Topic page · {{ topic.source_name }}</div>
+    <div class="card-header">
+      <div><h1>{{ topic.title }}</h1></div>
+      <span class="status st-{{ topic.effective_status }}">{{ topic.effective_status }}</span>
+    </div>
+    <p class="wiki-meta">{{ topic.sources|length }} 篇原文支持 · 模型 {{ topic.model or '—' }} · 更新于 {{ topic.updated_at }}</p>
+    {% if topic.has_stale_source %}<div class="wiki-warning">至少一篇来源已有新版本，这个主题不会参与 Wiki 问答，重新编译来源后可恢复。</div>{% endif %}
+    {% if topic.error %}<div class="error">{{ topic.error }}</div>{% endif %}
+    <div class="wiki-content">{{ topic.content }}</div>
+
+    <div class="wiki-references">
+      <strong>原始来源</strong>
+      {% for source in topic.sources %}
+        <div class="evidence">
+          <div class="meta">{{ source.filename }} · 编译版本 v{{ source.document_version }} · 当前版本 v{{ source.current_version }}</div>
+          {% if source.source_revision_available %}<a href="/wiki/source/{{ source.document_id }}/{{ source.document_version }}">查看编译时原文</a>{% endif %}
+          {% if source.page_id %}<a href="/wiki/{{ source.page_id }}">{{ source.page_title }}</a>{% else %}<span>来源摘要页不可用</span>{% endif %}
+        </div>
+      {% else %}
+        <div class="empty-state">这个主题没有可追溯来源。</div>
+      {% endfor %}
+    </div>
+
+    {% if topic.related_topics %}
+      <div class="wiki-references">
+        <strong>关联主题</strong>
+        <div class="wiki-links">
+          {% for related in topic.related_topics %}<a href="/wiki/topic/{{ related.id }}">{{ related.title }}</a>{% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </article>
+</main>
+{% endblock %}
