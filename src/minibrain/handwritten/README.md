@@ -4,14 +4,14 @@
 
 主路径现在是框架版：
 
-| 环节 | 主路径（框架） | 这里（手写） |
-|---|---|---|
-| Agent 循环 | `agent/graph.py` — LangGraph | `agent_loop.py` |
-| 切分 | `SentenceSplitter` | `chunking.py` |
-| 向量检索 | `PGVectorStore` + `VectorIndexRetriever` | `vector_search.py` |
-| 关键词 | `BM25Retriever` | `keyword.py` |
-| 融合 | `QueryFusionRetriever`（RRF 模式） | `fusion.py` |
-| 重排 | （待接 postprocessor） | `rerank.py` |
+| 环节 | 主路径（框架） | 这里（手写） | 框架接管了算法吗 |
+|---|---|---|---|
+| Agent 循环 | `agent/graph.py` — LangGraph | `agent_loop.py` | ✅ |
+| 切分 | `SentenceSplitter` | `chunking.py` | ✅ |
+| 向量检索 | `PGVectorStore` + `VectorIndexRetriever` | `vector_search.py` | ✅ |
+| 关键词 | `lexical.py` 持久化全库 BM25 | `keyword.py` | ✅ |
+| 融合 | `QueryFusionRetriever`（RRF 模式） | `fusion.py` | ✅ |
+| 候选选择 | 去重 + MMR + 可选 cross-encoder | 无 | ✅ |
 
 ## 为什么保留
 
@@ -37,16 +37,16 @@
 
 **三、框架接不住的地方要有参照。**
 
-最典型的一条：`BM25Retriever` 要求**全部节点在内存里**，
+框架默认 `BM25Retriever` 要求**全部节点在内存里**，
 而 `keyword.py` + `vector_search.py` 专门为此建了 Postgres 倒排索引。
 语料大了之后这个差别是数量级的。
 
 ## 和主路径共用的东西
 
-搬迁时刻意留在主路径的三个文件，因为**两版都要用**：
+搬迁时刻意留在主路径的公共部件：
 
-- `modules/vector_rag/tokenizer.py` —— 中文怎么切。框架接管了 BM25 算法，
-  但没接管「中文没有空格」这个问题，`BM25Retriever` 的分词器就是它
+- `modules/vector_rag/tokenizer.py` —— 中文怎么切。通用框架不会自动解决
+  「中文没有空格」，主路径 sparse 索引和手写基线都复用它
 - `modules/vector_rag/embeddings.py` —— MRL 截断（4096→1024）+ 重新归一化。
   两版必须用**字节级相同**的向量，否则比出来的差异说明不了任何问题
 - `agent/prompt.py` / `agent/types.py` —— 系统提示词是消融实验的产物

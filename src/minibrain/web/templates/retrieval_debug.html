@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}检索实验室 · minibrain{% endblock %}
+{% block body %}
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="brand-symbol">m</span><span>minibrain</span></a>
+    <div class="header-actions">
+      <nav class="nav-links" aria-label="主导航">
+        <a class="nav-link" href="/">问答与知识库</a>
+        <a class="nav-link" href="/wiki">知识 Wiki</a>
+        <a class="nav-link is-active" href="/retrieval-debug" aria-current="page">检索实验室</a>
+        <a class="nav-link" href="/runs">运行记录</a>
+        <a class="nav-link" href="/metrics">监控指标</a>
+      </nav>
+      <span class="who">{{ user.username }}</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="page-heading lab-intro">
+    <div class="eyebrow">Retrieval observability</div>
+    <h1>看清一次检索如何找到证据</h1>
+    <p>直接执行正式文档检索链路，不调用 Agent 或回答模型。结果会展示当次请求的候选、排名、分数和阶段耗时，并沿用当前用户的权限过滤。</p>
+  </div>
+
+  <section class="card card-primary" aria-labelledby="lab-title">
+    <div class="card-header">
+      <div>
+        <div class="section-kicker">Controlled experiment</div>
+        <h2 id="lab-title">配置一次检索实验</h2>
+        <p class="hint">默认路径是 Dense 与 BM25 独立召回、RRF 融合，再做确定性去重和最终截断。</p>
+      </div>
+      <span class="tag tag-public">不调用回答模型</span>
+    </div>
+    <form hx-post="/retrieval-debug" hx-target="#retrieval-result"
+          hx-swap="innerHTML" hx-indicator="#retrieval-form">
+      <div id="retrieval-form">
+        <label for="debug-query">检索问题</label>
+        <textarea id="debug-query" name="query" required
+                  placeholder="例如：P0 故障要求多长时间响应，恢复后什么时候完成复盘？">{{ query }}</textarea>
+        <div class="lab-form-grid" style="margin-top:12px;">
+          <div>
+            <label>检索模式</label>
+            <select name="mode">
+              <option value="hybrid" {% if mode == 'hybrid' %}selected{% endif %}>Hybrid（Dense + BM25 + RRF）</option>
+              <option value="vector" {% if mode == 'vector' %}selected{% endif %}>仅 Dense</option>
+              <option value="keyword" {% if mode == 'keyword' %}selected{% endif %}>仅 BM25</option>
+            </select>
+          </div>
+          <div>
+            <label>最终证据数（top-k）</label>
+            <input type="number" name="top_k" min="1" max="20" value="{{ top_k }}">
+          </div>
+          <div>
+            <label>每路候选池</label>
+            <input type="number" name="candidate_pool" min="1" max="100" value="{{ candidate_pool }}">
+          </div>
+          <div>
+            <label>MMR 多样性权重 λ</label>
+            <input type="number" name="mmr_lambda" min="0" max="1" step="0.05" value="{{ mmr_lambda }}">
+          </div>
+        </div>
+        <div class="option-row">
+          <label>
+            <input type="checkbox" name="use_mmr" value="true" style="width:auto;" {% if use_mmr %}checked{% endif %}>
+            启用 MMR（默认关闭）
+          </label>
+          <label>
+            <input type="checkbox" name="use_rerank" value="true" style="width:auto;" {% if use_rerank %}checked{% endif %}>
+            启用 cross-encoder（默认关闭，需安装 rerank-ce）
+          </label>
+        </div>
+        <button type="submit">运行并展开检索轨迹</button>
+        <span class="spinner">正在执行…</span>
+      </div>
+    </form>
+  </section>
+  <div id="retrieval-result">
+    {% include "_retrieval_debug_result.html" %}
+  </div>
+</main>
+{% endblock %}

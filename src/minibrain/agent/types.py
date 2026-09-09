@@ -21,6 +21,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from ..contracts import Evidence
+from .citations import AnswerClaim, CitationMetrics
+from .confidence import ConfidenceReport
+from .context import ContextDecision, ContextMetrics
 
 
 @dataclass
@@ -59,3 +62,11 @@ class AnswerResult:
     answer: str
     evidence: list[Evidence] = field(default_factory=list)
     trace: list[ToolCallTrace] = field(default_factory=list)
+    run_id: str | None = None
+    claims: list[AnswerClaim] = field(default_factory=list)
+    citation_metrics: CitationMetrics = field(default_factory=CitationMetrics)
+    context_decisions: list[ContextDecision] = field(default_factory=list)
+    context_metrics: ContextMetrics | None = None
+    # True 表示常规 Agent 达到调用上限后，由无业务工具的结构化调用强制收口。
+    forced_final: bool = False
+    confidence_report: ConfidenceReport | None = None

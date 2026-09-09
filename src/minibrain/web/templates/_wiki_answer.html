@@ -1,0 +1,13 @@
+<div class="wiki-answer-block">
+  <div class="eyebrow">Wiki answer</div>
+  <div class="answer">{{ result.answer }}</div>
+  <div class="wiki-references">
+    <strong>使用的 Wiki 页面</strong>
+    {% for ref in result.references %}
+      <div class="evidence">
+        <div class="meta">[{{ ref.ref }}] {{ ref.source_name }} · {% if ref.page_type == 'topic' %}主题页 · {{ ref.source_count }} 篇来源{% else %}{{ ref.filename }} · v{{ ref.document_version }}{% endif %}</div>
+        <a href="{{ ref.href }}">{{ ref.title }}</a>
+      </div>
+    {% endfor %}
+  </div>
+</div>

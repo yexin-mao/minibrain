@@ -53,6 +53,9 @@ jobs:
       - name: 安装依赖
         run: uv sync --frozen
 
+      - name: 静态检查
+        run: uv run ruff check src tests scripts
+
       - name: 建库 + 跑 schema（幂等）
         run: uv run minibrain-init-db
 
@@ -61,6 +64,11 @@ jobs:
 
       - name: pytest
         run: uv run pytest
+
+      # CI 不调用付费 embedding API；它对最新提交的 NanoBEIR 报告执行确定性门禁。
+      # 修改检索策略时，先在本地重跑 eval_nanobeir.py 并提交 candidate 报告。
+      - name: RAG 检索评测回归门禁
+        run: uv run python scripts/check_eval_regression.py
 
       - name: 确认没有留下孤儿数据
         run: uv run minibrain-purge --list

@@ -1,4 +1,4 @@
-"""手写版的向量检索链路：入库（切分+向量化+倒排索引）+ 检索（向量/BM25/RRF/重排）。
+"""手写版的向量检索链路：入库（切分+向量化+倒排索引）+ 检索（向量/BM25/RRF）。
 
 ## 这个文件为什么在 handwritten/ 里
 
@@ -17,7 +17,7 @@
 
 主路径（`chain.py`）和这里**共用**：`tokenizer.py`（中文怎么切）、
 `embeddings.py`（MRL 截断）、`core.py`（source/document 的 CRUD 和权限）。
-不共用的正是被框架接管的那几层：切分、向量检索、BM25、融合、重排。
+不共用的正是被框架接管的那几层：切分、向量检索、BM25、融合。
 """
 
 from __future__ import annotations
@@ -35,7 +35,6 @@ from ..modules.vector_rag.embeddings import embed_query, embed_texts
 from .chunking import split_text
 from .fusion import reciprocal_rank_fusion
 from .keyword import bm25_from_postings, index_terms, total_term_count
-from .rerank import rerank as rerank_candidates
 
 SearchMode = Literal["hybrid", "vector", "keyword"]
 
@@ -287,8 +286,7 @@ def _keyword_ranking_indexed(user: UserContext, query: str, rows: list[dict]) ->
 
 
 def search(user: UserContext, query: str, top_k: int = 5,
-           mode: SearchMode = "hybrid", *,
-           rerank_pool: int = 0) -> SearchResult:
+           mode: SearchMode = "hybrid") -> SearchResult:
     """混合检索：向量召回 + BM25 关键词召回，RRF 融合。
 
     为什么要两条路（数据在 eval/RESULTS.md）：
@@ -304,14 +302,6 @@ def search(user: UserContext, query: str, top_k: int = 5,
     mode 参数是为了**评测**存在的（scripts/probe_hybrid.py 要跑三种模式做对比），
     不是给调用方日常挑的。默认 hybrid。
 
-    rerank_pool > 0 时启用重排：**先召回 rerank_pool 条，再用 LLM 重排，最后截到
-    top_k**。默认 0（关闭）——开不开由评测数据决定，不由"大家都这么做"决定，
-    见 scripts/ablate_rerank.py 和 modules/vector_rag/rerank.py。
-
-    ★ rerank_pool 必须 > top_k 才有意义：重排只能重新排列已经召回的东西，
-      **它变不出没召回到的文档**。所以池子越大，重排能救回的越多，
-      代价是提示词越长越贵。这个取舍要用数据定，不能拍脑袋。
-
     已知边界：向量和 BM25 都在内存里算，把可见片段全量拉进来。
     几万条以上要换 pgvector + PG 全文检索，见 SCALING.md。
     """
@@ -325,8 +315,7 @@ def search(user: UserContext, query: str, top_k: int = 5,
     if not rows:
         return SearchResult(evidence=[], note="没有可检索的内容：当前用户可见范围内还没有处理完成的文档。")
 
-    # ★ 开了重排就先多召回一些。截断推迟到重排之后，否则重排拿不到东西可排。
-    fetch_k = max(top_k, rerank_pool) if rerank_pool > 0 else top_k
+    fetch_k = top_k
 
     # ★ 混合模式下取多少候选：
     # RRF 融合需要两条路各自的排名。向量路现在只返回 top-k（这正是 pgvector 的收益），
@@ -371,17 +360,6 @@ def search(user: UserContext, query: str, top_k: int = 5,
 
         cosine_of = {str(r["id"]): r["cosine"] for r in vector_rows}
         scores = [cosine_of.get(str(r["id"])) for r in picked]
-
-    # ---- 重排：只重新排列已召回的候选，然后截到 top_k ----
-    #
-    # ★ 顺序很重要：召回 fetch_k 条 → 重排 → 截 top_k。
-    #   如果先截到 top_k 再重排，重排就只是把 5 条重新排 5 条，
-    #   救不回原本排在第 6~20 名的必需文档 —— 那正是 Complete Recall@5
-    #   丢分的地方，也是整件事唯一的收益来源。
-    if rerank_pool > 0 and len(picked) > 1:
-        outcome = rerank_candidates(query, [r["content"] for r in picked])
-        picked = [picked[i] for i in outcome.order]
-        scores = [scores[i] for i in outcome.order]
 
     picked, scores = picked[:top_k], scores[:top_k]
 

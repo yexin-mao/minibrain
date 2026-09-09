@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}运行详情 · minibrain{% endblock %}
+{% block body %}
+<header>
+  <span class="brand">minibrain · 运行详情</span>
+  <span><a href="/runs">返回运行记录</a>　<a href="/">返回问答</a></span>
+</header>
+<main>
+  <div class="card">
+    <h2>状态与开销</h2>
+    <table>
+      <tr><th>状态</th><td class="st-{{ run.status }}">{{ run.status }}</td></tr>
+      <tr><th>模型</th><td>{{ run.model }}</td></tr>
+      <tr><th>开始时间</th><td>{{ run.started_at }}</td></tr>
+      <tr><th>耗时</th><td>{% if run.latency_ms is not none %}{{ run.latency_ms }} ms{% else %}—{% endif %}</td></tr>
+      <tr><th>token</th><td>输入 {{ run.input_tokens }} / 输出 {{ run.output_tokens }} / 总计 {{ run.total_tokens }}</td></tr>
+      <tr><th>Run ID</th><td><code>{{ run.id }}</code></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>上下文组装</h2>
+    {% if run.context_metrics and run.context_metrics.token_budget %}
+      <p class="hint">
+        {{ run.context_metrics.candidate_count }} 条候选 →
+        {{ run.context_metrics.selected_count }} 条进入模型；
+        {{ run.context_metrics.context_tokens }} / {{ run.context_metrics.token_budget }} tokens
+        （{{ (run.context_metrics.budget_utilization * 100)|round|int }}%）·
+        duplicate {{ run.context_metrics.dropped_duplicate_count }} ·
+        budget {{ run.context_metrics.dropped_budget_count }} ·
+        limit {{ run.context_metrics.dropped_limit_count }}
+      </p>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>ID</th><th>候选排名</th><th>tokens</th><th>结果</th><th>位置</th></tr></thead>
+          <tbody>
+          {% for item in run.context_decisions %}
+            <tr>
+              <td>{{ item.evidence_id or '—' }}</td>
+              <td>{{ item.candidate_rank }}</td>
+              <td>{{ item.token_count }}</td>
+              <td class="{% if item.selected %}st-succeeded{% else %}st-failed{% endif %}">
+                {{ item.reason }}
+              </td>
+              <td>{{ item.source_name }} · {{ item.location }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="hint">旧运行或本次没有上下文组装数据。</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>结论与引用（{{ run.claims|length }} 条）</h2>
+    {% if run.citation_metrics %}
+      <p class="hint">
+        引用覆盖率：
+        {% if run.citation_metrics.citation_coverage is not none %}
+          {{ (run.citation_metrics.citation_coverage * 100)|round|int }}%
+        {% else %}—{% endif %}
+       　引用有效率：
+        {% if run.citation_metrics.citation_validity is not none %}
+          {{ (run.citation_metrics.citation_validity * 100)|round|int }}%
+        {% else %}—{% endif %}
+       　数字/编号 grounded rate：
+        {% if run.citation_metrics.grounded_fact_rate is not none %}
+          {{ (run.citation_metrics.grounded_fact_rate * 100)|round|int }}%
+        {% else %}—{% endif %}
+      </p>
+    {% endif %}
+    {% for item in run.claims %}
+      <div class="evidence">
+        <div>{{ item.text }}</div>
+        <div class="meta">
+          有效引用：{{ item.valid_evidence_ids|join(', ') or '无' }}
+          {% if item.invalid_evidence_ids %} · 无效编号：{{ item.invalid_evidence_ids|join(', ') }}{% endif %}
+          {% if item.ungrounded_numbers %} · 未落在证据中的数字：{{ item.ungrounded_numbers|join(', ') }}{% endif %}
+          {% if item.ungrounded_identifiers %} · 未落在证据中的编号：{{ item.ungrounded_identifiers|join(', ') }}{% endif %}
+        </div>
+      </div>
+    {% else %}
+      <p class="hint">本次运行没有结构化事实结论。</p>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <h2>问题</h2>
+    <div class="answer">{{ run.question }}</div>
+    {% if run.answer %}
+      <h2 style="margin-top:18px;">回答</h2>
+      <div class="answer">{{ run.answer }}</div>
+    {% endif %}
+    {% if run.error %}
+      <div class="error">{{ run.error.code }}：{{ run.error.message }}</div>
+    {% endif %}
+    {% if run.confidence_report %}
+      <h2 style="margin-top:18px;">确定性支持检查</h2>
+      <p class="hint">
+        状态：<span class="{% if run.confidence_report.blocked %}st-failed{% else %}st-ready{% endif %}">{{ run.confidence_report.status }}</span>
+        · 支持 {{ run.confidence_report.supported_claim_count }} / {{ run.confidence_report.claim_count }} 条 claim
+        · 口径 {{ run.confidence_report.scope }}
+      </p>
+      {% for reason in run.confidence_report.reasons %}<div class="meta">· {{ reason }}</div>{% endfor %}
+      {% if run.confidence_report.blocked and run.raw_answer %}
+        <details style="margin-top:10px;"><summary>查看被安全门拦截的原始回答</summary><div class="answer">{{ run.raw_answer }}</div></details>
+      {% endif %}
+    {% endif %}
+    {% if feedback %}
+      <p class="hint" style="margin-top:12px;">
+        当前反馈：{% if feedback.rating == 1 %}有帮助{% else %}待改进 · {{ feedback.reason }}{% endif %}
+        {% if feedback.note %} · {{ feedback.note }}{% endif %}
+      </p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <h2>工具轨迹（{{ run.tool_calls|length }} 次）</h2>
+    {% for item in run.tool_calls %}
+      <details style="margin-top:10px;" {% if loop.first %}open{% endif %}>
+        <summary>第 {{ item.step }} 轮 · {{ item.name }}</summary>
+        <div class="meta" style="font-size:12px; color:var(--muted); margin-top:8px;">参数</div>
+        <pre>{{ item.arguments }}</pre>
+        <div class="meta" style="font-size:12px; color:var(--muted);">结果预览</div>
+        <pre>{{ item.result_preview }}</pre>
+      </details>
+    {% else %}
+      <p class="hint">本次运行没有调用工具。</p>
+    {% endfor %}
+  </div>
+
+  <div class="card">
+    <h2>证据（{{ run.evidence|length }} 条）</h2>
+    {% for item in run.evidence %}
+      <div class="evidence" id="evidence-{{ item.evidence_id or loop.index }}">
+        <div class="meta">
+          [{{ item.evidence_id or loop.index }}] {{ item.module }} · source={{ item.source_name }} · {{ item.location }}
+          {% if item.score is not none %} · 分数 {{ item.score }}{% endif %}
+        </div>
+        <div class="snippet">{{ item.snippet }}</div>
+      </div>
+    {% else %}
+      <p class="hint">本次运行没有返回证据。</p>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

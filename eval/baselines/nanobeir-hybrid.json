@@ -1,0 +1,34 @@
+{
+  "provenance": {
+    "source": "eval/results/nanobeir-global-bm25.json",
+    "note": "Frozen hybrid retrieval baseline; query embedding latency excluded."
+  },
+  "tasks": {
+    "NanoNQRetrieval": {
+      "arms": {
+        "hybrid": {
+          "metrics": {
+            "mrr": 0.5565238095238095,
+            "recall@5": 0.73,
+            "complete_recall@5": 0.72,
+            "ndcg@10": 0.6242679511385428
+          },
+          "latency_median_ms_without_query_embedding": 92.48627099441364
+        }
+      }
+    },
+    "NanoHotpotQARetrieval": {
+      "arms": {
+        "hybrid": {
+          "metrics": {
+            "mrr": 0.9255555555555556,
+            "recall@5": 0.89,
+            "complete_recall@5": 0.8,
+            "ndcg@10": 0.8664143382634765
+          },
+          "latency_median_ms_without_query_embedding": 77.97510399541352
+        }
+      }
+    }
+  }
+}

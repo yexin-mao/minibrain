@@ -1,0 +1,106 @@
+[
+  {
+    "id": "cal-supported",
+    "payload": {
+      "schema_version": "answer-quality-v3",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "reference": {
+        "expected_answer_terms": ["400"],
+        "answer_match": "all",
+        "expected_refusal": false,
+        "grading_note": "证据中有直接答案"
+      },
+      "answer": "二线城市住宿费上限为每晚 400 元。",
+      "evidence": [
+        {"evidence_id": "E1.1", "source_name": "差旅制度", "location": "住宿标准", "snippet": "二线城市住宿费标准：每人每晚不超过 400 元。"}
+      ],
+      "submitted_claims": [
+        {"claim_index": 0, "text": "二线城市住宿费上限为每晚 400 元", "evidence_ids": ["E1.1"]}
+      ]
+    },
+    "expected": {
+      "is_refusal": false,
+      "factual_verdicts": ["supported"],
+      "citation_verdicts": ["supported"],
+      "correctness_range": [0.9, 1.0]
+    }
+  },
+  {
+    "id": "cal-soft-hallucination",
+    "payload": {
+      "schema_version": "answer-quality-v3",
+      "question": "用户研究组采用什么工作流程？",
+      "reference": {
+        "expected_answer_terms": [],
+        "answer_match": "all",
+        "expected_refusal": true,
+        "grading_note": "资料只写职责，没有工作流程"
+      },
+      "answer": "用户研究组采用需求收集、访谈、复盘的三阶段流程。",
+      "evidence": [
+        {"evidence_id": "E1.1", "source_name": "组织职责", "location": "用户研究组", "snippet": "用户研究组负责用户访谈和研究报告。"}
+      ],
+      "submitted_claims": [
+        {"claim_index": 0, "text": "用户研究组的工作包含用户访谈", "evidence_ids": ["E1.1"]},
+        {"claim_index": 1, "text": "用户研究组采用需求收集和复盘流程", "evidence_ids": ["E1.1"]}
+      ]
+    },
+    "expected": {
+      "is_refusal": false,
+      "factual_must_include": ["unsupported"],
+      "citation_verdicts": ["supported", "unsupported"],
+      "correctness_range": [0.0, 0.2]
+    }
+  },
+  {
+    "id": "cal-refusal",
+    "payload": {
+      "schema_version": "answer-quality-v3",
+      "question": "技术部去年的离职率是多少？",
+      "reference": {
+        "expected_answer_terms": [],
+        "answer_match": "all",
+        "expected_refusal": true,
+        "grading_note": "全部资料都没有离职率"
+      },
+      "answer": "当前资料没有提供技术部去年的离职率，无法确定。",
+      "evidence": [],
+      "submitted_claims": [
+        {"claim_index": 0, "text": "当前资料没有提供技术部去年的离职率", "evidence_ids": []}
+      ]
+    },
+    "expected": {
+      "is_refusal": true,
+      "factual_verdicts": ["not_applicable"],
+      "citation_verdicts": ["not_applicable"],
+      "correctness_range": [0.9, 1.0]
+    }
+  },
+  {
+    "id": "cal-partial-citation",
+    "payload": {
+      "schema_version": "answer-quality-v3",
+      "question": "TICKET-88407 的故障等级和修复时间是什么？",
+      "reference": {
+        "expected_answer_terms": ["P0"],
+        "answer_match": "all",
+        "expected_refusal": null,
+        "grading_note": "证据只支持故障等级，不支持修复时间"
+      },
+      "answer": "故障等级是 P0，并在 30 分钟内修复。",
+      "evidence": [
+        {"evidence_id": "E1.1", "source_name": "故障单", "location": "TICKET-88407", "snippet": "TICKET-88407，故障等级：P0。"}
+      ],
+      "submitted_claims": [
+        {"claim_index": 0, "text": "故障等级是 P0", "evidence_ids": ["E1.1"]},
+        {"claim_index": 1, "text": "故障在 30 分钟内修复", "evidence_ids": ["E1.1"]}
+      ]
+    },
+    "expected": {
+      "is_refusal": false,
+      "factual_must_include": ["supported", "unsupported"],
+      "citation_verdicts": ["supported", "unsupported"],
+      "correctness_range": [0.0, 0.8]
+    }
+  }
+]

@@ -1,0 +1,58 @@
+x-minibrain: &minibrain
+  build:
+    context: .
+  env_file:
+    - .env
+  environment:
+    # 覆盖 .env 里的本机地址；容器间通过服务名访问数据库。
+    DATABASE_URL: postgres://minibrain:minibrain@db:5432/minibrain
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: minibrain
+      POSTGRES_USER: minibrain
+      POSTGRES_PASSWORD: minibrain
+    volumes:
+      - minibrain_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U minibrain -d minibrain"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  init:
+    <<: *minibrain
+    command: ["minibrain-init-db"]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  web:
+    <<: *minibrain
+    command: ["uvicorn", "minibrain.web.app:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  worker:
+    <<: *minibrain
+    command: ["minibrain-worker"]
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  minibrain_postgres:

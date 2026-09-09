@@ -11,8 +11,7 @@ import pytest
 
 from minibrain import gateway
 from minibrain.agent.prompt import system_prompt as _system_prompt
-
-from .conftest import needs_embedding
+from minibrain.db import vector_db
 
 
 @pytest.fixture(scope="module")
@@ -58,26 +57,42 @@ def test_includes_stopping_rules(prompt):
     assert "查到头了" in prompt
 
 
+def test_includes_lightweight_multihop_protocol(prompt):
+    """多跳规划复用现有 tool loop，不引入一次独立 Planner LLM 调用。"""
+    assert "多跳问题的检索协议" in prompt
+    assert "中间实体 + 下一条缺失关系" in prompt
+    assert "只找到中间实体，不等于已经找到最终答案" in prompt
+    assert "时间、对象和条件范围" in prompt
+    assert "不要擅自把问题扩成" in prompt
+    assert "单跳问题查到答案后立即回答" in prompt
+
+
 def test_says_not_found_is_a_valid_answer(prompt):
     """「查不到」是正确答案而不是失败——这句是防幻觉的关键。"""
     assert "正确答案，不是失败" in prompt
 
 
-@needs_embedding
-def test_includes_document_catalog(alice):
-    """★ 文档清单。
+def test_includes_knowledge_domain_without_per_document_catalog(alice):
+    """★ 可扩展知识域摘要。
 
     没有它时「文档·组织事实」类路由只有 1/6，因为模型看得见表有哪些列，
     完全不知道文档里写了什么（eval/ROUTING.md 第一节）。
     """
-    doc_id = gateway.call(
-        "vector-rag", "upload_document", alice, None, "dept-tech.md",
-        "# 技术部\n\n技术部负责人是李伟。",
-    )
-    gateway.process("vector-rag", doc_id)
+    # 这里只测 Router 的 O(source 数)摘要，不测 embedding 入库。直接造一个 ready
+    # 登记项可避免付费 API，也避免开发机常驻 worker 抢走测试任务导致 teardown 等待。
+    source = gateway.call("vector-rag", "ensure_default_source", alice)
+    with vector_db() as cur:
+        cur.execute(
+            """INSERT INTO documents
+               (source_id, filename, content, status, char_count, parsed_as, content_hash)
+               VALUES (%s, 'dept-tech.md', '# 技术部', 'ready', 5, 'markdown', 'prompt-test')""",
+            (source["id"],),
+        )
     text = _system_prompt(alice)
-    assert "可检索的文档" in text
-    assert "dept-tech.md" in text
+    assert "可检索的知识域/source" in text
+    assert f"user/{alice.username}" in text
+    assert "1 篇" in text
+    assert "dept-tech.md" not in text
 
 
 def test_declares_current_user(prompt, alice):

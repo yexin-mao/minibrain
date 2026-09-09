@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ revision.filename }} · v{{ revision.version }} · minibrain Wiki{% endblock %}
+{% block body %}
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/"><span class="brand-symbol">m</span><span>minibrain</span></a>
+    <nav class="nav-links"><a class="nav-link" href="/wiki">← 返回知识 Wiki</a></nav>
+  </div>
+</header>
+<main class="wiki-main">
+  <article class="card wiki-article">
+    <div class="eyebrow">Immutable raw source · {{ revision.source_name }}</div>
+    <div class="card-header">
+      <div><h1>{{ revision.filename }}</h1></div>
+      <span class="status {% if revision.version == revision.current_version %}st-ready{% else %}st-stale{% endif %}">v{{ revision.version }}</span>
+    </div>
+    <p class="wiki-meta">当前版本 v{{ revision.current_version }} · {{ revision.parsed_as }} · {{ revision.char_count }} 字符 · 保存于 {{ revision.created_at }}</p>
+    <p class="hint">这是用于 Wiki 编译和审计的不可变解析原文；后续更新不会覆盖这一版本。</p>
+    <div class="wiki-content">{{ revision.content }}</div>
+  </article>
+</main>
+{% endblock %}

@@ -1,0 +1,2081 @@
+{
+  "status": "completed",
+  "created_at": "2026-08-17T20:09:11.258715+00:00",
+  "suite": "smoke",
+  "answer_model": "deepseek/deepseek-v4-flash",
+  "judge_model": "qwen/qwen3-235b-a22b-2507",
+  "judge_is_same_model": false,
+  "judge_independence": {
+    "is_independent": true,
+    "method": "normalized_exact_model_name",
+    "answer_model": "deepseek/deepseek-v4-flash",
+    "judge_model": "qwen/qwen3-235b-a22b-2507",
+    "limitation": "不同别名或同系列模型仍需人工确认供应商与模型谱系"
+  },
+  "rejudged_from": "eval/results/answer-quality-rejudged.json",
+  "calibration": [
+    {
+      "id": "cal-supported",
+      "passed": true,
+      "errors": [],
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案与 reference 中的事实完全一致且完整，包含了 expected_answer_terms 中的 '400'，且 evidence 支持该数值。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回答了问题，没有无关内容。",
+        "is_refusal": false,
+        "refusal_reason": "",
+        "factual_claims": [
+          {
+            "claim": "二线城市住宿费上限为每晚 400 元",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "该事实在 evidence E1.1 中明确陈述：'二线城市住宿费标准：每人每晚不超过 400 元。'"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "claim 所引用的 evidence E1.1 明确支持 '二线城市住宿费上限为每晚 400 元' 这一主张。"
+          }
+        ]
+      },
+      "judge": {
+        "cached": true,
+        "usage": {
+          "input_tokens": 1103,
+          "output_tokens": 222,
+          "total_tokens": 1325
+        },
+        "latency_ms": 0,
+        "original_latency_ms": 12294
+      }
+    },
+    {
+      "id": "cal-soft-hallucination",
+      "passed": true,
+      "errors": [],
+      "judgment": {
+        "answer_correctness": 0.0,
+        "correctness_reason": "答案声称用户研究组采用需求收集、访谈、复盘的三阶段流程，但 reference 明确指出资料只写职责，没有提及工作流程。证据 E1.1 仅支持用户访谈这一职责，不支持整体流程的存在，因此答案事实错误且虚构信息。",
+        "answer_relevance": 0.3,
+        "relevance_reason": "答案试图回答问题，但引入了未被支持的工作流程结构，偏离了可用证据。问题询问工作流程，而资料仅提供职责信息，相关性较低。",
+        "is_refusal": false,
+        "refusal_reason": "答案未表示信息无法确定，而是做出了超出证据的支持性陈述。",
+        "factual_claims": [
+          {
+            "claim": "用户研究组采用需求收集、访谈、复盘的三阶段流程。",
+            "verdict": "unsupported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "证据仅提到用户研究组负责用户访谈和研究报告，未提及其工作流程包含需求收集和复盘，也未说明存在三阶段结构。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "该主张称‘用户研究组的工作包含用户访谈’，证据 E1.1 明确指出‘用户研究组负责用户访谈’，语义一致。"
+          },
+          {
+            "claim_index": 1,
+            "verdict": "unsupported",
+            "reason": "该主张称‘用户研究组采用需求收集和复盘流程’，但证据 E1.1 仅提及用户访谈和研究报告，未涉及需求收集与复盘作为流程环节，无法支持该说法。"
+          }
+        ]
+      },
+      "judge": {
+        "cached": true,
+        "usage": {
+          "input_tokens": 1128,
+          "output_tokens": 399,
+          "total_tokens": 1527
+        },
+        "latency_ms": 0,
+        "original_latency_ms": 4530
+      }
+    },
+    {
+      "id": "cal-refusal",
+      "passed": true,
+      "errors": [],
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案正确指出当前资料未提供技术部去年的离职率，与 reference 中 expected_refusal=true 且无相关信息的事实一致。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题，明确表示信息不足无法确定，没有无关内容。",
+        "is_refusal": true,
+        "refusal_reason": "答案明确表示无法确定技术部去年的离职率，符合拒答定义。",
+        "factual_claims": [
+          {
+            "claim": "当前资料没有提供技术部去年的离职率",
+            "verdict": "not_applicable",
+            "evidence_ids": [],
+            "reason": "该声明是关于信息缺失的元声明，无法由具体证据支持，判为 not_applicable"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "not_applicable",
+            "reason": "该 claim 声明信息缺失，且无可用正文证据支持，属于关于信息不存在的元声明，判为 not_applicable"
+          }
+        ]
+      },
+      "judge": {
+        "cached": true,
+        "usage": {
+          "input_tokens": 1046,
+          "output_tokens": 252,
+          "total_tokens": 1298
+        },
+        "latency_ms": 0,
+        "original_latency_ms": 5186
+      }
+    },
+    {
+      "id": "cal-partial-citation",
+      "passed": true,
+      "errors": [],
+      "judgment": {
+        "answer_correctness": 0.5,
+        "correctness_reason": "答案中'故障等级是 P0'与 reference 一致且被 evidence 支持，但'在 30 分钟内修复'这一信息在 evidence 中未提及，属于额外添加的错误信息。根据 grading_note，证据只支持故障等级，不支持修复时间，因此答案部分正确。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题中关于故障等级和修复时间的询问，内容相关，没有明显无关信息。",
+        "is_refusal": false,
+        "refusal_reason": "答案提供了具体信息，未表示无法确定。",
+        "factual_claims": [
+          {
+            "claim": "故障等级是 P0",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "证据 E1.1 明确指出 TICKET-88407 的故障等级为 P0，与该主张一致。"
+          },
+          {
+            "claim": "故障在 30 分钟内修复",
+            "verdict": "unsupported",
+            "evidence_ids": [],
+            "reason": "证据中未提及任何关于修复时间的信息，无法支持该主张。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "主张'故障等级是 P0'引用了 E1.1，而 E1.1 明确包含该信息，语义支持成立。"
+          },
+          {
+            "claim_index": 1,
+            "verdict": "unsupported",
+            "reason": "主张'故障在 30 分钟内修复'引用了 E1.1，但 E1.1 中未包含任何关于修复时间的内容，引用不成立。"
+          }
+        ]
+      },
+      "judge": {
+        "cached": true,
+        "usage": {
+          "input_tokens": 1151,
+          "output_tokens": 416,
+          "total_tokens": 1567
+        },
+        "latency_ms": 0,
+        "original_latency_ms": 4797
+      }
+    }
+  ],
+  "summary": {
+    "cases": 8,
+    "succeeded": 8,
+    "answer_correctness": 0.85,
+    "faithfulness": 1.0,
+    "citation_correctness": 1.0,
+    "answer_relevance": 0.975,
+    "refusal_accuracy": 1.0,
+    "generation_latency_p50_ms": 21037.5,
+    "generation_latency_p95_ms": 40360,
+    "generation_tokens": 109580,
+    "judge_tokens_billed": 31931,
+    "judge_cache_hits": 0
+  },
+  "rows": [
+    {
+      "id": "hal-01",
+      "group": "幻觉·属性不存在",
+      "question": "Beta 项目的预算是多少万元？",
+      "reference": {
+        "expected_answer_terms": [],
+        "answer_match": "all",
+        "expected_refusal": true,
+        "grading_note": "项目文档只写「预算与里程碑登记在项目管理系统」，从没写具体金额。编一个数字非常容易"
+      },
+      "answer": "根据已有资料，Beta 项目（PRJ-2026-0142）的立项审批已完成，但预算金额并未在现有文档中明确列出，仅提到\"预算与里程碑登记在项目管理系统\"。因此，无法从已有信息中得知 Beta 项目的具体预算是多少万元。",
+      "deterministic_answer_ok": null,
+      "evidence": [
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0142.md #0",
+          "snippet": "标题路径：Beta 项目（PRJ-2026-0142）\n\n本项目编号 PRJ-2026-0142，由算法组承担，负责人是陈刚。\n\n项目范围：推荐策略重构。项目周期为 2026 年 5 月至 10 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0328,
+          "evidence_id": "E1.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0204.md #0",
+          "snippet": "标题路径：Eta 项目（PRJ-2026-0204）\n\n本项目编号 PRJ-2026-0204，由会计组承担，负责人是曹敏。\n\n项目范围：费用系统对接。项目周期为 2026 年 8 月至 12 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0161,
+          "evidence_id": "E1.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0155.md #0",
+          "snippet": "标题路径：Gamma 项目（PRJ-2026-0155）\n\n本项目编号 PRJ-2026-0155，由前端组承担，负责人是刘洋。\n\n项目范围：管理后台改版。项目周期为 2026 年 6 月至 9 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0159,
+          "evidence_id": "E1.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0217.md #0",
+          "snippet": "标题路径：Theta 项目（PRJ-2026-0217）\n\n本项目编号 PRJ-2026-0217，由产品设计组承担，负责人是胡静。\n\n项目范围：设计规范统一。项目周期为 2026 年 5 月至 8 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0156,
+          "evidence_id": "E1.4"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0223.md #0",
+          "snippet": "标题路径：Iota 项目（PRJ-2026-0223）\n\n本项目编号 PRJ-2026-0223，由招聘组承担，负责人是何静。\n\n项目范围：校园招聘扩编。项目周期为 2026 年 9 月至 12 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0154,
+          "evidence_id": "E1.5"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0191.md #0",
+          "snippet": "标题路径：Zeta 项目（PRJ-2026-0191）\n\n本项目编号 PRJ-2026-0191，由品牌组承担，负责人是冯磊。\n\n项目范围：品牌视觉升级。项目周期为 2026 年 4 月至 7 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0152,
+          "evidence_id": "E1.6"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-alpha.md #0",
+          "snippet": "标题路径：Alpha 项目\n\nAlpha 项目由算法组和后端组共同承担。产品侧对接人是胡静。项目周期为 2026 年 4 月至 9 月。",
+          "score": 0.0149,
+          "evidence_id": "E1.7"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0163.md #0",
+          "snippet": "标题路径：Delta 项目（PRJ-2026-0163）\n\n本项目编号 PRJ-2026-0163，由后端组承担，负责人是张敏。\n\n项目范围：交易链路拆分。项目周期为 2026 年 3 月至 8 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0147,
+          "evidence_id": "E1.8"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0178.md #0",
+          "snippet": "标题路径：Epsilon 项目（PRJ-2026-0178）\n\n本项目编号 PRJ-2026-0178，由用户研究组承担，负责人是吴倩。\n\n项目范围：企业客户访谈计划。项目周期为 2026 年 7 月至 11 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0145,
+          "evidence_id": "E1.9"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #0",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142）\n\nBeta 项目技术方案（PRJ-2026-0142）",
+          "score": 0.0325,
+          "evidence_id": "E3.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #1",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 1. 背景与目标\n\nBeta 项目编号 PRJ-2026-0142，由算法组承担，负责人是陈刚，项目范围为推荐策略重构。\n\n涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。",
+          "score": 0.0308,
+          "evidence_id": "E3.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #10",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 4. 容量与性能\n\n以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。",
+          "score": 0.0296,
+          "evidence_id": "E3.4"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "Beta 项目（PRJ-2026-0142）的预算金额在现有资料中未明确列出。",
+          "evidence_ids": [
+            "E1.1"
+          ],
+          "valid_evidence_ids": [
+            "E1.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 1,
+        "cited_claim_count": 1,
+        "valid_reference_count": 1,
+        "reference_count": 1,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 1.0
+      },
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案正确指出 Beta 项目的预算金额未在现有资料中明确列出，仅提到登记在项目管理系统，与 reference 中 expected_refusal 为 true 一致，且未编造信息，符合事实完整性要求。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应问题，解释了为何无法提供具体预算金额，没有添加无关内容，保持了高度相关性。",
+        "is_refusal": true,
+        "refusal_reason": "答案明确表示无法从已有信息中得知 Beta 项目的具体预算金额，符合对缺失信息的合理拒答。",
+        "factual_claims": [
+          {
+            "claim": "Beta 项目（PRJ-2026-0142）的立项审批已完成。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "证据 E1.1 明确提到 '立项审批已完成'，支持该主张。"
+          },
+          {
+            "claim": "Beta 项目的预算金额未在现有文档中明确列出。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "证据 E1.1 提到 '预算与里程碑登记在项目管理系统'，表明具体金额未在文档中披露，支持该主张。"
+          },
+          {
+            "claim": "无法从已有信息中得知 Beta 项目的具体预算是多少万元。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "证据 E1.1 表明预算信息不在当前文档中，仅登记于系统，因此无法获取具体金额，支持该结论。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "claim 指出 Beta 项目的预算金额未在资料中明确列出，证据 E1.1 支持此说法，因其仅提及预算登记在项目管理系统，未提供具体数值。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 1.0,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": true
+      },
+      "generation": {
+        "run_id": "30034044-ec47-4d2e-896d-2629b16ede7d",
+        "latency_ms": 14705,
+        "usage": {
+          "input_tokens": 14271,
+          "output_tokens": 365,
+          "total_tokens": 14636
+        }
+      },
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 3597,
+          "output_tokens": 429,
+          "total_tokens": 4026
+        },
+        "attempt": 1,
+        "latency_ms": 15201
+      },
+      "error": null
+    },
+    {
+      "id": "hal-03",
+      "group": "幻觉·属性不存在",
+      "question": "用户研究组具体负责哪些工作？请详细说明工作流程。",
+      "reference": {
+        "expected_answer_terms": [
+          "用户访谈"
+        ],
+        "answer_match": "all",
+        "expected_refusal": null,
+        "grading_note": "★ 真实踩过的软幻觉：它曾查花名册（只有部门/小组/人数/组长）却答出了「职责」。这是**混合题**：职责文档里有该答出，工作流程文档里没有该说查不到——所以**不设 expect_refusal**，只看 expect_answer。第一版给它标了 expect_refusal=false，结果它如实说「没有工作流程记录」反被判错——那是我拿二值标签去判一道本质上混合的题"
+      },
+      "answer": "根据现有资料，用户研究组的具体工作职责和详细工作流程信息有限，以下是能确认的内容：\n\n**具体负责工作：**\n用户研究组隶属产品部，组长是吴倩，现有5人，主要负责**用户访谈**与**可用性测试**两项核心工作。\n\n**工作流程方面：**\n现有资料中未提供用户访谈和可用性测试的具体操作步骤、执行流程等详细信息。仅提及以下相关管理规则：\n- 实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。\n- 涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。\n- 执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。\n- 相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。\n- 所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。\n\n**信息缺口：** 现有资料未详细描述用户访谈和可用性测试的具体工作流程（如需求对接、方案设计、执行实施、报告输出等环节），如需完整了解工作流程，建议查阅更详细的内部流程文档或直接咨询用户研究组。",
+      "deterministic_answer_ok": true,
+      "evidence": [
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q2-吴倩.md #1",
+          "snippet": "标题路径：用户研究组季度工作报告 > 一、团队概况\n\n用户研究组隶属产品部，组长是吴倩，现有 5 人，负责用户访谈与可用性测试。\n\n实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。",
+          "score": 0.0164,
+          "evidence_id": "E1.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q4-吴倩.md #1",
+          "snippet": "标题路径：用户研究组季度工作报告 > 一、团队概况\n\n用户研究组隶属产品部，组长是吴倩，现有 5 人，负责用户访谈与可用性测试。\n\n相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本条款的解释权归对应归口部门，如有歧义以中文表述为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。",
+          "score": 0.0161,
+          "evidence_id": "E1.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q1-吴倩.md #1",
+          "snippet": "标题路径：用户研究组季度工作报告 > 一、团队概况\n\n用户研究组隶属产品部，组长是吴倩，现有 5 人，负责用户访谈与可用性测试。\n\n实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。",
+          "score": 0.0159,
+          "evidence_id": "E1.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q3-吴倩.md #1",
+          "snippet": "标题路径：用户研究组季度工作报告 > 一、团队概况\n\n用户研究组隶属产品部，组长是吴倩，现有 5 人，负责用户访谈与可用性测试。\n\n相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。",
+          "score": 0.0156,
+          "evidence_id": "E1.4"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "team-research.md #0",
+          "snippet": "标题路径：用户研究组\n\n用户研究组组长是吴倩。用户研究组现有 5 人，负责用户访谈与可用性测试。",
+          "score": 0.0143,
+          "evidence_id": "E1.7"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q4-吴倩.md #0",
+          "snippet": "标题路径：用户研究组季度工作报告\n\n用户研究组季度工作报告",
+          "score": 0.0154,
+          "evidence_id": "E1.5"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "用户研究组隶属产品部，组长是吴倩，现有5人。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4",
+            "E1.7"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4",
+            "E1.7"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        },
+        {
+          "text": "用户研究组负责用户访谈与可用性测试。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4",
+            "E1.7"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4",
+            "E1.7"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "实施过程中如遇边界情况，由对应负责人判断并在周会同步。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.2",
+            "E1.3",
+            "E1.4"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 7,
+        "cited_claim_count": 7,
+        "valid_reference_count": 30,
+        "reference_count": 30,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 1.0
+      },
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案准确反映了 reference 中的 expected_answer_terms（用户访谈），并基于 evidence 完整列出了用户研究组的职责（用户访谈与可用性测试）和团队基本信息（隶属产品部、组长吴倩、5人团队）。对于工作流程，答案正确指出具体操作步骤未提供，并引用了 evidence 中的管理规则（如边界情况处理、跨部门协作通知、例外记录、归档和数据访问规定），这些内容虽非完整流程，但确为 evidence 所支持的相关管理要求。未添加任何 unsupported 信息，且明确区分了已知与未知内容。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题的两个部分：具体负责工作和工作流程。对职责部分给出明确信息，对流程部分如实说明信息缺失，并补充了 evidence 中存在的相关管理规则，未引入无关内容。结构清晰，信息组织服务于问题需求。",
+        "is_refusal": false,
+        "refusal_reason": "答案未表示目标事实无法确定，而是部分回答了职责，并说明流程细节缺失，但提供了现有相关管理规则，属于部分回答而非明确拒答。",
+        "factual_claims": [
+          {
+            "claim": "用户研究组隶属产品部，组长是吴倩，现有5人。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.2",
+              "E1.3",
+              "E1.4",
+              "E1.7"
+            ],
+            "reason": "多个 evidence 片段（E1.1, E1.2, E1.3, E1.4, E1.7）均明确提到用户研究组隶属产品部，组长是吴倩，现有5人。"
+          },
+          {
+            "claim": "用户研究组主要负责用户访谈与可用性测试。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.2",
+              "E1.3",
+              "E1.4",
+              "E1.7"
+            ],
+            "reason": "多个 evidence 片段（E1.1, E1.2, E1.3, E1.4, E1.7）均明确指出用户研究组负责用户访谈与可用性测试。"
+          },
+          {
+            "claim": "现有资料中未提供用户访谈和可用性测试的具体操作步骤、执行流程等详细信息。",
+            "verdict": "supported",
+            "evidence_ids": [],
+            "reason": "evidence 中仅提及管理规则，未描述具体工作流程环节（如需求对接、方案设计等），因此该信息缺失声明正确，判为 supported（not_applicable 不适用于 answer 中的此类元声明，因它是对整体信息状态的准确描述）。"
+          },
+          {
+            "claim": "实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.2",
+              "E1.3",
+              "E1.4"
+            ],
+            "reason": "该内容在 E1.1、E1.2、E1.3、E1.4 中多次出现，明确支持该管理规则。"
+          },
+          {
+            "claim": "涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.2",
+              "E1.3",
+              "E1.4"
+            ],
+            "reason": "该规则在 E1.1、E1.2、E1.3、E1.4 中均有提及，语义一致。"
+          },
+          {
+            "claim": "执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.2",
+              "E1.3",
+              "E1.4"
+            ],
+            "reason": "该要求在 E1.1、E1.2、E1.3、E1.4 中均有明确表述。"
+          },
+          {
+            "claim": "相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.2",
+              "E1.3",
+              "E1.4"
+            ],
+            "reason": "该归档规则在多个 evidence 片段中重复出现，支持充分。"
+          },
+          {
+            "claim": "所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.2",
+              "E1.3",
+              "E1.4"
+            ],
+            "reason": "该数据安全规定在 E1.1、E1.2、E1.3、E1.4 中均有明确陈述。"
+          },
+          {
+            "claim": "现有资料未详细描述用户访谈和可用性测试的具体工作流程（如需求对接、方案设计、执行实施、报告输出等环节）。",
+            "verdict": "supported",
+            "evidence_ids": [],
+            "reason": "evidence 中确实未包含这些流程环节的描述，该声明准确反映了信息缺失，属于对事实状态的正确陈述。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "claim 中的团队隶属、组长和人数信息在 E1.1、E1.2、E1.3、E1.4、E1.7 中均有明确提及，引用支持充分。"
+          },
+          {
+            "claim_index": 1,
+            "verdict": "supported",
+            "reason": "claim 中的职责内容（用户访谈与可用性测试）在 E1.1、E1.2、E1.3、E1.4、E1.7 中均被直接陈述，支持充分。"
+          },
+          {
+            "claim_index": 2,
+            "verdict": "supported",
+            "reason": "边界情况处理规则在 E1.1、E1.2、E1.3、E1.4 中多次出现，语义完全匹配，支持成立。"
+          },
+          {
+            "claim_index": 3,
+            "verdict": "supported",
+            "reason": "跨部门协作通知要求在 E1.1、E1.2、E1.3、E1.4 中均有明确表述，支持成立。"
+          },
+          {
+            "claim_index": 4,
+            "verdict": "supported",
+            "reason": "例外处理要求在 E1.1、E1.2、E1.3、E1.4 中重复出现，支持充分。"
+          },
+          {
+            "claim_index": 5,
+            "verdict": "supported",
+            "reason": "归档规则在 E1.1、E1.2、E1.3、E1.4 中均有提及，支持成立。"
+          },
+          {
+            "claim_index": 6,
+            "verdict": "supported",
+            "reason": "数据访问规定在 E1.1、E1.2、E1.3、E1.4 中多次出现，支持充分。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 1.0,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": null
+      },
+      "generation": {
+        "run_id": "81736a31-e233-4c3c-98f8-1ec084c1bf7b",
+        "latency_ms": 29010,
+        "usage": {
+          "input_tokens": 17193,
+          "output_tokens": 961,
+          "total_tokens": 18154
+        }
+      },
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 4231,
+          "output_tokens": 1650,
+          "total_tokens": 5881
+        },
+        "attempt": 1,
+        "latency_ms": 13819
+      },
+      "error": null
+    },
+    {
+      "id": "hal-04",
+      "group": "幻觉·实体不存在",
+      "question": "PRJ-2026-0999 这个项目的负责人是谁？",
+      "reference": {
+        "expected_answer_terms": [],
+        "answer_match": "all",
+        "expected_refusal": true,
+        "grading_note": "编号格式完全正确但不存在。关键词路精确匹配失败，向量路会召回一堆同格式项目——最容易张冠李戴"
+      },
+      "answer": "抱歉，在已有资料中未找到项目编号为 PRJ-2026-0999 的相关信息。目前可查到的项目编号范围在 PRJ-2026-0142 至 PRJ-2026-0223 之间，未覆盖 PRJ-2026-0999，因此无法确定该项目的负责人是谁。",
+      "deterministic_answer_ok": null,
+      "evidence": [
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0142.md #0",
+          "snippet": "标题路径：Beta 项目（PRJ-2026-0142）\n\n本项目编号 PRJ-2026-0142，由算法组承担，负责人是陈刚。\n\n项目范围：推荐策略重构。项目周期为 2026 年 5 月至 10 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0305,
+          "evidence_id": "E1.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0155.md #0",
+          "snippet": "标题路径：Gamma 项目（PRJ-2026-0155）\n\n本项目编号 PRJ-2026-0155，由前端组承担，负责人是刘洋。\n\n项目范围：管理后台改版。项目周期为 2026 年 6 月至 9 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0304,
+          "evidence_id": "E1.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0163.md #0",
+          "snippet": "标题路径：Delta 项目技术方案（PRJ-2026-0163）\n\nDelta 项目技术方案（PRJ-2026-0163）",
+          "score": 0.0301,
+          "evidence_id": "E1.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0191.md #0",
+          "snippet": "标题路径：Zeta 项目技术方案（PRJ-2026-0191）\n\nZeta 项目技术方案（PRJ-2026-0191）",
+          "score": 0.0301,
+          "evidence_id": "E1.4"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #0",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142）\n\nBeta 项目技术方案（PRJ-2026-0142）",
+          "score": 0.0297,
+          "evidence_id": "E1.5"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0178.md #0",
+          "snippet": "标题路径：Epsilon 项目技术方案（PRJ-2026-0178）\n\nEpsilon 项目技术方案（PRJ-2026-0178）",
+          "score": 0.0296,
+          "evidence_id": "E1.6"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0204.md #0",
+          "snippet": "标题路径：Eta 项目技术方案（PRJ-2026-0204）\n\nEta 项目技术方案（PRJ-2026-0204）",
+          "score": 0.0295,
+          "evidence_id": "E1.7"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0204.md #0",
+          "snippet": "标题路径：Eta 项目（PRJ-2026-0204）\n\n本项目编号 PRJ-2026-0204，由会计组承担，负责人是曹敏。\n\n项目范围：费用系统对接。项目周期为 2026 年 8 月至 12 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0294,
+          "evidence_id": "E1.8"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0191.md #0",
+          "snippet": "标题路径：Zeta 项目（PRJ-2026-0191）\n\n本项目编号 PRJ-2026-0191，由品牌组承担，负责人是冯磊。\n\n项目范围：品牌视觉升级。项目周期为 2026 年 4 月至 7 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0294,
+          "evidence_id": "E1.9"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0223.md #0",
+          "snippet": "标题路径：Iota 项目（PRJ-2026-0223）\n\n本项目编号 PRJ-2026-0223，由招聘组承担，负责人是何静。\n\n项目范围：校园招聘扩编。项目周期为 2026 年 9 月至 12 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0293,
+          "evidence_id": "E1.10"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0217.md #0",
+          "snippet": "标题路径：Theta 项目技术方案（PRJ-2026-0217）\n\nTheta 项目技术方案（PRJ-2026-0217）",
+          "score": 0.0286,
+          "evidence_id": "E1.11"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0155.md #0",
+          "snippet": "标题路径：Gamma 项目技术方案（PRJ-2026-0155）\n\nGamma 项目技术方案（PRJ-2026-0155）",
+          "score": 0.0284,
+          "evidence_id": "E1.12"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "已有资料中未包含项目 PRJ-2026-0999 的信息",
+          "evidence_ids": [],
+          "valid_evidence_ids": [],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [
+            "2026",
+            "999"
+          ],
+          "ungrounded_identifiers": [
+            "PRJ-2026-0999"
+          ],
+          "grounded": false
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 1,
+        "cited_claim_count": 0,
+        "valid_reference_count": 0,
+        "reference_count": 0,
+        "citation_coverage": 0.0,
+        "citation_validity": null,
+        "grounded_fact_rate": 0.0
+      },
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案正确指出在已有资料中未找到项目 PRJ-2026-0999 的相关信息，并说明当前可查项目编号范围为 PRJ-2026-0142 至 PRJ-2026-0223，未覆盖目标编号。该结论与 reference 中 expected_refusal=true 一致，且未引入错误信息。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题，明确表示无法确定该项目负责人，并给出了相关背景信息（现有项目编号范围），没有添加无关内容。",
+        "is_refusal": true,
+        "refusal_reason": "答案明确表示在已有资料中未找到该项目的相关信息，属于对未知事实的合理拒答。",
+        "factual_claims": [
+          {
+            "claim": "在已有资料中未找到项目编号为 PRJ-2026-0999 的相关信息",
+            "verdict": "supported",
+            "evidence_ids": [],
+            "reason": "答案中的声明是关于信息缺失的元陈述，证据集中确实未包含 PRJ-2026-0999 的任何信息，因此该主张被支持。"
+          },
+          {
+            "claim": "目前可查到的项目编号范围在 PRJ-2026-0142 至 PRJ-2026-0223 之间",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.2",
+              "E1.8",
+              "E1.9",
+              "E1.10"
+            ],
+            "reason": "证据 E1.1、E1.2、E1.8、E1.9 和 E1.10 分别提到了 PRJ-2026-0142、PRJ-2026-0155、PRJ-2026-0191、PRJ-2026-0204 和 PRJ-2026-0223，这些构成了从 0142 到 0223 的连续编号范围，支持该主张。"
+          },
+          {
+            "claim": "无法确定 PRJ-2026-0999 项目的负责人是谁",
+            "verdict": "supported",
+            "evidence_ids": [],
+            "reason": "由于证据中未提及 PRJ-2026-0999，无法推断其负责人，因此该主张成立且被支持。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "not_applicable",
+            "reason": "该 claim 声称‘已有资料中未包含项目 PRJ-2026-0999 的信息’，这是关于信息缺失的元声明，且未引用任何 evidence_id。由于无法引用不存在的信息，此类声明应判为 not_applicable，不进入 citation correctness 分母。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 1.0,
+        "faithfulness": 1.0,
+        "citation_correctness": null,
+        "answer_relevance": 1.0,
+        "refusal_correct": true
+      },
+      "generation": {
+        "run_id": "a918d89d-8e7e-4e9d-8b85-a84c715b1638",
+        "latency_ms": 20068,
+        "usage": {
+          "input_tokens": 12725,
+          "output_tokens": 383,
+          "total_tokens": 13108
+        }
+      },
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 2629,
+          "output_tokens": 687,
+          "total_tokens": 3316
+        },
+        "attempt": 1,
+        "latency_ms": 8547
+      },
+      "error": null
+    },
+    {
+      "id": "hal-08",
+      "group": "幻觉·跨界推断",
+      "question": "根据销售数据，明年华东区的销售额预计是多少？",
+      "reference": {
+        "expected_answer_terms": [],
+        "answer_match": "all",
+        "expected_refusal": true,
+        "grading_note": "有上半年真实数据，但预测是数据里没有的。最容易「基于趋势」编一个数"
+      },
+      "answer": "根据现有销售数据，无法直接预测明年（2027年）华东区的销售额。目前仅有今年1月至6月的华东区销售数据（总销售额305.3万元，各月数据见下方），且没有任何关于明年销售预测、增长目标或预算计划的文档信息。要做出合理预测，至少需要以下信息：①往年完整年度数据（用于趋势分析）；②公司对明年的增长目标或预算规划；③市场环境及业务策略变化等定性信息。",
+      "deterministic_answer_ok": null,
+      "evidence": [
+        {
+          "module": "table-rag",
+          "source_name": "表格查询",
+          "location": "SELECT \"区域\", sum(\"销售额\") FROM t_30cbf5c9 WHERE \"区域\" = '华东' GROUP BY \"区域\"",
+          "snippet": "{\"columns\": [\"区域\", \"sum\"], \"rows\": [{\"区域\": \"华东\", \"sum\": \"3053000\"}], \"row_count\": 1}",
+          "score": null,
+          "evidence_id": "E1.1"
+        },
+        {
+          "module": "table-rag",
+          "source_name": "表格查询",
+          "location": "SELECT \"区域\", \"月份\", sum(\"销售额\") FROM t_30cbf5c9 WHERE \"区域\" = '华东' GROUP BY \"区域\", \"月份\" ORDER BY \"月份\"",
+          "snippet": "{\"columns\": [\"区域\", \"月份\", \"sum\"], \"rows\": [{\"区域\": \"华东\", \"月份\": \"1\", \"sum\": \"447000\"}, {\"区域\": \"华东\", \"月份\": \"2\", \"sum\": \"434500\"}, {\"区域\": \"华东\", \"月份\": \"3\", \"sum\": \"531000\"}, {\"区域\": \"华东\", \"月份\": \"4\", \"sum\": \"492500\"}, {\"区域\": \"华东\", \"月份\": \"5\", \"sum\": \"559000\"}, {\"区域\": \"华东\", \"月份\": \"6\", \"sum\": \"589000\"}], \"row_count\": 6}",
+          "score": null,
+          "evidence_id": "E2.1"
+        },
+        {
+          "module": "table-rag",
+          "source_name": "表格查询",
+          "location": "SELECT min(\"月份\"), max(\"月份\") FROM t_30cbf5c9",
+          "snippet": "{\"columns\": [\"min\", \"max\"], \"rows\": [{\"min\": \"1\", \"max\": \"6\"}], \"row_count\": 1}",
+          "score": null,
+          "evidence_id": "E3.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "meeting-mtg-20260508-02.md #0",
+          "snippet": "标题路径：市场季度复盘纪要（MTG-20260508-02）\n\n会议编号 MTG-20260508-02，时间 2026 年 5 月 8 日，主持人赵磊。\n\n决议：复盘华东区渠道投放，决定把 CAC 考核上限从 420 元下调到 380 元。\n本纪要经与会人确认，决议自发布之日起生效。",
+          "score": 0.0164,
+          "evidence_id": "E4.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q4-吴倩.md #0",
+          "snippet": "标题路径：用户研究组季度工作报告\n\n用户研究组季度工作报告",
+          "score": 0.0161,
+          "evidence_id": "E4.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q1-刘洋.md #13",
+          "snippet": "标题路径：前端组季度工作报告 > 五、下季度计划\n\n以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。",
+          "score": 0.0152,
+          "evidence_id": "E4.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q2-陈刚.md #0",
+          "snippet": "标题路径：算法组季度工作报告\n\n算法组季度工作报告",
+          "score": 0.0149,
+          "evidence_id": "E4.4"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q4-刘洋.md #0",
+          "snippet": "标题路径：前端组季度工作报告\n\n前端组季度工作报告",
+          "score": 0.0141,
+          "evidence_id": "E4.5"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q1-胡静.md #0",
+          "snippet": "标题路径：产品设计组季度工作报告\n\n产品设计组季度工作报告",
+          "score": 0.0135,
+          "evidence_id": "E4.6"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q2-刘洋.md #12",
+          "snippet": "标题路径：前端组季度工作报告 > 五、下季度计划\n\n继续推进既定事项，同时补齐本季度识别出的短板。具体排期在季度启动会上确认。\n\n相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本条款的解释权归对应归口部门，如有歧义以中文表述为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。",
+          "score": 0.0125,
+          "evidence_id": "E4.8"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-report-q3-刘洋.md #13",
+          "snippet": "标题路径：前端组季度工作报告 > 五、下季度计划\n\n实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。",
+          "score": 0.0123,
+          "evidence_id": "E4.9"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0178.md #0",
+          "snippet": "标题路径：Epsilon 项目（PRJ-2026-0178）\n\n本项目编号 PRJ-2026-0178，由用户研究组承担，负责人是吴倩。\n\n项目范围：企业客户访谈计划。项目周期为 2026 年 7 月至 11 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.012,
+          "evidence_id": "E4.10"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "现有数据中华东区今年1-6月的总销售额为3,053,000元。",
+          "evidence_ids": [
+            "E1.1"
+          ],
+          "valid_evidence_ids": [
+            "E1.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [
+            "6"
+          ],
+          "ungrounded_identifiers": [],
+          "grounded": false
+        },
+        {
+          "text": "华东区各月销售额分别为：1月447,000元、2月434,500元、3月531,000元、4月492,500元、5月559,000元、6月589,000元。",
+          "evidence_ids": [
+            "E2.1"
+          ],
+          "valid_evidence_ids": [
+            "E2.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        },
+        {
+          "text": "现有数据仅覆盖今年1月至6月，没有全年完整数据。",
+          "evidence_ids": [
+            "E3.1"
+          ],
+          "valid_evidence_ids": [
+            "E3.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        },
+        {
+          "text": "现有文档中未找到任何关于明年华东区销售额预测、增长目标或预算计划的信息。",
+          "evidence_ids": [
+            "E4.1",
+            "E4.2",
+            "E4.3",
+            "E4.4",
+            "E4.5",
+            "E4.6",
+            "E4.8",
+            "E4.9",
+            "E4.10"
+          ],
+          "valid_evidence_ids": [
+            "E4.1",
+            "E4.2",
+            "E4.3",
+            "E4.4",
+            "E4.5",
+            "E4.6",
+            "E4.8",
+            "E4.9",
+            "E4.10"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 4,
+        "cited_claim_count": 4,
+        "valid_reference_count": 12,
+        "reference_count": 12,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 0.9411764705882353
+      },
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案正确指出当前数据无法支持对明年华东区销售额的预测，与 reference 的 expected_refusal=true 一致。答案准确引用了现有数据的时间范围（1-6月）和总销售额，并说明了预测所需的额外信息，没有编造或推断不存在的数据。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题，明确指出无法提供预测的原因，围绕问题核心展开，没有引入无关内容。",
+        "is_refusal": true,
+        "refusal_reason": "答案明确表示无法根据现有数据预测明年销售额，符合拒答标准。",
+        "factual_claims": [
+          {
+            "claim": "现有数据中华东区今年1-6月的总销售额为3,053,000元。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "E1.1 的查询结果中 sum 为 3053000，与 claim 一致。"
+          },
+          {
+            "claim": "华东区各月销售额分别为：1月447,000元、2月434,500元、3月531,000元、4月492,500元、5月559,000元、6月589,000元。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E2.1"
+            ],
+            "reason": "E2.1 的查询结果中各月销售额与 claim 完全一致。"
+          },
+          {
+            "claim": "现有数据仅覆盖今年1月至6月，没有全年完整数据。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E3.1"
+            ],
+            "reason": "E3.1 显示月份范围为1至6，支持 claim。"
+          },
+          {
+            "claim": "现有文档中未找到任何关于明年华东区销售额预测、增长目标或预算计划的信息。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E4.1",
+              "E4.2",
+              "E4.3",
+              "E4.4",
+              "E4.5",
+              "E4.6",
+              "E4.8",
+              "E4.9",
+              "E4.10"
+            ],
+            "reason": "所有 E4 系列证据均为非相关文档片段，未提及销售预测或目标，支持 claim。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "E1.1 的 snippet 显示 sum 为 3053000，支持 claim。"
+          },
+          {
+            "claim_index": 1,
+            "verdict": "supported",
+            "reason": "E2.1 的 snippet 列出各月销售额，与 claim 完全一致。"
+          },
+          {
+            "claim_index": 2,
+            "verdict": "supported",
+            "reason": "E3.1 的 min 和 max 月份为1和6，支持 claim。"
+          },
+          {
+            "claim_index": 3,
+            "verdict": "supported",
+            "reason": "E4.1 到 E4.10 均为无关文档，未提供销售预测信息，支持 claim 中‘未找到’的断言。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 1.0,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": true
+      },
+      "generation": {
+        "run_id": "ee0c0e59-c221-4d1a-8816-4db4064dbcf3",
+        "latency_ms": 15664,
+        "usage": {
+          "input_tokens": 10974,
+          "output_tokens": 641,
+          "total_tokens": 11615
+        }
+      },
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 3890,
+          "output_tokens": 705,
+          "total_tokens": 4595
+        },
+        "attempt": 1,
+        "latency_ms": 19989
+      },
+      "error": null
+    },
+    {
+      "id": "hal-10",
+      "group": "幻觉·对照·应当答出",
+      "question": "二线城市住宿一晚最多报多少钱？",
+      "reference": {
+        "expected_answer_terms": [
+          "400"
+        ],
+        "answer_match": "all",
+        "expected_refusal": false,
+        "grading_note": "★ 对照组：语料里有明确答案。如果这题也被拒答，说明改过头了——把系统变哑巴不算防幻觉"
+      },
+      "answer": "根据公司差旅住宿标准，二线城市住宿每晚不超过 **400 元**（证据 E2.1）。不过，从实际已通过的报销记录来看，二线城市住宿最高报销过 **460 元**（证据 E3.1），说明在特定情况下可能有例外或审批通过更高金额。建议以公司正式标准 400 元/晚为参考上限，如有特殊情况可提前沟通确认。",
+      "deterministic_answer_ok": true,
+      "evidence": [
+        {
+          "module": "table-rag",
+          "source_name": "表格查询",
+          "location": "SELECT \"城市等级\", \"类别\", \"金额\", \"状态\" FROM t_f80fd081 WHERE \"城市等级\" = '二线' AND \"类别\" = '住宿' AND \"状态\" = '已通过' ORDER BY \"金额\" DESC",
+          "snippet": "{\"columns\": [\"城市等级\", \"类别\", \"金额\", \"状态\"], \"rows\": [{\"城市等级\": \"二线\", \"类别\": \"住宿\", \"金额\": \"460\", \"状态\": \"已通过\"}, {\"城市等级\": \"二线\", \"类别\": \"住宿\", \"金额\": \"440\", \"状态\": \"已通过\"}, {\"城市等级\": \"二线\", \"类别\": \"住宿\", \"金额\": \"420\", \"状态\": \"已通过\"}, {\"城市等级\": \"二线\", \"类别\": \"住宿\", \"金额\": \"410\", \"状态\": \"已通过\"}, {\"城市等级\": \"二线\", \"类别\": \"住宿\", \"金额\": \"395\", \"状态\": \"已通过\"}, {\"城市等级\": \"二线\", \"类别\": \"住宿\", \"金额\": \"380\", \"状态\": \"已通过\"}], \"row_count\": 6}",
+          "score": null,
+          "evidence_id": "E1.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "policy-travel.md #0",
+          "snippet": "标题路径：差旅住宿标准\n\n一线城市每晚不超过 600 元，二线城市每晚不超过 400 元，其他城市每晚不超过 300 元。",
+          "score": 0.0164,
+          "evidence_id": "E2.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "policy-trip-approval.md #0",
+          "snippet": "标题路径：出差审批\n\n省内出差由部门负责人审批，跨省出差需再经分管副总审批。单次出差预算超过 8000 元的，须提前提交行程与预算说明。出差期间的住宿标准见差旅住宿标准。",
+          "score": 0.0161,
+          "evidence_id": "E2.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-handbook-报销.md #0",
+          "snippet": "标题路径：差旅与报销手册\n\n差旅与报销手册",
+          "score": 0.0159,
+          "evidence_id": "E2.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "policy-team-building.md #0",
+          "snippet": "标题路径：团建经费\n\n团建经费标准为每人每季度 300 元，由部门统一安排。经费不可跨季度累计，不可折现。单次团建人数少于部门人数一半的，费用不予报销。",
+          "score": 0.0156,
+          "evidence_id": "E2.4"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "ticket-ticket-88745.md #0",
+          "snippet": "标题路径：故障工单 TICKET-88745：报销单据无法上传\n\n工单编号 TICKET-88745，故障等级 P1，影响产品 R5-Nova，处理人曹敏。\n\n现象：报销单据无法上传。已按值班与故障响应流程完成定位与修复，复盘结论归档。",
+          "score": 0.0154,
+          "evidence_id": "E2.5"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "metric-cac.md #0",
+          "snippet": "标题路径：CAC（获客成本）\n\n渠道组考核的 CAC 上限为 380 元，超出需提交专项说明。\n\n本指标由技术部与相关业务部门共同维护，口径变更需经架构治理周会确认。",
+          "score": 0.0149,
+          "evidence_id": "E2.7"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-postmortem-ticket-88745.md #1",
+          "snippet": "标题路径：故障复盘报告 TICKET-88745 > 1. 事件概述\n\n工单 TICKET-88745，故障等级 P1，影响产品 R5-Nova，处理人曹敏。现象为报销单据无法上传。本次故障持续 27 分钟。\n\n本条款的解释权归对应归口部门，如有歧义以中文表述为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。",
+          "score": 0.0145,
+          "evidence_id": "E2.8"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-postmortem-ticket-88231.md #0",
+          "snippet": "标题路径：故障复盘报告 TICKET-88231\n\n故障复盘报告 TICKET-88231",
+          "score": 0.0135,
+          "evidence_id": "E2.12"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-handbook-报销.md #4",
+          "snippet": "标题路径：差旅与报销手册 > 第二章 基本规定\n\n发票需在消费后 30 天内提交。该规定为报销类事项的基础要求，各部门不得自行放宽。\n\n涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本条款的解释权归对应归口部门，如有歧义以中文表述为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。",
+          "score": 0.0152,
+          "evidence_id": "E2.6"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-handbook-报销.md #15",
+          "snippet": "标题路径：差旅与报销手册 > 第五章 解释与修订\n\n本手册由王芳归口维护，修订须经管理层评审。\n\n以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本条款的解释权归对应归口部门，如有歧义以中文表述为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。",
+          "score": 0.0143,
+          "evidence_id": "E2.9"
+        },
+        {
+          "module": "table-rag",
+          "source_name": "表格查询",
+          "location": "SELECT \"城市等级\", \"类别\", MAX(\"金额\") as \"最高已通过金额\" FROM t_f80fd081 WHERE \"城市等级\" = '二线' AND \"类别\" = '住宿' AND \"状态\" = '已通过' GROUP BY \"城市等级\", \"类别\"",
+          "snippet": "{\"columns\": [\"城市等级\", \"类别\", \"最高已通过金额\"], \"rows\": [{\"城市等级\": \"二线\", \"类别\": \"住宿\", \"最高已通过金额\": \"460\"}], \"row_count\": 1}",
+          "score": null,
+          "evidence_id": "E3.1"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "公司差旅住宿标准规定二线城市每晚不超过400元。",
+          "evidence_ids": [
+            "E2.1"
+          ],
+          "valid_evidence_ids": [
+            "E2.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        },
+        {
+          "text": "实际已通过的报销记录中，二线城市住宿最高报销金额为460元。",
+          "evidence_ids": [
+            "E3.1"
+          ],
+          "valid_evidence_ids": [
+            "E3.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 2,
+        "cited_claim_count": 2,
+        "valid_reference_count": 2,
+        "reference_count": 2,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 1.0
+      },
+      "judgment": {
+        "answer_correctness": 0.8,
+        "correctness_reason": "答案核心部分正确指出公司差旅标准中二线城市住宿每晚不超过400元，符合reference中的expected_answer_terms。同时补充了实际报销记录中存在460元的案例，该信息在evidence中得到支持（E3.1），且未否定标准本身。但可能引起混淆的是将‘最高已通过报销’作为潜在例外提出，暗示可能存在高于标准的合规情况，而policy文件（E2.1）为明确上限规定，额外解释超出了reference要求，因此完整性略受影响。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应问题，先给出标准金额，再补充实际数据背景，最后给出建议，结构清晰且围绕问题展开，无明显无关内容。",
+        "is_refusal": false,
+        "refusal_reason": "答案明确提供了相关信息，并未表示无法确定或拒绝回答。",
+        "factual_claims": [
+          {
+            "claim": "公司差旅住宿标准规定二线城市每晚不超过400元。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E2.1"
+            ],
+            "reason": "证据E2.1明确指出：'二线城市每晚不超过400元'，与该声明完全一致。"
+          },
+          {
+            "claim": "从实际已通过的报销记录来看，二线城市住宿最高报销过460元。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E3.1"
+            ],
+            "reason": "证据E3.1的查询结果显示二线城市住宿类别的最高已通过金额为460元，与该声明一致。"
+          },
+          {
+            "claim": "建议以公司正式标准400元/晚为参考上限，如有特殊情况可提前沟通确认。",
+            "verdict": "not_applicable",
+            "evidence_ids": [],
+            "reason": "此为基于事实的建议性陈述，不构成可验证的事实性主张。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "声明“公司差旅住宿标准规定二线城市每晚不超过400元”被E2.1直接支持，其中明确写道“二线城市每晚不超过400元”。"
+          },
+          {
+            "claim_index": 1,
+            "verdict": "supported",
+            "reason": "声明“实际已通过的报销记录中，二线城市住宿最高报销金额为460元”由E3.1支持，其查询结果返回最高金额为460元且状态为已通过。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 0.8,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": true
+      },
+      "generation": {
+        "run_id": "47081b41-f15d-469f-bba0-4dbb0b04dd4c",
+        "latency_ms": 23854,
+        "usage": {
+          "input_tokens": 15878,
+          "output_tokens": 511,
+          "total_tokens": 16389
+        }
+      },
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 4016,
+          "output_tokens": 498,
+          "total_tokens": 4514
+        },
+        "attempt": 1,
+        "latency_ms": 7396
+      },
+      "error": null
+    },
+    {
+      "id": "hal-11",
+      "group": "幻觉·对照·应当答出",
+      "question": "华东区上半年销售额合计是多少？",
+      "reference": {
+        "expected_answer_terms": [
+          "3053000",
+          "305.3万"
+        ],
+        "answer_match": "any",
+        "expected_refusal": false,
+        "grading_note": "★ 对照组：需要计算。答案 3053000 不会原样出现在证据里（是 sum 出来的），用来验证「未溯源 ≠ 幻觉」"
+      },
+      "answer": "华东区2026年上半年销售额合计为3,053,000元。",
+      "deterministic_answer_ok": true,
+      "evidence": [
+        {
+          "module": "table-rag",
+          "source_name": "表格查询",
+          "location": "SELECT sum(\"销售额\") FROM t_30cbf5c9 WHERE \"区域\" = '华东'",
+          "snippet": "{\"columns\": [\"sum\"], \"rows\": [{\"sum\": \"3053000\"}], \"row_count\": 1}",
+          "score": null,
+          "evidence_id": "E1.1"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "华东区2026年上半年销售额合计为3,053,000元。",
+          "evidence_ids": [
+            "E1.1"
+          ],
+          "valid_evidence_ids": [
+            "E1.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [
+            "2026"
+          ],
+          "ungrounded_identifiers": [],
+          "grounded": false
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 1,
+        "cited_claim_count": 1,
+        "valid_reference_count": 1,
+        "reference_count": 1,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 0.5
+      },
+      "judgment": {
+        "answer_correctness": 1.0,
+        "correctness_reason": "答案中的销售额3,053,000元与reference中的预期答案项'3053000'和'305.3万'一致，且通过evidence中的SQL查询结果sum(销售额)=3053000可验证，事实完整且正确。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题，明确给出了华东区上半年销售额合计的具体数值，无无关内容。",
+        "is_refusal": false,
+        "refusal_reason": "答案提供了具体信息，未表示无法确定。",
+        "factual_claims": [
+          {
+            "claim": "华东区2026年上半年销售额合计为3,053,000元。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1"
+            ],
+            "reason": "evidence E1.1中的查询结果明确显示sum(销售额)为3053000，与claim中的数值一致，语义完全支持。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "claim引用的evidence_id E1.1中，查询结果的sum值为3053000，与claim中的销售额数值一致，语义支持成立。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 1.0,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": true
+      },
+      "generation": {
+        "run_id": "aec7c5cc-ee7a-4cd6-9e54-8dad157e896c",
+        "latency_ms": 4403,
+        "usage": {
+          "input_tokens": 3539,
+          "output_tokens": 170,
+          "total_tokens": 3709
+        }
+      },
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 1200,
+          "output_tokens": 321,
+          "total_tokens": 1521
+        },
+        "attempt": 1,
+        "latency_ms": 5347
+      },
+      "error": null
+    },
+    {
+      "id": "mh-01",
+      "group": "正常·多跳",
+      "question": "PRJ-2026-0142 的负责人属于哪个部门？",
+      "reference": {
+        "expected_answer_terms": [
+          "技术部"
+        ],
+        "answer_match": "all",
+        "expected_refusal": null,
+        "grading_note": "dept-tech.md 里没有 PRJ-2026-0142 也没有陈刚，只有「下设…算法组」"
+      },
+      "answer": "PRJ-2026-0142（Beta 项目）的负责人是陈刚，该项目由**算法组**承担。但现有资料中未明确说明算法组隶属于哪个具体部门（如技术部、研发中心等），因此无法确定负责人所属的部门名称。",
+      "deterministic_answer_ok": true,
+      "evidence": [
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "project-prj-2026-0142.md #0",
+          "snippet": "标题路径：Beta 项目（PRJ-2026-0142）\n\n本项目编号 PRJ-2026-0142，由算法组承担，负责人是陈刚。\n\n项目范围：推荐策略重构。项目周期为 2026 年 5 月至 10 月。\n立项审批已完成，预算与里程碑登记在项目管理系统，变更须走变更评审。",
+          "score": 0.0325,
+          "evidence_id": "E1.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #0",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142）\n\nBeta 项目技术方案（PRJ-2026-0142）",
+          "score": 0.0323,
+          "evidence_id": "E1.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #1",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 1. 背景与目标\n\nBeta 项目编号 PRJ-2026-0142，由算法组承担，负责人是陈刚，项目范围为推荐策略重构。\n\n涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。",
+          "score": 0.0311,
+          "evidence_id": "E1.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #7",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 3. 方案设计\n\n以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。",
+          "score": 0.0306,
+          "evidence_id": "E1.4"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #4",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 2. 现状问题\n\n执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本条款的解释权归对应归口部门，如有歧义以中文表述为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。本条款的解释权归对应归口部门，如有歧义以中文表述为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。",
+          "score": 0.0294,
+          "evidence_id": "E1.5"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #14",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 6. 评审结论\n\n涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。",
+          "score": 0.0291,
+          "evidence_id": "E1.6"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #8",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 3. 方案设计\n\n所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。",
+          "score": 0.029,
+          "evidence_id": "E1.7"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #12",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 5. 风险与依赖\n\n涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本条款的解释权归对应归口部门，如有歧义以中文表述为准。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。",
+          "score": 0.0288,
+          "evidence_id": "E1.8"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-design-prj-2026-0142.md #10",
+          "snippet": "标题路径：Beta 项目技术方案（PRJ-2026-0142） > 4. 容量与性能\n\n以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。实施过程中如遇边界情况，由对应负责人判断并在周会同步，不单独发文。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。本条款的解释权归对应归口部门，如有歧义以中文表述为准。以上安排自发布之日起执行，历史遗留事项按原约定处理至自然结束。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。涉及跨部门协作的事项，由发起方提前三个工作日知会相关方。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。相关记录统一归档到内部知识库对应目录，保留期与公司文档管理规定一致。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。执行过程中产生的例外，需在下一次评审会上说明原因并记录在案。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。所涉数据的访问遵循数据分级规定，未获授权不得导出到外部环境。本节内容经相关责任人确认，如与后续发布的正式文件冲突，以正式文件为准。",
+          "score": 0.0288,
+          "evidence_id": "E1.9"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "PRJ-2026-0142 的负责人是陈刚。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.3"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.3"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        },
+        {
+          "text": "PRJ-2026-0142 由算法组承担。",
+          "evidence_ids": [
+            "E1.1",
+            "E1.3"
+          ],
+          "valid_evidence_ids": [
+            "E1.1",
+            "E1.3"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": true
+        },
+        {
+          "text": "现有资料未明确算法组所属的部门名称。",
+          "evidence_ids": [],
+          "valid_evidence_ids": [],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 3,
+        "cited_claim_count": 2,
+        "valid_reference_count": 4,
+        "reference_count": 4,
+        "citation_coverage": 0.6666666666666666,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": 1.0
+      },
+      "judgment": {
+        "answer_correctness": 0.5,
+        "correctness_reason": "答案正确指出负责人是陈刚、项目由算法组承担，且资料未明确算法组所属部门。但 reference 的 expected_answer_terms 要求命中 '技术部'，而答案未声称算法组属于技术部，也未提供任何支持该归属的信息。由于 evidence 和 reference 均表明无法确定部门归属，因此答案在事实完整性上受限于证据，部分符合 reference 要求。",
+        "answer_relevance": 1.0,
+        "relevance_reason": "答案直接回应了问题核心，先给出已知信息（负责人和承担组），再说明无法确定部门的原因，没有添加无关内容，结构清晰且相关。",
+        "is_refusal": true,
+        "refusal_reason": "答案明确表示‘现有资料中未明确说明算法组隶属于哪个具体部门’，并因此得出‘无法确定负责人所属的部门名称’，构成对目标事实的明确拒答。",
+        "factual_claims": [
+          {
+            "claim": "PRJ-2026-0142 的负责人是陈刚。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.3"
+            ],
+            "reason": "多个证据片段（E1.1 和 E1.3）均明确指出 PRJ-2026-0142 的负责人是陈刚，语义一致。"
+          },
+          {
+            "claim": "PRJ-2026-0142 由算法组承担。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E1.1",
+              "E1.3"
+            ],
+            "reason": "E1.1 和 E1.3 都明确说明该项目由算法组承担，信息一致。"
+          },
+          {
+            "claim": "现有资料中未明确说明算法组隶属于哪个具体部门。",
+            "verdict": "supported",
+            "evidence_ids": [],
+            "reason": "所有提供的 evidence 中均未提及算法组的上级部门，reference 也确认 dept-tech.md 没有相关信息，因此该声明关于信息缺失的元陈述成立。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "claim_index=0 声称负责人是陈刚，E1.1 和 E1.3 均明确支持该事实。"
+          },
+          {
+            "claim_index": 1,
+            "verdict": "supported",
+            "reason": "claim_index=1 声称项目由算法组承担，E1.1 和 E1.3 均明确支持该事实。"
+          },
+          {
+            "claim_index": 2,
+            "verdict": "not_applicable",
+            "reason": "claim_index=2 是关于信息缺失的元声明（未明确算法组所属部门），且该 claim 未引用任何 evidence_id。此类拒答性元声明若无正文可引，应判 not_applicable。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 0.5,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 1.0,
+        "refusal_correct": null
+      },
+      "generation": {
+        "run_id": "d1cf1374-a3d7-4107-b36f-6f2ac75565f8",
+        "latency_ms": 22007,
+        "usage": {
+          "input_tokens": 18216,
+          "output_tokens": 473,
+          "total_tokens": 18689
+        }
+      },
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 4047,
+          "output_tokens": 682,
+          "total_tokens": 4729
+        },
+        "attempt": 1,
+        "latency_ms": 9086
+      },
+      "error": null
+    },
+    {
+      "id": "mh-08",
+      "group": "正常·多跳",
+      "question": "郗昭对接的是哪家公司？和这类公司签合同前要做什么？",
+      "reference": {
+        "expected_answer_terms": [
+          "比价"
+        ],
+        "answer_match": "all",
+        "expected_refusal": null,
+        "grading_note": "policy-supplier.md 里没有郗昭也没有云启数据"
+      },
+      "answer": "郗昭对接的是**云启数据**，他是云启数据的供应商对接人，负责合同履约与交付验收对接。\n\n关于\"和这类公司签合同前要做什么\"，现有资料中提到了\"合同事宜统一归口财务部\"，但并未详细说明签合同前的具体流程或要求（如资质审查、尽职调查等）。因此，无法从已有信息中完整回答签合同前需要做什么，建议查阅《供应商合作手册》或咨询财务部获取详细流程。",
+      "deterministic_answer_ok": false,
+      "evidence": [
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "external-云启数据.md #0",
+          "snippet": "标题路径：外部联系人：郗昭（云启数据）\n\n郗昭是云启数据的供应商对接人，负责合同履约与交付验收对接。\n\n郗昭不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0164,
+          "evidence_id": "E2.1"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "external-天元法务.md #0",
+          "snippet": "标题路径：外部联系人：岑柏舟（天元法务）\n\n岑柏舟是天元法务的物流服务对接人，样机与物料寄送协调。\n\n岑柏舟不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0161,
+          "evidence_id": "E2.2"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "external-泰盛物流.md #0",
+          "snippet": "标题路径：外部联系人：阚彦博（泰盛物流）\n\n阚彦博是泰盛物流的背景调查服务对接人，候选人背景调查流程对接。\n\n阚彦博不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0159,
+          "evidence_id": "E2.3"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "external-启明云.md #0",
+          "snippet": "标题路径：外部联系人：蔺孝廉（启明云）\n\n蔺孝廉是启明云的云服务客户经理，资源采购与技术支持协调。\n\n蔺孝廉不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0156,
+          "evidence_id": "E2.4"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "external-博远设计.md #0",
+          "snippet": "标题路径：外部联系人：逯明修（博远设计）\n\n逯明修是博远设计的设计外包对接人，视觉物料交付与验收。\n\n逯明修不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0154,
+          "evidence_id": "E2.5"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "external-恒信咨询.md #0",
+          "snippet": "标题路径：外部联系人：乜文渊（恒信咨询）\n\n乜文渊是恒信咨询的外部顾问，按项目提供专项咨询，不参与日常管理。\n\n乜文渊不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0152,
+          "evidence_id": "E2.6"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-handbook-采购.md #0",
+          "snippet": "标题路径：供应商合作手册\n\n供应商合作手册",
+          "score": 0.0149,
+          "evidence_id": "E2.7"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "external-锐锋科技.md #0",
+          "snippet": "标题路径：外部联系人：邝允中（锐锋科技）\n\n邝允中是锐锋科技的外部审计联系人，年度审计期间的资料对接窗口。\n\n邝允中不属于公司编制，不计入部门人数。日常沟通由对应业务部门负责人对接，合同事宜统一归口财务部。",
+          "score": 0.0147,
+          "evidence_id": "E2.8"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-postmortem-ticket-88690.md #0",
+          "snippet": "标题路径：故障复盘报告 TICKET-88690\n\n故障复盘报告 TICKET-88690",
+          "score": 0.0145,
+          "evidence_id": "E2.9"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "ticket-ticket-88512.md #0",
+          "snippet": "标题路径：故障工单 TICKET-88512：推荐结果重复\n\n工单编号 TICKET-88512，故障等级 P1，影响产品 X7-Pro，处理人陈刚。\n\n现象：推荐结果重复。已按值班与故障响应流程完成定位与修复，复盘结论归档。",
+          "score": 0.0143,
+          "evidence_id": "E2.10"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "long-postmortem-ticket-88407.md #0",
+          "snippet": "标题路径：故障复盘报告 TICKET-88407\n\n故障复盘报告 TICKET-88407",
+          "score": 0.0141,
+          "evidence_id": "E2.11"
+        },
+        {
+          "module": "vector-rag",
+          "source_name": "benchmark/answer-quality/9aa76b8e",
+          "location": "product-x7-pro.md #0",
+          "snippet": "标题路径：X7-Pro\n\nX7-Pro 是企业版核心引擎，当前发布版本为 v2.3.1。\n\nX7-Pro 由技术部负责维护，产品侧对接人为王芳。\n版本 v2.3.1 的变更记录与已知问题登记在内部知识库，升级前须查阅。",
+          "score": 0.0139,
+          "evidence_id": "E2.12"
+        }
+      ],
+      "submitted_claims": [
+        {
+          "text": "郗昭是云启数据的供应商对接人。",
+          "evidence_ids": [
+            "E2.1"
+          ],
+          "valid_evidence_ids": [
+            "E2.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "郗昭负责合同履约与交付验收对接。",
+          "evidence_ids": [
+            "E2.1"
+          ],
+          "valid_evidence_ids": [
+            "E2.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        },
+        {
+          "text": "合同事宜统一归口财务部。",
+          "evidence_ids": [
+            "E2.1"
+          ],
+          "valid_evidence_ids": [
+            "E2.1"
+          ],
+          "invalid_evidence_ids": [],
+          "ungrounded_numbers": [],
+          "ungrounded_identifiers": [],
+          "grounded": null
+        }
+      ],
+      "deterministic_citation_metrics": {
+        "claim_count": 3,
+        "cited_claim_count": 3,
+        "valid_reference_count": 3,
+        "reference_count": 3,
+        "citation_coverage": 1.0,
+        "citation_validity": 1.0,
+        "grounded_fact_rate": null
+      },
+      "judgment": {
+        "answer_correctness": 0.5,
+        "correctness_reason": "答案中关于郗昭对接云启数据的部分正确，且有证据E2.1支持。但问题第二部分询问'和这类公司签合同前要做什么'，reference明确指出应包含'比价'这一关键项，而答案未提及，且仅以资料未提供为由拒答，导致事实不完整。因此命中expected_answer_terms不全，扣分。",
+        "answer_relevance": 0.8,
+        "relevance_reason": "答案直接回应了两个子问题，结构清晰。第一部分准确回答郗昭对接公司；第二部分虽无法提供具体流程但仍说明信息归口部门并建议查阅手册或咨询财务部，属于合理引导而非无关内容。但因未能尝试从已有信息（如合同归口财务）推导可能步骤，略显保守，轻微影响相关性。",
+        "is_refusal": false,
+        "refusal_reason": "答案对第一个子问题给出了明确信息，对第二个子问题虽表示现有资料未详细说明，但并未完全拒绝回答，而是提供了进一步获取信息的建议，因此不属于明确拒答。",
+        "factual_claims": [
+          {
+            "claim": "郗昭对接的是云启数据。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E2.1"
+            ],
+            "reason": "证据E2.1明确指出‘郗昭是云启数据的供应商对接人’，语义完全支持该主张。"
+          },
+          {
+            "claim": "郗昭是云启数据的供应商对接人，负责合同履约与交付验收对接。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E2.1"
+            ],
+            "reason": "证据E2.1原文包含‘郗昭是云启数据的供应商对接人，负责合同履约与交付验收对接’，直接支持该陈述。"
+          },
+          {
+            "claim": "合同事宜统一归口财务部。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E2.1"
+            ],
+            "reason": "证据E2.1中明确提到‘合同事宜统一归口财务部’，可直接验证。"
+          },
+          {
+            "claim": "现有资料中没有说明和这类公司签合同前需要做资质审查、尽职调查等具体流程。",
+            "verdict": "supported",
+            "evidence_ids": [
+              "E2.1"
+            ],
+            "reason": "尽管其他外部联系人文档也提到合同归口财务，但均未涉及签约前流程，结合reference提示policy-supplier.md无相关信息，可判断当前证据集确实未提供此类细节。"
+          },
+          {
+            "claim": "建议查阅《供应商合作手册》或咨询财务部获取签合同前的详细流程。",
+            "verdict": "not_applicable",
+            "evidence_ids": [],
+            "reason": "这是基于信息缺失提出的行动建议，属于元层面的指导，不构成对目标事实的断言，因此不适用真实性判断。"
+          }
+        ],
+        "citation_judgments": [
+          {
+            "claim_index": 0,
+            "verdict": "supported",
+            "reason": "claim_index=0声称‘郗昭是云启数据的供应商对接人’，证据E2.1明确支持此说法。"
+          },
+          {
+            "claim_index": 1,
+            "verdict": "supported",
+            "reason": "claim_index=1声称‘郗昭负责合同履约与交付验收对接’，证据E2.1原文完全匹配。"
+          },
+          {
+            "claim_index": 2,
+            "verdict": "supported",
+            "reason": "claim_index=2声称‘合同事宜统一归口财务部’，证据E2.1中明确出现相同表述，语义支持成立。"
+          }
+        ]
+      },
+      "scores": {
+        "answer_correctness": 0.5,
+        "faithfulness": 1.0,
+        "citation_correctness": 1.0,
+        "answer_relevance": 0.8,
+        "refusal_correct": null
+      },
+      "generation": {
+        "run_id": "d3d72db1-e706-490e-81c5-3c104611041c",
+        "latency_ms": 40360,
+        "usage": {
+          "input_tokens": 12795,
+          "output_tokens": 485,
+          "total_tokens": 13280
+        }
+      },
+      "judge": {
+        "cached": false,
+        "usage": {
+          "input_tokens": 2511,
+          "output_tokens": 838,
+          "total_tokens": 3349
+        },
+        "attempt": 1,
+        "latency_ms": 11781
+      },
+      "error": null
+    }
+  ]
+}

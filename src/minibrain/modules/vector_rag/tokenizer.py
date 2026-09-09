@@ -5,10 +5,10 @@
 它不是某条链路的实现细节，是**语料本身的性质**决定的：
 
 - 中文没有空格，任何检索器都得先决定怎么切
-- LlamaIndex 的 `BM25Retriever` 默认按空白分词，中文会被切成一整坨，
+- 通用 BM25 实现通常默认按空白分词，中文会被切成一整坨，
   等于关键词检索完全失效
 
-所以 `llamaindex_chain` 把这个函数当分词器传给 `BM25Retriever`。
+所以主路径的持久化 BM25 和手写基线共用这个函数。
 换句话说：**框架接管了 BM25 算法，但没接管"中文怎么切"这个问题。**
 
 ## 切法：拉丁保留整体 + 拆分，中文走二元组
@@ -25,6 +25,7 @@
 from __future__ import annotations
 
 import re
+from collections import Counter
 
 _LATIN = re.compile(r"[a-z0-9]+(?:[-_./][a-z0-9]+)*")
 _SEPARATORS = re.compile(r"[-_./]")
@@ -52,3 +53,16 @@ def tokenize(text: str) -> list[str]:
             tokens.extend(run[i:i + 2] for i in range(len(run) - 1))
 
     return tokens
+
+
+def identifier_tokens(text: str) -> list[str]:
+    """中文语料只让标识符进入 sparse 路；英文普通单词天然也是拉丁 token。"""
+    return [token for token in tokenize(text) if _LATIN.fullmatch(token)]
+
+
+def index_terms(text: str) -> dict[str, int]:
+    return dict(Counter(identifier_tokens(text)))
+
+
+def total_term_count(text: str) -> int:
+    return len(tokenize(text))

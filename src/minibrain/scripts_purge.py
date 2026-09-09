@@ -16,6 +16,7 @@ import sys
 from . import gateway, identity
 from .contracts import MODULE_IDS, UserContext
 from .db import close_all
+from .observability import delete_user_runs
 
 DEFAULT_PREFIXES = ("smoke_", "live_")
 
@@ -33,6 +34,7 @@ def purge_user(user: UserContext) -> int:
             if str(source["owner_id"]) == user.user_id:
                 gateway.call(module_id, "delete_source", user, str(source["id"]))
                 removed += 1
+    delete_user_runs(user.user_id)
     identity.delete_user(user.user_id)
     return removed
 

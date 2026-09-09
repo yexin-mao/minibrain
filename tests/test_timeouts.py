@@ -2,7 +2,7 @@
 
 ## 背景
 
-三处构造 OpenAI 客户端（agent/loop、rerank、embeddings）原本都没设 timeout。
+两处手写 OpenAI 客户端（agent/loop、embeddings）原本都没设 timeout。
 OpenAI SDK 默认 600 秒 + 2 次重试，单次最坏 30 分钟。
 一次 194 调用的重排消融因此挂死 13 小时 17 分——
 **进程活着、CPU 只用了 14.7 秒**，全程在等一个永远不返回的响应，
@@ -38,18 +38,17 @@ def _clients():
       **防线要覆盖新代码路径，不是覆盖旧代码路径。**
       框架客户端的超时在 graph.py / chain.py 里显式传，见 test_framework_clients。
     """
-    from minibrain.handwritten import agent_loop, rerank
+    from minibrain.handwritten import agent_loop
     from minibrain.modules.vector_rag import embeddings
     return [
         ("handwritten/agent_loop", agent_loop._get_client),
-        ("handwritten/rerank", rerank._get_client),
         ("vector_rag/embeddings", embeddings._get_client),
     ]
 
 
 @pytest.mark.parametrize("name", [n for n, _ in _clients()])
 def test_every_openai_client_has_a_finite_timeout(name):
-    """三处客户端都必须带有限超时。少一处，那一处就是下一次挂 13 小时的地方。"""
+    """客户端都必须带有限超时。少一处，那一处就是下一次长时间挂起的地方。"""
     builder = dict(_clients())[name]
     cfg = get_config()
     if not (cfg.agent_configured and cfg.embedding_configured):

@@ -80,7 +80,10 @@ def answer(user: UserContext, question: str) -> AnswerResult:
         )
 
         for call in message.tool_calls:
-            text, items = execute_tool(user, call.function.name, call.function.arguments)
+            text, items = execute_tool(
+                user, call.function.name, call.function.arguments,
+                evidence_prefix=f"E{len(trace) + 1}",
+            )
             evidence.extend(items)
             trace.append(
                 ToolCallTrace(
